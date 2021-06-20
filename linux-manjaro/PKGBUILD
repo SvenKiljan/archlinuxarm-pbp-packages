@@ -6,7 +6,7 @@
 
 pkgbase=linux-manjaro
 pkgver=6.2.3
-pkgrel=1
+pkgrel=2
 _newversion=false
 _stopbuild=false     # Will also stop if ${_newversion} is true
 _srcname="linux-${pkgver/%.0/}"
@@ -29,6 +29,7 @@ source=("http://www.kernel.org/pub/linux/kernel/v6.x/${_srcname}.tar.xz"
         '1009-arm64-dts-rockchip-Add-PCIe-bus-scan-delay-to-Rock-P.patch'          # Radxa Rock Pi 4 (relies on patch 1005)
         '1010-arm64-dts-rockchip-add-rk3568-station-p2.patch'                      # Firefly Station P2 (by Furkan)
         '1011-arm64-dts-meson-radxa-zero-add-support-for-the-usb-t.patch'          # Radxa Zero (by Furkan)
+        '1012-pwm-meson-Explicitly-set-.polarity-in-.get_state.patch'              # Meson; Temp fix for boot issues
         '2001-staging-add-rtl8723cs-driver.patch'                                  # Realtek WiFi;  Not upstreamable
         '2003-arm64-dts-rockchip-Work-around-daughterboard-issues.patch'           # Pinebook Pro microSD;  Will be submitted upstream by Dragan
         '2004-arm64-dts-allwinner-add-hdmi-sound-to-pine-devices.patch'            # Allwinner HDMI Sound; (by Dan)
@@ -67,6 +68,7 @@ md5sums=('c6f5873837275e6ba35736bbe2370cbe'
          'a0cf3209d3f856522ef14c4618837ae7'
          '206dadb349d169d5ba226c291fd05430'
          'e9377e7295ebd76cc68b9dd42891c0c8'
+         'f63789868cfed98d49602162059d690c'
          '3cb7e8c18b920bb49ff1e51e92732db2'
          '59c20ef6082f4b4c6b54c4f532931ff4'
          '9aa0591c2d601a104d664a802a44728c'
