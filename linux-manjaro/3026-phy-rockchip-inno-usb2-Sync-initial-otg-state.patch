@@ -1,0 +1,32 @@
+From d821cfdc19ec4232c540df45c8fe7899c6ecfe94 Mon Sep 17 00:00:00 2001
+From: Peter Geis <pgwipeout@gmail.com>
+Date: Fri, 10 Jun 2022 19:53:08 -0400
+Subject: [PATCH 39/39] phy: rockchip-inno-usb2: Sync initial otg state
+
+The initial otg state for the phy defaults to device mode. The actual
+state isn't detected until an ID IRQ fires. Fix this by syncing the ID
+state during initialization.
+
+Fixes: 51a9b2c03dd3 ("phy: rockchip-inno-usb2: Handle ID IRQ")
+Signed-off-by: Peter Geis <pgwipeout@gmail.com>
+---
+ drivers/phy/rockchip/phy-rockchip-inno-usb2.c | 3 +++
+ 1 file changed, 3 insertions(+)
+
+diff --git a/drivers/phy/rockchip/phy-rockchip-inno-usb2.c b/drivers/phy/rockchip/phy-rockchip-inno-usb2.c
+index 6711659f727c..5bbb60aa0801 100644
+--- a/drivers/phy/rockchip/phy-rockchip-inno-usb2.c
++++ b/drivers/phy/rockchip/phy-rockchip-inno-usb2.c
+@@ -1164,6 +1164,9 @@ static int rockchip_usb2phy_otg_port_init(struct rockchip_usb2phy *rphy,
+ 			dev_err(rphy->dev, "register USB HOST notifier failed\n");
+ 	}
+ 
++	/* do initial sync of usb state */
++	ret = property_enabled(rphy->grf, &rport->port_cfg->utmi_id);
++	extcon_set_state_sync(rphy->edev, EXTCON_USB_HOST, !ret);
+ out:
+ 	return ret;
+ }
+-- 
+2.33.1
+
