@@ -8,7 +8,7 @@ _srcname=linux-5.15
 _kernelname=${pkgbase#linux}
 _desc="AArch64 multi-platform"
 pkgver=5.15.1
-pkgrel=2
+pkgrel=3
 arch=('aarch64')
 url="http://www.kernel.org/"
 license=('GPL2')
@@ -100,7 +100,7 @@ md5sums=('071d49ff4e020d58c04f9f3f76d3b594'
          '7659fe53cc58b9a7ed615b49719f7066'
          'ae85e433bc4fd787c20a4df0d07d528b'
          '15b2d6fd96df0a070a8f1b4fc5399b8b'
-         '1057a6ec83cadfa5adc3182d6bada514'
+         'c5e2c93a4f353425f3410ff522e3e282'
          '86d4a35722b5410e3b29fc92dae15d4b'
          'ce6c81ad1ad1f8b333fd6077d47abdaf'
          '3dc88030a8f2f5a5f97266d99b149f77')
