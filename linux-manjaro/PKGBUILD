@@ -7,7 +7,7 @@ pkgbase=linux-manjaro
 _srcname=linux-5.13
 _kernelname=${pkgbase#linux}
 _desc="AArch64 multi-platform"
-pkgver=5.13.11
+pkgver=5.13.12
 pkgrel=1
 arch=('aarch64')
 url="http://www.kernel.org/"
@@ -32,7 +32,6 @@ source=("http://www.kernel.org/pub/linux/kernel/v5.x/${_srcname}.tar.xz"
         '0014-drm-meson-add-YUV422-output-support.patch'
         '0015-arm64-dts-meson-add-initial-Beelink-GT1-Ultimate-dev.patch'
         '0016-add-ugoos-device.patch'
-        '0017-drm-meson-fix-green-pink-color-distortion-set-from-u.patch'
         '0018-drm-bridge-dw-hdmi-disable-loading-of-DW-HDMI-CEC-sub-driver.patch' #Applied for -next
         '0019-drm-panfrost-Handle-failure-in-panfrost_job_hw_submit.patch'
         '0001-phy-rockchip-typec-Set-extcon-capabilities.patch'
@@ -54,7 +53,7 @@ source=("http://www.kernel.org/pub/linux/kernel/v5.x/${_srcname}.tar.xz"
         '60-linux.hook'
         '90-linux.hook')
 md5sums=('76c60fb304510a7bbd9c838790bc5fe4'
-         '33b12686c6f185e49a35c45e233d558e'
+         '7d83ac5db385ebe63f68a7ee1774c685'
          '9e6b7f44db105fef525d715213dce7cf'
          'a8954ca19639be0e0e9053d23711f670'
          'fa586447846ec5aef8ab972058c5548e'
@@ -71,7 +70,6 @@ md5sums=('76c60fb304510a7bbd9c838790bc5fe4'
          '469417b64e6a2bf65bd74c6d9cad2040'
          'c41b101c033ac487c15298bc5a9e95cd'
          '1b92d7617e60d3c525a4b18ab4351185'
-         '63ec4c70352a86a02e1aacf2bc8e6fc5'
          '581a3ca441098d9f323fecfff0e37d79'
          'a90a366662357233db7022f8a1e7ac46'
          '252b4dbd2d0f560b6d254f29dd5b0f5f'
@@ -118,7 +116,6 @@ prepare() {
   patch -Np1 -i "${srcdir}/0014-drm-meson-add-YUV422-output-support.patch"                              #G12B
   patch -Np1 -i "${srcdir}/0015-arm64-dts-meson-add-initial-Beelink-GT1-Ultimate-dev.patch"             #Beelink
   patch -Np1 -i "${srcdir}/0016-add-ugoos-device.patch"                                                 #Ugoos
-  patch -Np1 -i "${srcdir}/0017-drm-meson-fix-green-pink-color-distortion-set-from-u.patch"             #AMLogic
   patch -Np1 -i "${srcdir}/0018-drm-bridge-dw-hdmi-disable-loading-of-DW-HDMI-CEC-sub-driver.patch"     #AMLogic
   patch -Np1 -i "${srcdir}/0019-drm-panfrost-Handle-failure-in-panfrost_job_hw_submit.patch"            #AMLogic
 
