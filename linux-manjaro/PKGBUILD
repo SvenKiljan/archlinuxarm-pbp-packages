@@ -6,7 +6,7 @@
 
 pkgbase=linux-manjaro
 pkgver=5.19.3
-pkgrel=2
+pkgrel=3
 _newversion=false
 _stopbuild=false     # Will also stop if ${_newversion} is true
 _srcname="linux-${pkgver/%.0/}"
@@ -74,8 +74,7 @@ source=("http://www.kernel.org/pub/linux/kernel/v5.x/${_srcname}.tar.xz"
         '3023-arm64-dts-rockchip-Add-Quartz64-A-battery-node.patch'
         '3024-arm64-dts-rockchip-rk356x-Add-HDMI-audio-nodes.patch'                # (applied in linux-next)
         '3025-arm64-dts-rockchip-Enable-HDMI-audio-on-Quartz64-A.patch'            # (applied in linux-next)
-        #'3026-phy-rockchip-inno-usb2-Sync-initial-otg-state.patch'
-        #'3027-phy-rockchip-inno-usb2-Only-sync-state-when-we-own-e.patch'
+        '3026-phy-rockchip-inno-usb2-Return-zero-after-otg-sync.patch'             # From list: https://patchwork.kernel.org/project/linux-rockchip/patch/20220824122543.174730-1-pgwipeout@gmail.com/
         '3028-arm64-dts-rockchip-Add-HDMI-sound-node-to-Quartz64-B.patch'
         '3029-arm64-dts-rockchip-Add-HDMI-sound-node-to-SoQuartz-C.patch'
         '3030-arm64-dts-rockchip-Add-PCIe-2-nodes-to-quartz64-b.patch'             # Quartz64 and associated patches that are still being upstreamed: END
@@ -140,6 +139,7 @@ md5sums=('5af3311ecafa00f607c99e82dbd2ebbe'
          'fa9babdfffadf76454b00fc22593eaba'
          'c8661942df340cf4ed49b366c83bfbcf'
          '9cd5a90efaa7448a737468954c1428fc'
+         '905f6a0443d8af923bdc506b1fe2396e'
          'a2271452ecf71f2ee160ad76f8bcadef'
          '7a39de5aa1c29e81d03096c2f9163456'
          '92d5c7dd3052f5d7a670bd06213d75fb'
