@@ -7,8 +7,8 @@ pkgbase=linux-manjaro
 _srcname=linux-5.16
 _kernelname=${pkgbase#linux}
 _desc="AArch64 multi-platform"
-pkgver=5.16.2
-pkgrel=5
+pkgver=5.16.3
+pkgrel=1
 arch=('aarch64')
 url="http://www.kernel.org/"
 license=('GPL2')
@@ -24,7 +24,7 @@ source=("http://www.kernel.org/pub/linux/kernel/v5.x/${_srcname}.tar.xz"
         '0006-arm64-dts-rockchip-Add-Firefly-Station-p1-support.patch'
         '0007-typec-displayport-some-devices-have-pin-assignments-reversed.patch'  # Not upstreamable
         '0008-Add-megis-extcon-changes-to-fusb302.patch'                           # Not upstreamable
-        '0009-usb-typec-Add-megis-typex-to-extcon-bridge-driver.patch'             # Not upstreamable?
+        '0009-usb-typec-Add-megis-typex-to-extcon-bridge-driver.patch'             # Not upstreamable
         '0010-arm64-rockchip-add-DP-ALT-rockpro64.patch'                           # Not upstreamable
         '0011-ayufan-drm-rockchip-add-support-for-modeline-32MHz-e.patch'
         '0012-rk3399-rp64-pcie-Reimplement-rockchip-PCIe-bus-scan-delay.patch'
@@ -52,7 +52,7 @@ source=("http://www.kernel.org/pub/linux/kernel/v5.x/${_srcname}.tar.xz"
         '60-linux.hook'
         '90-linux.hook')
 md5sums=('e6680ce7c989a3efe58b51e3f3f0bf93'
-         '3ce3933c25c9a589fb072b81894a8f7b'
+         '9c4ccc30302104ebcebcf2d4e8dc4db8'
          '0d47dea87f03bf36262171e01889f832'
          'e6fe272dc95a1c0a8f871924699fea16'
          '9f27b2a05eaeb1995fc0fcf6a8b923c4'
