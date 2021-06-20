@@ -25,43 +25,43 @@ source=("http://www.kernel.org/pub/linux/kernel/v6.x/${_srcname}.tar.xz"
         '1005-panfrost-Silence-Panfrost-gem-shrinker-loggin.patch'                 # Panfrost (preference patch, might not be upstreamable)
         '1006-arm64-dts-rockchip-Add-Firefly-Station-p1-support.patch'             # Firefly Station P1 (by Furkan)
         '1007-rk3399-rp64-pcie-Reimplement-rockchip-PCIe-bus-scan-delay.patch'     # RockPro64 (by @nuumio, perhaps upstreamable?)
-        '1008-arm64-dts-amlogic-add-initial-Beelink-GT1-Ultimate-dev.patch'        # Beelink GT1 Ultimate (by Furkan) (applied in linux-next)
+        '1008-arm64-dts-amlogic-add-initial-Beelink-GT1-Ultimate-dev.patch'        # Beelink GT1 Ultimate (by Furkan) (applied in linux-rc)
         '1009-arm64-dts-amlogic-add-meson-g12b-ugoos-am6-plus.patch'               # Meson Ugoos (by Furkan)
         '1010-arm64-dts-rockchip-Add-PCIe-bus-scan-delay-to-RockPr.patch'          # RockPro64 (relies on patch 1007)
-        '1011-drm-rockchip-support-gamma-control-on-RK3399.patch'                  # RK3399 VOP;  From list: https://patchwork.kernel.org/project/linux-arm-kernel/cover/20211019215843.42718-1-sigmaris@gmail.com/ (applied in linux-next)
+        '1011-drm-rockchip-support-gamma-control-on-RK3399.patch'                  # RK3399 VOP;  From list: https://patchwork.kernel.org/project/linux-arm-kernel/cover/20211019215843.42718-1-sigmaris@gmail.com/ (applied in linux-rc)
         '1012-arm64-dts-rockchip-switch-to-hs200-on-rockpi4.patch'                 # Radxa Rock Pi 4;  Temporary hotfix, not for upstreaming (by Dragan)
         '1013-arm64-dts-rockchip-Add-PCIe-bus-scan-delay-to-Rock-P.patch'          # Radxa Rock Pi 4 (relies on patch 1007)
         '1014-ASOC-sun9i-hdmi-audio-Initial-implementation.patch'                  # Allwinner H6 HDMI audio (by Furkan)
         '1015-arm64-dts-allwinner-h6-Add-hdmi-sound-card.patch'                    # Allwinner H6 HDMI audio (by Furkan)
         '1016-arm64-dts-allwinner-h6-Enable-hdmi-sound-card-on-boards.patch'       # Allwinner H6 HDMI audio (by Furkan)
         '1017-arm64-dts-allwinner-add-OrangePi-3-LTS.patch'                        # Orange Pi 3 LTS (by Furkan)
-        '1018-Add-support-for-the-Hardkernel-ODROID-M1-board.patch'                # Odroid M1; V3 From list: https://patchwork.kernel.org/project/linux-rockchip/list/?series=682120
+        '1018-Add-support-for-the-Hardkernel-ODROID-M1-board.patch'                # Odroid M1; V3 From list: https://patchwork.kernel.org/project/linux-rockchip/list/?series=682120 (applied in linux-next)
         '1019-arm64-dts-rockchip-add-rk3568-station-p2.patch'                      # Firefly Station P2 (by Furkan)
         '1020-arm64-dts-meson-radxa-zero-add-support-for-the-usb-t.patch'          # Radxa Zero (by Furkan)
         '1021-arm64-dts-rockchip-add-OrangePi-4-LTS.patch'                         # Orange Pi 4 LTS (by Furkan)
         '1022-Add-YT8531C-phy-support.patch'                                       # Motorcomm PHY (by Furkan)
-        '1023-add-phy-rockchip-Support-PCIe-v3.patch'                              # Rockchip; (applied in linux-next) 
-        '1024-arm64-dts-rockchip-rk3568-Add-PCIe-v3-nodes.patch'                   # Rockchip; (applied in linux-next) 
+        '1023-add-phy-rockchip-Support-PCIe-v3.patch'                              # Rockchip; (applied in linux-rc) 
+        '1024-arm64-dts-rockchip-rk3568-Add-PCIe-v3-nodes.patch'                   # Rockchip; (applied in linux-rc) 
         '2001-staging-add-rtl8723cs-driver.patch'                                  # Realtek WiFi;  Not upstreamable
         '2002-brcmfmac-USB-probing-provides-no-board-type.patch'                   # Bluetooth;  Will be submitted upstream by Dragan
         '2003-arm64-dts-rockchip-Work-around-daughterboard-issues.patch'           # Pinebook Pro microSD;  Will be submitted upstream by Dragan
         '3001-irqchip-gic-v3-add-hackaround-for-rk3568-its.patch'                  # Quartz64 and associated patches that are still being upstreamed: START
-        '3002-arm64-dts-rockchip-Enable-video-output-on-Quartz64-B.patch'          # (applied in linux-next)
+        '3002-arm64-dts-rockchip-Enable-video-output-on-Quartz64-B.patch'          # (applied in linux-rc)
         '3003-arm64-dts-rockchip-Add-hdmi-cec-assigned-clocks-to-r.patch'
         '3004-arm64-dts-rockchip-Add-PCIe-support-to-Quartz64-B.patch'
         '3005-arm64-dts-rockchip-Add-Quartz64-B-eeprom.patch'
         '3006-arm64-dts-rockchip-Add-PCIe-support-to-SoQuartz-CM4-.patch'
         '3007-arm64-dts-rockchip-Enable-video-output-on-SoQuartz-C.patch'
-        '3008-dt-bindings-Add-Rockchip-rk817-battery-charger-suppo.patch'          # (applied in linux-next)
-        '3009-mfd-Add-Rockchip-rk817-battery-charger-support.patch'                # (applied in linux-next)
-        '3010-power-supply-Add-charger-driver-for-Rockchip-RK817.patch'            # (applied in linux-next)
+        '3008-dt-bindings-Add-Rockchip-rk817-battery-charger-suppo.patch'          # (applied in linux-rc)
+        '3009-mfd-Add-Rockchip-rk817-battery-charger-support.patch'                # (applied in linux-rc)
+        '3010-power-supply-Add-charger-driver-for-Rockchip-RK817.patch'            # (applied in linux-rc)
         '3011-drm-panel-simple-Add-init-sequence-support.patch'
         '3012-arm64-dts-rockchip-Move-Quartz64-A-to-mdio-setup.patch'
         '3013-arm64-dts-rockchip-Add-Quartz64-A-battery-node.patch'
-        '3014-phy-rockchip-inno-usb2-Return-zero-after-otg-sync.patch'             # From list: https://patchwork.kernel.org/project/linux-rockchip/patch/20220824122543.174730-1-pgwipeout@gmail.com/ (applied in linux-next)
-        '3015-arm64-dts-rockchip-Add-HDMI-sound-node-to-Quartz64-B.patch'          # (applied in linux-next)
+        '3014-phy-rockchip-inno-usb2-Return-zero-after-otg-sync.patch'             # From list: https://patchwork.kernel.org/project/linux-rockchip/patch/20220824122543.174730-1-pgwipeout@gmail.com/ (applied in linux-rc)
+        '3015-arm64-dts-rockchip-Add-HDMI-sound-node-to-Quartz64-B.patch'          # (applied in linux-rc)
         '3016-arm64-dts-rockchip-Add-HDMI-sound-node-to-SoQuartz-C.patch'
-        '3017-arm64-dts-rockchip-Add-PCIe-2-nodes-to-quartz64-b.patch'             # Quartz64 and associated patches that are still being upstreamed: END (applied in linux-next)
+        '3017-arm64-dts-rockchip-Add-PCIe-2-nodes-to-quartz64-b.patch'             # Quartz64 and associated patches that are still being upstreamed: END (applied in linux-rc)
         '3018-arm64-dts-rockchip-Enable-video-output-on-rk3566-roc-pc.patch'       # Station M2; (by Furkan)
         '3019-board-rock3a-gmac1.patch'                                            # Rock 3A; From Armbian: https://github.com/armbian/build/blob/master/patch/kernel/archive/rockchip64-5.19/board-rock3a-gmac1.patch
         'config'
