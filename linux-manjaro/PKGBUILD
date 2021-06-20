@@ -7,7 +7,7 @@ pkgbase=linux-manjaro
 _srcname=linux-5.15
 _kernelname=${pkgbase#linux}
 _desc="AArch64 multi-platform"
-pkgver=5.15.2
+pkgver=5.15.3
 pkgrel=1
 arch=('aarch64')
 url="http://www.kernel.org/"
@@ -41,6 +41,7 @@ source=("http://www.kernel.org/pub/linux/kernel/v5.x/${_srcname}.tar.xz"
         '0023-drm-rockchip-support-gamma-control-on-RK3399.patch' #From list: https://patchwork.kernel.org/project/linux-arm-kernel/cover/20211019215843.42718-1-sigmaris@gmail.com/
         '0024-Bluetooth-btsdio-Do-not-bind-to-non-removable-BCM4345-and-BCM43455.patch' #From list: https://patchwork.kernel.org/project/bluetooth/patch/20211020130023.196651-1-kmcopper@danwin1210.me/
         '0025-usb-typec-fusb302-fix-masking-of-comparator.patch' #From list: https://patchwork.kernel.org/project/linux-usb/patch/20211107185435.2540185-1-megous@megous.com/
+        #'0026-arm64-dts-rockchip-Add-back-cdn_dp-to-Pinebook-Pro.patch' #Revert from mainline
         '0001-Bluetooth-Add-new-quirk-for-broken-local-ext-features.patch' #From list: https://patchwork.kernel.org/project/bluetooth/patch/20200705195110.405139-2-anarsoul@gmail.com/
         '0002-Bluetooth-btrtl-add-support-for-the-RTL8723CS.patch' #From list: https://patchwork.kernel.org/project/bluetooth/patch/20200705195110.405139-3-anarsoul@gmail.com/
         '0003-arm64-allwinner-a64-enable-Bluetooth-On-Pinebook.patch' #From list: https://patchwork.kernel.org/project/bluetooth/patch/20200705195110.405139-4-anarsoul@gmail.com/
@@ -60,7 +61,7 @@ source=("http://www.kernel.org/pub/linux/kernel/v5.x/${_srcname}.tar.xz"
         '60-linux.hook'
         '90-linux.hook')
 md5sums=('071d49ff4e020d58c04f9f3f76d3b594'
-         '568b7d7588d99eb5c3a56d5631f3d2f8'
+         'a8e84cda01b70e193fa11b7e992439f2'
          '9e6b7f44db105fef525d715213dce7cf'
          '754cf09a858498e1d98b44baa043a196'
          '0d47dea87f03bf36262171e01889f832'
@@ -137,6 +138,7 @@ prepare() {
   patch -Np1 -i "${srcdir}/0023-drm-rockchip-support-gamma-control-on-RK3399.patch"                     #RK3399
   patch -Np1 -i "${srcdir}/0024-Bluetooth-btsdio-Do-not-bind-to-non-removable-BCM4345-and-BCM43455.patch" #Bluetooth
   patch -Np1 -i "${srcdir}/0025-usb-typec-fusb302-fix-masking-of-comparator.patch"                      #USB-C
+  #patch -Np1 -i "${srcdir}/0026-arm64-dts-rockchip-Add-back-cdn_dp-to-Pinebook-Pro.patch"               #DP Alt mode - Pinebook Pro
   
   # Pinebook Pro patches
   patch -Np1 -i "${srcdir}/0016-arm64-dts-rockchip-add-typec-extcon-hack.patch"                         #DP Alt mode
