@@ -7,7 +7,7 @@ pkgbase=linux-manjaro
 _srcname=linux-5.14
 _kernelname=${pkgbase#linux}
 _desc="AArch64 multi-platform"
-pkgver=5.14.6
+pkgver=5.14.7
 pkgrel=1
 arch=('aarch64')
 url="http://www.kernel.org/"
@@ -64,7 +64,7 @@ source=("http://www.kernel.org/pub/linux/kernel/v5.x/${_srcname}.tar.xz"
         '60-linux.hook'
         '90-linux.hook')
 md5sums=('a082ef5748b813abca0649dab8be5f52'
-         'e5035bd071a36f73b8112e6d10dc69cc'
+         '4b724fd10cf02af351dd4f4fdb8630ff'
          '9e6b7f44db105fef525d715213dce7cf'
          '754cf09a858498e1d98b44baa043a196'
          '0d47dea87f03bf36262171e01889f832'
@@ -108,7 +108,7 @@ md5sums=('a082ef5748b813abca0649dab8be5f52'
          '7659fe53cc58b9a7ed615b49719f7066'
          'ae85e433bc4fd787c20a4df0d07d528b'
          '15b2d6fd96df0a070a8f1b4fc5399b8b'
-         'f60bae6f01fcbe2e5ec95580bf46f8e2'
+         '8e9eb69572db2f4c772cc387cc91fc4a'
          '86d4a35722b5410e3b29fc92dae15d4b'
          'ce6c81ad1ad1f8b333fd6077d47abdaf'
          '3dc88030a8f2f5a5f97266d99b149f77')
