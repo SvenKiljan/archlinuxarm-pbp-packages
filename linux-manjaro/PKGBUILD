@@ -8,7 +8,7 @@ _srcname=linux-5.14
 _kernelname=${pkgbase#linux}
 _desc="AArch64 multi-platform"
 pkgver=5.14.1
-pkgrel=1
+pkgrel=2
 arch=('aarch64')
 url="http://www.kernel.org/"
 license=('GPL2')
@@ -38,6 +38,7 @@ source=("http://www.kernel.org/pub/linux/kernel/v5.x/${_srcname}.tar.xz"
         '0020-add-ugoos-device.patch'
         '0021-drm-panfrost-Handle-failure-in-panfrost_job_hw_submit.patch'
         '0022-arm64-dts-rockchip-Add-pcie-bus-scan-delay-to-rockpr.patch'
+        '0023-Revert-net-stmmac-dwmac-rk-fix-unbalanced-pm_runtime.patch'
         '0001-Bluetooth-Add-new-quirk-for-broken-local-ext-features.patch'
         '0002-Bluetooth-btrtl-add-support-for-the-RTL8723CS.patch'
         '0003-arm64-allwinner-a64-enable-Bluetooth-On-Pinebook.patch'
@@ -86,6 +87,7 @@ md5sums=('a082ef5748b813abca0649dab8be5f52'
          '1b92d7617e60d3c525a4b18ab4351185'
          'a90a366662357233db7022f8a1e7ac46'
          '6bb2d84857359016b5e0878cf2fc50cc'
+         '4d1c5ad859cf3f22c0c9f7903d6d761c'
          'cf64831f27bb47da29e708b7243bb340'
          'e3f53e07612939729afaa4dd7ef7f7ce'
          '9510821113c122f91f47b9d0f7ca7264'
@@ -140,6 +142,7 @@ prepare() {
   patch -Np1 -i "${srcdir}/0020-add-ugoos-device.patch"                                                 #Ugoos
   patch -Np1 -i "${srcdir}/0021-drm-panfrost-Handle-failure-in-panfrost_job_hw_submit.patch"            #AMLogic
   patch -Np1 -i "${srcdir}/0022-arm64-dts-rockchip-Add-pcie-bus-scan-delay-to-rockpr.patch"             #RockPro64
+  patch -Np1 -i "${srcdir}/0023-Revert-net-stmmac-dwmac-rk-fix-unbalanced-pm_runtime.patch"             #Fix ethernet on RK3399
   
   # Pinebook Pro patches
   patch -Np1 -i "${srcdir}/0016-arm64-dts-rockchip-add-typec-extcon-hack.patch"                         #DP Alt mode
