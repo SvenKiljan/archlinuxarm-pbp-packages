@@ -5,7 +5,7 @@
 # Contributor: Dragan Simic <dsimic@buserror.io>
 
 pkgbase=linux-manjaro
-pkgver=6.0.10
+pkgver=6.1.5
 pkgrel=1
 _newversion=false
 _stopbuild=false     # Will also stop if ${_newversion} is true
@@ -18,72 +18,54 @@ license=('GPL2')
 makedepends=('xmlto' 'docbook-xsl' 'kmod' 'inetutils' 'bc' 'git' 'dtc')
 options=('!strip')
 source=("http://www.kernel.org/pub/linux/kernel/v6.x/${_srcname}.tar.xz"
-        '1001-arm64-dts-allwinner-add-hdmi-sound-to-pine-devices.patch'            # A64-based devices
-        '1002-arm64-dts-allwinner-add-ohci-ehci-to-h5-nanopi.patch'                # Nanopi Neo Plus 2 (by Furkan?)
-        '1003-drm-bridge-analogix_dp-Add-enable_psr-param.patch'                   # Pinebook Pro;  From list: https://patchwork.kernel.org/project/dri-devel/patch/20200626033023.24214-2-shawn@anastas.io/ (no updates since June 2020) (schedule for removal in 6.1-rc1)
-        '1004-gpu-drm-add-new-display-resolution-2560x1440.patch'                  # Odroid;  Not upstreamable
-        '1005-panfrost-Silence-Panfrost-gem-shrinker-loggin.patch'                 # Panfrost (preference patch, might not be upstreamable)
-        '1006-arm64-dts-rockchip-Add-Firefly-Station-p1-support.patch'             # Firefly Station P1 (by Furkan)
-        '1007-rk3399-rp64-pcie-Reimplement-rockchip-PCIe-bus-scan-delay.patch'     # RockPro64 (by @nuumio, perhaps upstreamable?)
-        '1008-arm64-dts-amlogic-add-initial-Beelink-GT1-Ultimate-dev.patch'        # Beelink GT1 Ultimate (by Furkan) (applied in linux-rc)
-        '1009-arm64-dts-amlogic-add-meson-g12b-ugoos-am6-plus.patch'               # Meson Ugoos (by Furkan)
-        '1010-arm64-dts-rockchip-Add-PCIe-bus-scan-delay-to-RockPr.patch'          # RockPro64 (relies on patch 1007)
-        '1011-drm-rockchip-support-gamma-control-on-RK3399.patch'                  # RK3399 VOP;  From list: https://patchwork.kernel.org/project/linux-arm-kernel/cover/20211019215843.42718-1-sigmaris@gmail.com/ (applied in linux-rc)
-        '1012-arm64-dts-rockchip-switch-to-hs200-on-rockpi4.patch'                 # Radxa Rock Pi 4;  Temporary hotfix, not for upstreaming (by Dragan)
-        '1013-arm64-dts-rockchip-Add-PCIe-bus-scan-delay-to-Rock-P.patch'          # Radxa Rock Pi 4 (relies on patch 1007)
-        '1014-ASOC-sun9i-hdmi-audio-Initial-implementation.patch'                  # Allwinner H6 HDMI audio (by Furkan)
-        '1015-arm64-dts-allwinner-h6-Add-hdmi-sound-card.patch'                    # Allwinner H6 HDMI audio (by Furkan)
-        '1016-arm64-dts-allwinner-h6-Enable-hdmi-sound-card-on-boards.patch'       # Allwinner H6 HDMI audio (by Furkan)
-        '1017-arm64-dts-allwinner-add-OrangePi-3-LTS.patch'                        # Orange Pi 3 LTS (by Furkan)
-        '1018-Add-support-for-the-Hardkernel-ODROID-M1-board.patch'                # Odroid M1; V3 From list: https://patchwork.kernel.org/project/linux-rockchip/list/?series=682120 (applied in linux-next)
-        '1019-arm64-dts-rockchip-add-rk3568-station-p2.patch'                      # Firefly Station P2 (by Furkan)
-        '1020-arm64-dts-meson-radxa-zero-add-support-for-the-usb-t.patch'          # Radxa Zero (by Furkan)
-        '1021-arm64-dts-rockchip-add-OrangePi-4-LTS.patch'                         # Orange Pi 4 LTS (by Furkan)
-        '1022-Add-YT8531C-phy-support.patch'                                       # Motorcomm PHY (by Furkan)
-        '1023-add-phy-rockchip-Support-PCIe-v3.patch'                              # Rockchip; (applied in linux-rc) 
-        '1024-arm64-dts-rockchip-rk3568-Add-PCIe-v3-nodes.patch'                   # Rockchip; (applied in linux-rc) 
+        '1001-arm64-dts-allwinner-add-ohci-ehci-to-h5-nanopi.patch'                # Nanopi Neo Plus 2 (by Furkan?)
+        '1002-gpu-drm-add-new-display-resolution-2560x1440.patch'                  # Odroid;  Not upstreamable
+        '1003-panfrost-Silence-Panfrost-gem-shrinker-loggin.patch'                 # Panfrost (preference patch, might not be upstreamable)
+        '1004-arm64-dts-rockchip-Add-Firefly-Station-p1-support.patch'             # Firefly Station P1 (by Furkan)
+        '1005-rk3399-rp64-pcie-Reimplement-rockchip-PCIe-bus-scan-delay.patch'     # RockPro64 (by @nuumio, perhaps upstreamable?)
+        '1006-arm64-dts-amlogic-add-meson-g12b-ugoos-am6-plus.patch'               # Meson Ugoos (by Furkan)
+        '1007-arm64-dts-rockchip-Add-PCIe-bus-scan-delay-to-RockPr.patch'          # RockPro64 (relies on patch 1005)
+        '1008-arm64-dts-rockchip-switch-to-hs200-on-rockpi4.patch'                 # Radxa Rock Pi 4;  Temporary hotfix, not for upstreaming (by Dragan)
+        '1009-arm64-dts-rockchip-Add-PCIe-bus-scan-delay-to-Rock-P.patch'          # Radxa Rock Pi 4 (relies on patch 1005)
+        '1010-ASOC-sun9i-hdmi-audio-Initial-implementation.patch'                  # Allwinner H6 HDMI audio (by Furkan)
+        '1011-arm64-dts-allwinner-h6-Add-hdmi-sound-card.patch'                    # Allwinner H6 HDMI audio (by Furkan)
+        '1012-arm64-dts-allwinner-h6-Enable-hdmi-sound-card-on-boards.patch'       # Allwinner H6 HDMI audio (by Furkan)
+        '1013-arm64-dts-allwinner-add-OrangePi-3-LTS.patch'                        # Orange Pi 3 LTS (by Furkan)
+        '1014-Add-support-for-the-Hardkernel-ODROID-M1-board.patch'                # Odroid M1; V3 From list: https://patchwork.kernel.org/project/linux-rockchip/list/?series=682120 (applied in linux-next)
+        '1015-arm64-dts-rockchip-add-rk3568-station-p2.patch'                      # Firefly Station P2 (by Furkan)
+        '1016-arm64-dts-meson-radxa-zero-add-support-for-the-usb-t.patch'          # Radxa Zero (by Furkan)
+        '1017-arm64-dts-rockchip-add-OrangePi-4-LTS.patch'                         # Orange Pi 4 LTS (by Furkan)
+        '1018-Add-YT8531C-phy-support.patch'                                       # Motorcomm PHY (by Furkan)
         '2001-staging-add-rtl8723cs-driver.patch'                                  # Realtek WiFi;  Not upstreamable
-        '2002-brcmfmac-USB-probing-provides-no-board-type.patch'                   # Bluetooth;  Will be submitted upstream by Dragan
+        #'2002-brcmfmac-USB-probing-provides-no-board-type.patch'                   # Bluetooth;  Will be submitted upstream by Dragan (needs to be redone for 6.1)
         '2003-arm64-dts-rockchip-Work-around-daughterboard-issues.patch'           # Pinebook Pro microSD;  Will be submitted upstream by Dragan
-        '3001-irqchip-gic-v3-add-hackaround-for-rk3568-its.patch'                  # Quartz64 and associated patches that are still being upstreamed: START
-        '3002-arm64-dts-rockchip-Enable-video-output-on-Quartz64-B.patch'          # (applied in linux-rc)
+        '2004-arm64-dts-allwinner-add-hdmi-sound-to-pine-devices.patch'            # Allwinner HDMI Sound; (by Dan)
+        '3001-irqchip-gic-v3-add-hackaround-for-rk3568-its.patch'                  # RK356X and associated patches that are still being upstreamed: START
+        '3002-arm64-dts-rockchip-Lower-sd-speed-on-soquartz.patch'
         '3003-arm64-dts-rockchip-Add-hdmi-cec-assigned-clocks-to-r.patch'
-        '3004-arm64-dts-rockchip-Add-PCIe-support-to-Quartz64-B.patch'
+        '3004-arm64-dts-rockchip-rk356x-update-pcie-io-ranges.patch'               # From https://github.com/neggles/linux-quartz64/commit/2c1e3811e6d7430f7d46dbb01d3773192c51cdcf (by Neggles)
         '3005-arm64-dts-rockchip-Add-Quartz64-B-eeprom.patch'
-        '3006-arm64-dts-rockchip-Add-PCIe-support-to-SoQuartz-CM4-.patch'
-        '3007-arm64-dts-rockchip-Enable-video-output-on-SoQuartz-C.patch'
-        '3008-dt-bindings-Add-Rockchip-rk817-battery-charger-suppo.patch'          # (applied in linux-rc)
-        '3009-mfd-Add-Rockchip-rk817-battery-charger-support.patch'                # (applied in linux-rc)
-        '3010-power-supply-Add-charger-driver-for-Rockchip-RK817.patch'            # (applied in linux-rc)
-        '3011-drm-panel-simple-Add-init-sequence-support.patch'
-        '3012-arm64-dts-rockchip-Move-Quartz64-A-to-mdio-setup.patch'
-        '3013-arm64-dts-rockchip-Add-Quartz64-A-battery-node.patch'
-        '3014-arm64-dts-rockchip-rk356x-update-pcie-io-ranges.patch'               # From https://github.com/neggles/linux-quartz64/commit/2c1e3811e6d7430f7d46dbb01d3773192c51cdcf (by Neggles)
-        '3015-arm64-dts-rockchip-Add-HDMI-sound-node-to-Quartz64-B.patch'          # (applied in linux-rc)
-        '3016-arm64-dts-rockchip-Add-HDMI-sound-node-to-SoQuartz-C.patch'
-        '3017-arm64-dts-rockchip-Add-PCIe-2-nodes-to-quartz64-b.patch'             # Quartz64 and associated patches that are still being upstreamed: END (applied in linux-rc)
-        '3018-arm64-dts-rockchip-Enable-video-output-on-rk3566-roc-pc.patch'       # Station M2; (by Furkan)
-        '3019-board-rock3a-gmac1.patch'                                            # Rock 3A; From Armbian: https://github.com/armbian/build/blob/master/patch/kernel/archive/rockchip64-5.19/board-rock3a-gmac1.patch
-        '3020-arm64-dts-rockchip-Lower-sd-speed-on-soquartz.patch'
+        '3006-Misc-SOQuartz-Enablement.patch'                                      # From list: https://patchwork.kernel.org/project/linux-rockchip/cover/20221112160404.70868-1-frattaroli.nicolas@gmail.com/ (applied in linux-next)
+        '3007-arm64-dts-rockchip-Enable-pcie2-and-audio-jack-on-rk3566-roc-pc.patch'  # Station M2; (by Furkan) (parts applied in linux-next)
+        '3008-drm-panel-simple-Add-init-sequence-support.patch'                    # (may not be needed)
+        '3009-arm64-dts-rockchip-Move-Quartz64-A-to-mdio-setup.patch'
+        '3010-arm64-dts-rockchip-Add-Quartz64-A-battery-node.patch'
+        '3011-board-rock3a-gmac1.patch'                                            # RK356X and associated patches that are still being upstreamed: END Rock 3A; From Armbian: https://github.com/armbian/build/blob/master/patch/kernel/archive/rockchip64-5.19/board-rock3a-gmac1.patch
         'config'
         'linux.preset'
         '60-linux.hook'
         '90-linux.hook')
-md5sums=('dede690733903e1ea5290010bb6e37c2'
-         '9aa0591c2d601a104d664a802a44728c'
+md5sums=('8e954f890f32917863ebf1fe159f1ae5'
          'e6fe272dc95a1c0a8f871924699fea16'
-         '9f27b2a05eaeb1995fc0fcf6a8b923c4'
          '6f592c11f6adc1de0f06e5d18f8c2862'
          'f8f0b124c741be61d86bea8d44e875f9'
          '564136ab1c75b6dc67be02b54e695ae5'
          '245858f26512dfc48adbf509b6fc8364'
-         '3384afa63fcfec1661dcb4a5e13a4b2a'
          '1b92d7617e60d3c525a4b18ab4351185'
          '28982d87c45ed8f5aab966d82f8455d8'
-         '19e2279811700cd8aa4ab326603d2f61'
          'a0f649f78c857a01e1680b89b58b05eb'
          'a0cf3209d3f856522ef14c4618837ae7'
-         '680aec843f385e7233763d37b98ed2e0'
+         '48aaca95111b1e8016414e72486bca18'
          'f666606de61576007a756e6e80e1f1fe'
          '717c673c7caa564fc06e76ff9a0eebaa'
          'e285b47405d8eab611ba17bcbf2f9cbf'
@@ -92,32 +74,21 @@ md5sums=('dede690733903e1ea5290010bb6e37c2'
          '9799998aa9b72fae2eb55e92d840dad5'
          '227466ec46ffce1684835c87640c46c2'
          '77200aa6b89276b9035f13c4bb422b98'
-         '8cf60a66691809a648a1c763a62ec5de'
-         '37221482c9228c84cfd7f969d9735740'
-         '9f2deefc9cd4f6b07386fc866ba76ff8'
-         'd2654df7fc87e5c874505a2d98cbce1c'
+         '3cb7e8c18b920bb49ff1e51e92732db2'
          '59c20ef6082f4b4c6b54c4f532931ff4'
+         '9aa0591c2d601a104d664a802a44728c'
          'a829e0d4711d8feff5fee1973938b25a'
-         'b10035b89284bff674fab588bc9a6630'
+         '4f81752a97ad44f42d6f3177acf19928'
          '467b3ff965db6867f4289f5d256ca93e'
-         'a136e3196eadbfd182652be0c04701c8'
+         '080d29aed29a49fe3ef7953e816ea4f4'
          '56605685714f21646f88fbc187a4bf47'
-         '5829f0ed70aa5e506f175d9bca5fe8f1'
-         '6083ec098a6401c8ba0172ed46d8a753'
-         '396bddfe770b2211d49810d587ab2d68'
-         '7064a13bc729ace382027dec0b18b0aa'
-         '1a34dd9c8fb49b974c2cbeb9aaa0de46'
+         'a5bef922ecbc2e54e453cfd1905372bc'
+         '03467f269d8861dc15fe282243b96607'
          '742bcd8aa51845850a8e5144221ea770'
          '61ed22ed1254727bd97902ce849d3df4'
          'fa9babdfffadf76454b00fc22593eaba'
-         '080d29aed29a49fe3ef7953e816ea4f4'
-         'a2271452ecf71f2ee160ad76f8bcadef'
-         '7a39de5aa1c29e81d03096c2f9163456'
-         '92d5c7dd3052f5d7a670bd06213d75fb'
-         'b241ca1a4566d37bd29cde8db238762d'
          'e8ea5b4f0937c3799a846991a9259b4b'
-         '4f81752a97ad44f42d6f3177acf19928'
-         '4be7477d34765b9fff0c756456bbd5c2'
+         '55aa37794b62452df67a77deccd5952c'
          '86d4a35722b5410e3b29fc92dae15d4b'
          'ce6c81ad1ad1f8b333fd6077d47abdaf'
          '3dc88030a8f2f5a5f97266d99b149f77')

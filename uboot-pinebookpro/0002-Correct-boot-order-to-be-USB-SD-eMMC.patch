@@ -1,6 +1,6 @@
-From f97401137daa1cb75532c373bbcb5011f1e03585 Mon Sep 17 00:00:00 2001
+From 4db910b802e19a9d1f9a7f100566a35ab9ab73b4 Mon Sep 17 00:00:00 2001
 From: Dan Johansen <strit@manjaro.org>
-Date: Sun, 10 Oct 2021 20:19:02 +0200
+Date: Wed, 28 Dec 2022 16:04:40 +0100
 Subject: [PATCH] Correct boot order to be USB -> SD -> eMMC
 
 Signed-off-by: Dan Johansen <strit@manjaro.org>
@@ -9,20 +9,21 @@ Signed-off-by: Dan Johansen <strit@manjaro.org>
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/include/configs/rockchip-common.h b/include/configs/rockchip-common.h
-index ba7061a287..5dc92373b2 100644
+index 4c964cc377..aa7ad2b11d 100644
 --- a/include/configs/rockchip-common.h
 +++ b/include/configs/rockchip-common.h
-@@ -55,9 +55,9 @@
+@@ -60,10 +60,10 @@
  
  #ifdef CONFIG_ROCKCHIP_RK3399
  #define BOOT_TARGET_DEVICES(func) \
 +	BOOT_TARGET_USB(func) \
  	BOOT_TARGET_MMC(func) \
  	BOOT_TARGET_NVME(func) \
+ 	BOOT_TARGET_SCSI(func) \
 -	BOOT_TARGET_USB(func) \
  	BOOT_TARGET_PXE(func) \
  	BOOT_TARGET_DHCP(func) \
  	BOOT_TARGET_SF(func)
 -- 
-2.33.0
+2.39.0
 
