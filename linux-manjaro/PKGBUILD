@@ -7,7 +7,7 @@ pkgbase=linux-manjaro
 _srcname=linux-5.14
 _kernelname=${pkgbase#linux}
 _desc="AArch64 multi-platform"
-pkgver=5.14.9
+pkgver=5.14.10
 pkgrel=2
 arch=('aarch64')
 url="http://www.kernel.org/"
@@ -39,6 +39,7 @@ source=("http://www.kernel.org/pub/linux/kernel/v5.x/${_srcname}.tar.xz"
         '0021-drm-panfrost-Handle-failure-in-panfrost_job_hw_submit.patch'
         '0022-arm64-dts-rockchip-Add-pcie-bus-scan-delay-to-rockpr.patch'
         '0023-Revert-net-stmmac-dwmac-rk-fix-unbalanced-pm_runtime.patch'
+        '0024-mmc-meson-gx-do-not-use-memcpy_to-fromio-for-dram-access-quirk.patch'
         '0001-Bluetooth-Add-new-quirk-for-broken-local-ext-features.patch'
         '0002-Bluetooth-btrtl-add-support-for-the-RTL8723CS.patch'
         '0003-arm64-allwinner-a64-enable-Bluetooth-On-Pinebook.patch'
@@ -64,7 +65,7 @@ source=("http://www.kernel.org/pub/linux/kernel/v5.x/${_srcname}.tar.xz"
         '60-linux.hook'
         '90-linux.hook')
 md5sums=('a082ef5748b813abca0649dab8be5f52'
-         '64e3961a575595f67cb7abea4ad28ba4'
+         '1a85cb58d1b2fa247feaaf1802138a09'
          '9e6b7f44db105fef525d715213dce7cf'
          '754cf09a858498e1d98b44baa043a196'
          '0d47dea87f03bf36262171e01889f832'
@@ -88,6 +89,7 @@ md5sums=('a082ef5748b813abca0649dab8be5f52'
          'a90a366662357233db7022f8a1e7ac46'
          '6bb2d84857359016b5e0878cf2fc50cc'
          '4d1c5ad859cf3f22c0c9f7903d6d761c'
+         'd5a13bbe2761b5e5637081481a2ac6a6'
          'cf64831f27bb47da29e708b7243bb340'
          'e3f53e07612939729afaa4dd7ef7f7ce'
          '9510821113c122f91f47b9d0f7ca7264'
@@ -143,6 +145,7 @@ prepare() {
   patch -Np1 -i "${srcdir}/0021-drm-panfrost-Handle-failure-in-panfrost_job_hw_submit.patch"            #AMLogic
   patch -Np1 -i "${srcdir}/0022-arm64-dts-rockchip-Add-pcie-bus-scan-delay-to-rockpr.patch"             #RockPro64
   patch -Np1 -i "${srcdir}/0023-Revert-net-stmmac-dwmac-rk-fix-unbalanced-pm_runtime.patch"             #Fix ethernet on RK3399
+  patch -Np1 -i "${srcdir}/0024-mmc-meson-gx-do-not-use-memcpy_to-fromio-for-dram-access-quirk.patch"   #Radxa Zero
   
   # Pinebook Pro patches
   patch -Np1 -i "${srcdir}/0016-arm64-dts-rockchip-add-typec-extcon-hack.patch"                         #DP Alt mode
