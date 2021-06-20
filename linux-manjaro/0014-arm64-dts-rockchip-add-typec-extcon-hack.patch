@@ -1,0 +1,78 @@
+From 4c839ce95766910235ff558b2959589c9068917c Mon Sep 17 00:00:00 2001
+From: Dan Johansen <strit@manjaro.org>
+Date: Sun, 2 Jan 2022 19:15:39 +0100
+Subject: [PATCH] arm64: dts: rockchip: add typec extcon hack
+
+Signed-off-by: Dan Johansen <strit@manjaro.org>
+---
+ .../boot/dts/rockchip/rk3399-pinebook-pro.dts | 31 +++++++++++++++++--
+ 1 file changed, 29 insertions(+), 2 deletions(-)
+
+diff --git a/arch/arm64/boot/dts/rockchip/rk3399-pinebook-pro.dts b/arch/arm64/boot/dts/rockchip/rk3399-pinebook-pro.dts
+index c2f021a1a18f..fc33e111bbee 100644
+--- a/arch/arm64/boot/dts/rockchip/rk3399-pinebook-pro.dts
++++ b/arch/arm64/boot/dts/rockchip/rk3399-pinebook-pro.dts
+@@ -384,6 +384,20 @@ mains_charger: dc-charger {
+ 		pinctrl-names = "default";
+ 		pinctrl-0 = <&dc_det_pin>;
+ 	};
++	
++    typec_extcon_bridge: typec-extcon {
++		compatible = "linux,typec-extcon-bridge";
++		usb-role-switch;
++		orientation-switch;
++		mode-switch;
++		svid = /bits/ 16 <0xff01>;
++	};
++};
++
++&cdn_dp {
++	status = "okay";
++	extcon = <&typec_extcon_bridge>;
++	phys = <&tcphy0_dp>;
+ };
+ 
+ &cpu_b0 {
+@@ -705,6 +719,8 @@ fusb0: fusb30x@22 {
+ 		pinctrl-names = "default";
+ 		pinctrl-0 = <&fusb0_int_pin>;
+ 		vbus-supply = <&vbus_typec>;
++		extcon = <&typec_extcon_bridge>;
++		usb-role-switch = <&typec_extcon_bridge>;
+ 
+ 		connector {
+ 			compatible = "usb-c-connector";
+@@ -713,10 +729,20 @@ connector {
+ 			op-sink-microwatt = <1000000>;
+ 			power-role = "dual";
+ 			sink-pdos =
+-				<PDO_FIXED(5000, 2500, PDO_FIXED_USB_COMM)>;
++				<PDO_FIXED(5000, 2500, PDO_FIXED_USB_COMM | PDO_FIXED_DUAL_ROLE | PDO_FIXED_DATA_SWAP)>;
+ 			source-pdos =
+-				<PDO_FIXED(5000, 1400, PDO_FIXED_USB_COMM)>;
++				<PDO_FIXED(5000, 1400, PDO_FIXED_USB_COMM | PDO_FIXED_DUAL_ROLE | PDO_FIXED_DATA_SWAP)>;
+ 			try-power-role = "sink";
++			
++			mode-switch = <&typec_extcon_bridge>;
++			orientation-switch = <&typec_extcon_bridge>;
++
++			altmodes {
++				dp {
++					svid = <0xff01>;
++					vdo = <0x0c0046>;
++				};
++			};
+ 
+ 			ports {
+ 				#address-cells = <1>;
+@@ -984,6 +1010,7 @@ spiflash: flash@0 {
+ };
+ 
+ &tcphy0 {
++	extcon = <&typec_extcon_bridge>;
+ 	status = "okay";
+ };
+ 
+-- 
+2.34.1
+

@@ -1,32 +1,34 @@
-From 43f11bcf02eaf0f5332fb10764514ba786f11ce8 Mon Sep 17 00:00:00 2001
+From 7f03ac7b6da2944d338dfd171fddfb5448046be3 Mon Sep 17 00:00:00 2001
 From: Dan Johansen <strit@manjaro.org>
-Date: Tue, 30 Mar 2021 16:39:34 +0200
-Subject: [PATCH] arm64-dts-meson-add-initial-Beelink-GT1-Ultimate-device-tree
+Date: Mon, 15 Nov 2021 00:00:54 +0100
+Subject: [PATCH] arm64: dts: meson: add initial Beelink GT1 Ultimate device
+ tree
 
+Signed-off-by: Dan Johansen <strit@manjaro.org>
 ---
  arch/arm64/boot/dts/amlogic/Makefile          |   1 +
- .../dts/amlogic/meson-gxm-gt1-ultimate.dts    | 395 ++++++++++++++++++
- 2 files changed, 396 insertions(+)
+ .../dts/amlogic/meson-gxm-gt1-ultimate.dts    | 393 ++++++++++++++++++
+ 2 files changed, 394 insertions(+)
  create mode 100644 arch/arm64/boot/dts/amlogic/meson-gxm-gt1-ultimate.dts
 
 diff --git a/arch/arm64/boot/dts/amlogic/Makefile b/arch/arm64/boot/dts/amlogic/Makefile
-index 78a569d7fa20..fb04038ca2b3 100644
+index 5148cd9e5146..e44d60939bba 100644
 --- a/arch/arm64/boot/dts/amlogic/Makefile
 +++ b/arch/arm64/boot/dts/amlogic/Makefile
-@@ -37,6 +37,7 @@ dtb-$(CONFIG_ARCH_MESON) += meson-gxl-s805x-p241.dtb
- dtb-$(CONFIG_ARCH_MESON) += meson-gxl-s905w-p281.dtb
+@@ -41,6 +41,7 @@ dtb-$(CONFIG_ARCH_MESON) += meson-gxl-s905w-p281.dtb
  dtb-$(CONFIG_ARCH_MESON) += meson-gxl-s905w-tx3-mini.dtb
  dtb-$(CONFIG_ARCH_MESON) += meson-gxl-s905d-libretech-pc.dtb
+ dtb-$(CONFIG_ARCH_MESON) += meson-gxl-s905w-jethome-jethub-j80.dtb
 +dtb-$(CONFIG_ARCH_MESON) += meson-gxm-gt1-ultimate.dtb
  dtb-$(CONFIG_ARCH_MESON) += meson-gxm-khadas-vim2.dtb
- dtb-$(CONFIG_ARCH_MESON) += meson-gxm-nexbox-a1.dtb
- dtb-$(CONFIG_ARCH_MESON) += meson-gxm-q200.dtb
+ dtb-$(CONFIG_ARCH_MESON) += meson-gxm-mecool-kiii-pro.dtb
+ dtb-$(CONFIG_ARCH_MESON) += meson-gxm-minix-neo-u9h.dtb
 diff --git a/arch/arm64/boot/dts/amlogic/meson-gxm-gt1-ultimate.dts b/arch/arm64/boot/dts/amlogic/meson-gxm-gt1-ultimate.dts
 new file mode 100644
-index 000000000000..e40bf26e28f3
+index 000000000000..052c8d266110
 --- /dev/null
 +++ b/arch/arm64/boot/dts/amlogic/meson-gxm-gt1-ultimate.dts
-@@ -0,0 +1,395 @@
+@@ -0,0 +1,393 @@
 +// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
 +/*
 + * Copyright (c) 2017 Martin Blumenstingl <martin.blumenstingl@googlemail.com>.
@@ -75,7 +77,6 @@ index 000000000000..e40bf26e28f3
 +		compatible = "mmc-pwrseq-emmc";
 +		reset-gpios = <&gpio BOOT_9 GPIO_ACTIVE_LOW>;
 +	};
-+
 +
 +	gpio-keys-polled {
 +		compatible = "gpio-keys-polled";
@@ -210,7 +211,6 @@ index 000000000000..e40bf26e28f3
 +	pinctrl-names = "default";
 +	hdmi-phandle = <&hdmi_tx>;
 +};
-+
 +
 +&ethmac {
 +	pinctrl-0 = <&eth_pins>;
@@ -421,7 +421,7 @@ index 000000000000..e40bf26e28f3
 +&usb {
 +	status = "okay";
 +	dr_mode = "peripheral";
-+};
++}; 
 -- 
-2.31.0
+2.33.0
 

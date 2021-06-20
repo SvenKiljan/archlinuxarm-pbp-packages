@@ -1,14 +1,15 @@
-From 52e17051609757eca49cc31acb6e1ed9b19a7d54 Mon Sep 17 00:00:00 2001
-From: =?UTF-8?q?Kamil=20Trzci=C5=84ski?= <ayufan@ayufan.eu>
-Date: Sun, 18 Oct 2020 21:37:42 +0200
-Subject: [PATCH 06/11] ayufan: dts: rockpro64: add type-c DP ALT
+From ff683bc9cd8130038de50b3d6588093cd9ddc6c6 Mon Sep 17 00:00:00 2001
+From: Dan Johansen <strit@manjaro.org>
+Date: Sun, 2 Jan 2022 21:33:53 +0100
+Subject: [PATCH] arm64: rockchip: add DP ALT rockpro64
 
+Signed-off-by: Dan Johansen <strit@manjaro.org>
 ---
- .../boot/dts/rockchip/rk3399-rockpro64.dtsi   | 54 +++++++++++++++++++
- 1 file changed, 54 insertions(+)
+ .../boot/dts/rockchip/rk3399-rockpro64.dtsi   | 88 +++++++++++++++++++
+ 1 file changed, 88 insertions(+)
 
 diff --git a/arch/arm64/boot/dts/rockchip/rk3399-rockpro64.dtsi b/arch/arm64/boot/dts/rockchip/rk3399-rockpro64.dtsi
-index 6e553ff47534..ec2de6622f4c 100644
+index 83db4ca67334..cb2a64689eb3 100644
 --- a/arch/arm64/boot/dts/rockchip/rk3399-rockpro64.dtsi
 +++ b/arch/arm64/boot/dts/rockchip/rk3399-rockpro64.dtsi
 @@ -6,6 +6,7 @@
@@ -19,21 +20,33 @@ index 6e553ff47534..ec2de6622f4c 100644
  #include "rk3399.dtsi"
  #include "rk3399-opp.dtsi"
  
-@@ -191,6 +192,11 @@ vdd_log: vdd-log {
+@@ -220,6 +221,20 @@ vdd_log: vdd-log {
+ 		regulator-max-microvolt = <1700000>;
+ 		vin-supply = <&vcc5v0_sys>;
  	};
- };
- 
-+&cdn_dp {
-+	status = "okay";
-+	extcon = <&fusb0>;
++	
++    typec_extcon_bridge: typec-extcon {
++		compatible = "linux,typec-extcon-bridge";
++		usb-role-switch;
++		orientation-switch;
++		mode-switch;
++		svid = /bits/ 16 <0xff01>;
++	};
 +};
 +
- &cpu_l0 {
- 	cpu-supply = <&vdd_cpu_l>;
++&cdn_dp {
++	status = "okay";
++	extcon = <&typec_extcon_bridge>;
++	phys = <&tcphy0_dp>;
  };
-@@ -505,6 +511,47 @@ fusb0: typec-portc@22 {
+ 
+ &cpu_l0 {
+@@ -563,7 +578,57 @@ fusb0: typec-portc@22 {
+ 		pinctrl-names = "default";
  		pinctrl-0 = <&fusb0_int>;
  		vbus-supply = <&vcc5v0_typec>;
++		extcon = <&typec_extcon_bridge>;
++		usb-role-switch = <&typec_extcon_bridge>;
  		status = "okay";
 +
 +		connector {
@@ -41,11 +54,18 @@ index 6e553ff47534..ec2de6622f4c 100644
 +			data-role = "host";
 +			label = "USB-C";
 +			power-role = "source";
-+			source-pdos = <PDO_FIXED(5000, 1400, PDO_FIXED_USB_COMM)>;
++			source-pdos = <PDO_FIXED(5000, 1400, PDO_FIXED_USB_COMM | PDO_FIXED_DUAL_ROLE | PDO_FIXED_DATA_SWAP)>;
 +			try-power-role = "sink";
++			
++			mode-switch = <&typec_extcon_bridge>;
++			orientation-switch = <&typec_extcon_bridge>;
 +
-+			extcon-cables = <1 2 5 6 9 10 12 44>;
-+			typec-altmodes = <0xff01 1 0x001c0c00 1>;
++			altmodes {
++				dp {
++					svid = <0xff01>;
++					vdo = <0x0c0046>;
++				};
++			};
 +
 +			ports {
 +				#address-cells = <1>;
@@ -79,11 +99,11 @@ index 6e553ff47534..ec2de6622f4c 100644
  	};
  };
  
-@@ -735,9 +811,26 @@
+@@ -784,9 +849,26 @@ flash@0 {
  };
  
  &tcphy0 {
-+	extcon = <&fusb0>;
++	extcon = <&typec_extcon_bridge>;
  	status = "okay";
  };
  
@@ -106,7 +126,7 @@ index 6e553ff47534..ec2de6622f4c 100644
  &tcphy1 {
  	status = "okay";
  };
-@@ -761,6 +854,12 @@
+@@ -810,6 +892,12 @@ u2phy0_host: host-port {
  		phy-supply = <&vcc5v0_host>;
  		status = "okay";
  	};
@@ -120,4 +140,5 @@ index 6e553ff47534..ec2de6622f4c 100644
  
  &u2phy1 {
 -- 
-2.25.1
+2.34.1
+
