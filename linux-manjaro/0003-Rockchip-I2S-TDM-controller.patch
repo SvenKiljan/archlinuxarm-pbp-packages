@@ -1,11 +1,11 @@
-From patchwork Fri Aug 20 18:27:28 2021
+From patchwork Sat Aug 28 14:02:01 2021
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: 7bit
 X-Patchwork-Submitter: Nicolas Frattaroli <frattaroli.nicolas@gmail.com>
-X-Patchwork-Id: 12450239
+X-Patchwork-Id: 12463525
 Return-Path: 
- <SRS0=Tcyv=NL=lists.infradead.org=linux-arm-kernel-bounces+linux-arm-kernel=archiver.kernel.org@kernel.org>
+ <SRS0=b+1m=NT=lists.infradead.org=linux-rockchip-bounces+linux-rockchip=archiver.kernel.org@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
@@ -15,17 +15,17 @@ X-Spam-Status: No, score=-13.7 required=3.0 tests=BAYES_00,
 	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,
 	USER_AGENT_GIT autolearn=unavailable autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 90CF0C4338F
-	for <linux-arm-kernel@archiver.kernel.org>;
- Fri, 20 Aug 2021 18:30:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0BECAC432BE
+	for <linux-rockchip@archiver.kernel.org>;
+ Sat, 28 Aug 2021 14:02:51 +0000 (UTC)
 Received: from bombadil.infradead.org (bombadil.infradead.org
  [198.137.202.133])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 5AA7D61245
-	for <linux-arm-kernel@archiver.kernel.org>;
- Fri, 20 Aug 2021 18:30:44 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.1 mail.kernel.org 5AA7D61245
+	by mail.kernel.org (Postfix) with ESMTPS id A2F8C60EE0
+	for <linux-rockchip@archiver.kernel.org>;
+ Sat, 28 Aug 2021 14:02:50 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.1 mail.kernel.org A2F8C60EE0
 Authentication-Results: mail.kernel.org;
  dmarc=fail (p=none dis=none) header.from=gmail.com
 Authentication-Results: mail.kernel.org;
@@ -36,86 +36,86 @@ DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
 	List-Archive:List-Unsubscribe:List-Id:MIME-Version:References:In-Reply-To:
 	Message-Id:Date:Subject:Cc:To:From:Reply-To:Content-ID:Content-Description:
 	Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:
-	List-Owner; bh=EnQIsommqyft1SgJDvcb3TVApPj74RTaqXQ8e2BUFNw=; b=cADmJpUiVgAGG2
-	EfsrJt96zLlhFzgo6eYqOEMoIHPFuPM5mF/C+1ydL93DutX54VZK3HOQyXV03KW4comLdxm3SYh+j
-	rC4I+q/WWouD/cGovQ8cpoyby0SszW6CEzQmZAZy6vZz2athVTTH9qhdEQq511DHW3m89XlMU0zSX
-	HHt+JQe6QQo/VmdYiS8Vg3aWMt3vbxIQpeLF5GXSr17xXlTewuTS6irpHfjts3J/grDY+PJ8S19Uf
-	N+7jqsPf1aKLM1cbmyK0nsE+QxmDCQxnUqVnGNTYvLSlAYdo5STMxtmOvsnkvFaeOqu6aTleLCy+G
-	bWi8HwZNlCMEYyOxyAwg==;
+	List-Owner; bh=JNEwZiwUfU8gBqOGp319RyZYbnaEYQ1YdYxe7u5MnFk=; b=HvuRiB21t6mPwi
+	Clx1R/S58u7+8f2wAlBd4THfbQdf5MIrDc3zRMMQ9jrgBd8DXt9HIy5vEP2PX0kjyY+f8S2b2G+g+
+	ofNyZODGXYIebdvqTZ+a/J8ovvK68Yn3rmP1SCufHAJfxVJ2BYbiWi7udgf9ljOIe2NKq1OLa/vhr
+	51ZZGIjGstr+Pu53HEvghwFwuJjggleVkG36LBJN4+l2y5D5Cqi3CwjQyTv7XFfXRuNtGUPFT9+eR
+	3tU/AFSn3tdV5zkbBlNkQSkkl8okQ77lYVeLa0znsooe6uOnEeG/VyURxKlfEiJfyyO4eUQqVwz1i
+	Web+viCybc0aTmQyJ4ig==;
 Received: from localhost ([::1] helo=bombadil.infradead.org)
 	by bombadil.infradead.org with esmtp (Exim 4.94.2 #2 (Red Hat Linux))
-	id 1mH9G3-00Bqp4-Oo; Fri, 20 Aug 2021 18:28:47 +0000
-Received: from mail-ed1-x531.google.com ([2a00:1450:4864:20::531])
+	id 1mJyuy-00EJ2l-Dz; Sat, 28 Aug 2021 14:02:44 +0000
+Received: from mail-ej1-x62a.google.com ([2a00:1450:4864:20::62a])
  by bombadil.infradead.org with esmtps (Exim 4.94.2 #2 (Red Hat Linux))
- id 1mH9Fw-00Bqkb-9y; Fri, 20 Aug 2021 18:28:45 +0000
-Received: by mail-ed1-x531.google.com with SMTP id q3so15264175edt.5;
- Fri, 20 Aug 2021 11:28:38 -0700 (PDT)
+ id 1mJyuc-00EIwd-Gv; Sat, 28 Aug 2021 14:02:27 +0000
+Received: by mail-ej1-x62a.google.com with SMTP id e21so20247735ejz.12;
+ Sat, 28 Aug 2021 07:02:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
  h=from:to:cc:subject:date:message-id:in-reply-to:references
  :mime-version:content-transfer-encoding;
- bh=yDUY1Nm2MlxN1PVjj976e5HrsmbAF2uKbhV70Kud1rI=;
- b=doo5LU4pv4F+CtKkmCQCCO+RBAofjoNCbjyp3NqF4mUzLPmq7Hhq7RvGU4mL5UCkqK
- qT4MWS0lizqr4/yr2f6PSZezmSjCA+fwBVVpMyEWlR+VpFuTueM8Q3tSj8JVV9kes2bH
- F3Jz6/UBbM89xYraif6EtKvuu2IgIm6KteTJQbVHINlQz+t/BBUYh9wKOC/6MULwdBI4
- abEquL7lxSVFNJk+KFvkHK/0gSEmOKW1eIye1erhCnVx2938zN87qlHL818faLzl4Yjl
- Vi+95M9HBCCMAufqEJPz0v8DJwnMebsndDEPyKU1HRDYBLuqGfJiVw0sW59lLXlxJsUQ
- 74oA==
+ bh=tXqlUaESuNXCFKQ3z7ctQ64qtH+IfeosrrW47yaPuJA=;
+ b=Rgca9spCfKk8D2vr6YlIqxpdqUQT8fox41/8qKt89+Q6G+sx3X6GJDa0Syo9MuLso4
+ Q1DfJsT8SNfFguBPFSYUYs9IisoegNZwasT8VuWP/euXwOYnfVUs4OwreLg70JNdKVpb
+ XTGoLzWsujPtsszHVOr0Y37D7whoHSQl6FzfqsdRhFmXTZEjZ9erKQfwPwvd2kAJP3OE
+ siGdPi14UoBkYWwiEcGTQimxjCdkViWlPNRCTCSNvWDoBBC8GHr73h7y0c57r9fClQHr
+ bqYl+OLrGXVtvWvLzibJUa7riNYE1eMz1/QbQPPMn1WTgMcbU89lyoCbiSd/60/Zj6FJ
+ /RTg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
  h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
  :references:mime-version:content-transfer-encoding;
- bh=yDUY1Nm2MlxN1PVjj976e5HrsmbAF2uKbhV70Kud1rI=;
- b=N28NDZb6ct3G/M7EWcTa0v5lGGW2Gc1PPKOvpyKKDY174Jd5AcVHnHrUI8dtPblbij
- I65rO9bB7pORF9w5NsFY9WHSHzOcuYnDjjcFUN9zKqqkA+JV1O6w8elHoc+JH37ip8IQ
- ItV7VFla0xIbQuJ0ItMbQ+ld1smR/vMaUIQLBM7oCYgDhQN3nHDmavU+/QfGjlCH8EL+
- 0MGK0I/dqachYKmgrZYyCJhBsAtSMocf7pqwxOeeu4LqN0fo8O3be9QCktxgKDw5Kwzu
- 9h5+EN7HshjrsYoMFPYpofupOCn+eYh1o9j2+LC0daVGRBaPO4A+Piiutb+AHg8iUNFE
- jWCQ==
-X-Gm-Message-State: AOAM533O3Wo0LGDykzeuidgIJ9dBfO0Y9YgQrHPsNBeXm5TbDkura1aW
- zK4wVKpXK77nV9HpYbYVX3RK2f8H3R6DRP97
+ bh=tXqlUaESuNXCFKQ3z7ctQ64qtH+IfeosrrW47yaPuJA=;
+ b=i/EYVbIEUTHgC497+sDtMsVG5A2jQb5bEVCM1kY1dzeY+fIQJhrzY9N1WzDB9Suf/8
+ LlFBE11r+pzyFU1G4f7GWHe/1FtELeqrKJWmiqobr1CiuZxGNNmCTpMUhlOf+TfLdOhH
+ baTQR4kZs/dDFsr4SxblPaQRfK0u94f88KRK35VL5CTm8X4cNfOrEc2Fxz0fsnlEWj/D
+ g/wX3hjbaMEJT1XN3IokV8SSN+IOSMniPB+Q0VdjCW1+8WltbOFDP3dKmf9KZOcq3gkL
+ FdhB9LOAxWndswys/GD0g5LmW42vWbU4ReK68n/r+O5/TjELxYJd+84tjVd4ZLFFhY9L
+ WAjg==
+X-Gm-Message-State: AOAM532p54OsqMUxmEuXnnaS2gg5GeTdrrUgfgbai9CSnZpxmcS/jbz4
+ L7CfEjCAHI+nlM77Tax2KnA=
 X-Google-Smtp-Source: 
- ABdhPJyypTv395peOg6nX27SzkJO+PdeVVLdfmiUBCqqzDCK+SA/glmwh5/MGtQdX9CNi15/jnqUAA==
-X-Received: by 2002:a05:6402:1299:: with SMTP id
- w25mr24468810edv.30.1629484117454;
- Fri, 20 Aug 2021 11:28:37 -0700 (PDT)
+ ABdhPJxlM7Aq3f9zf0dh2o140/mLhGk1CtpS8LI+VII6gw3Zp5yFkj8Bf4dvWl7lzbMzHL6TeVaKRQ==
+X-Received: by 2002:a17:906:405:: with SMTP id
+ d5mr15256584eja.189.1630159340653;
+ Sat, 28 Aug 2021 07:02:20 -0700 (PDT)
 Received: from localhost.localdomain (84-72-105-84.dclient.hispeed.ch.
  [84.72.105.84])
- by smtp.gmail.com with ESMTPSA id n10sm3255724ejk.86.2021.08.20.11.28.36
+ by smtp.gmail.com with ESMTPSA id cn16sm4953982edb.87.2021.08.28.07.02.19
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 20 Aug 2021 11:28:36 -0700 (PDT)
+ Sat, 28 Aug 2021 07:02:20 -0700 (PDT)
 From: Nicolas Frattaroli <frattaroli.nicolas@gmail.com>
 To: Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>,
  Jaroslav Kysela <perex@perex.cz>, Takashi Iwai <tiwai@suse.com>,
- Heiko Stuebner <heiko@sntech.de>, Philipp Zabel <p.zabel@pengutronix.de>
-Cc: Nicolas Frattaroli <frattaroli.nicolas@gmail.com>,
- linux-kernel@vger.kernel.org, alsa-devel@alsa-project.org,
+ Heiko Stuebner <heiko@sntech.de>,
+ Nicolas Frattaroli <frattaroli.nicolas@gmail.com>,
+ Philipp Zabel <p.zabel@pengutronix.de>
+Cc: linux-kernel@vger.kernel.org, alsa-devel@alsa-project.org,
  linux-arm-kernel@lists.infradead.org, linux-rockchip@lists.infradead.org
-Subject: [PATCH v2 1/4] ASoC: rockchip: add support for i2s-tdm controller
-Date: Fri, 20 Aug 2021 20:27:28 +0200
-Message-Id: <20210820182731.29370-2-frattaroli.nicolas@gmail.com>
-X-Mailer: git-send-email 2.32.0
-In-Reply-To: <20210820182731.29370-1-frattaroli.nicolas@gmail.com>
-References: <20210820182731.29370-1-frattaroli.nicolas@gmail.com>
+Subject: [PATCH v3 1/4] ASoC: rockchip: add support for i2s-tdm controller
+Date: Sat, 28 Aug 2021 16:02:01 +0200
+Message-Id: <20210828140205.21973-2-frattaroli.nicolas@gmail.com>
+X-Mailer: git-send-email 2.33.0
+In-Reply-To: <20210828140205.21973-1-frattaroli.nicolas@gmail.com>
+References: <20210828140205.21973-1-frattaroli.nicolas@gmail.com>
 MIME-Version: 1.0
 X-CRM114-Version: 20100106-BlameMichelson ( TRE 0.8.0 (BSD) ) MR-646709E3 
-X-CRM114-CacheID: sfid-20210820_112840_619550_C4C0D5CA 
-X-CRM114-Status: GOOD (  30.29  )
-X-BeenThere: linux-arm-kernel@lists.infradead.org
+X-CRM114-CacheID: sfid-20210828_070222_856088_71F658E6 
+X-CRM114-Status: GOOD (  30.96  )
+X-BeenThere: linux-rockchip@lists.infradead.org
 X-Mailman-Version: 2.1.34
 Precedence: list
-List-Id: <linux-arm-kernel.lists.infradead.org>
-List-Unsubscribe: 
- <http://lists.infradead.org/mailman/options/linux-arm-kernel>,
- <mailto:linux-arm-kernel-request@lists.infradead.org?subject=unsubscribe>
-List-Archive: <http://lists.infradead.org/pipermail/linux-arm-kernel/>
-List-Post: <mailto:linux-arm-kernel@lists.infradead.org>
-List-Help: <mailto:linux-arm-kernel-request@lists.infradead.org?subject=help>
-List-Subscribe: 
- <http://lists.infradead.org/mailman/listinfo/linux-arm-kernel>,
- <mailto:linux-arm-kernel-request@lists.infradead.org?subject=subscribe>
-Sender: "linux-arm-kernel" <linux-arm-kernel-bounces@lists.infradead.org>
+List-Id: Upstream kernel work for Rockchip platforms
+ <linux-rockchip.lists.infradead.org>
+List-Unsubscribe: <http://lists.infradead.org/mailman/options/linux-rockchip>,
+ <mailto:linux-rockchip-request@lists.infradead.org?subject=unsubscribe>
+List-Archive: <http://lists.infradead.org/pipermail/linux-rockchip/>
+List-Post: <mailto:linux-rockchip@lists.infradead.org>
+List-Help: <mailto:linux-rockchip-request@lists.infradead.org?subject=help>
+List-Subscribe: <http://lists.infradead.org/mailman/listinfo/linux-rockchip>,
+ <mailto:linux-rockchip-request@lists.infradead.org?subject=subscribe>
+Sender: "Linux-rockchip" <linux-rockchip-bounces@lists.infradead.org>
 Errors-To: 
- linux-arm-kernel-bounces+linux-arm-kernel=archiver.kernel.org@lists.infradead.org
+ linux-rockchip-bounces+linux-rockchip=archiver.kernel.org@lists.infradead.org
 
 This commit adds support for the rockchip i2s-tdm controller,
 which enables audio output on the following rockchip SoCs:
@@ -132,14 +132,32 @@ configuration option.
 
 Signed-off-by: Nicolas Frattaroli <frattaroli.nicolas@gmail.com>
 ---
+ MAINTAINERS                           |    6 +
  sound/soc/rockchip/Kconfig            |   11 +
  sound/soc/rockchip/Makefile           |    2 +
- sound/soc/rockchip/rockchip_i2s_tdm.c | 1737 +++++++++++++++++++++++++
+ sound/soc/rockchip/rockchip_i2s_tdm.c | 1845 +++++++++++++++++++++++++
  sound/soc/rockchip/rockchip_i2s_tdm.h |  398 ++++++
- 4 files changed, 2148 insertions(+)
+ 5 files changed, 2262 insertions(+)
  create mode 100644 sound/soc/rockchip/rockchip_i2s_tdm.c
  create mode 100644 sound/soc/rockchip/rockchip_i2s_tdm.h
 
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 3f1843204567..5d459d42672c 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -16049,6 +16049,12 @@ F:	Documentation/ABI/*/sysfs-driver-hid-roccat*
+ F:	drivers/hid/hid-roccat*
+ F:	include/linux/hid-roccat*
+ 
++ROCKCHIP I2S TDM DRIVER
++M:	Nicolas Frattaroli <frattaroli.nicolas@gmail.com>
++L:	linux-rockchip@lists.infradead.org
++S:	Maintained
++F:	sound/soc/rockchip/rockchip_i2s_tdm.*
++
+ ROCKCHIP ISP V1 DRIVER
+ M:	Helen Koike <helen.koike@collabora.com>
+ M:	Dafna Hirschfeld <dafna.hirschfeld@collabora.com>
 diff --git a/sound/soc/rockchip/Kconfig b/sound/soc/rockchip/Kconfig
 index 053097b73e28..42f76bc0fb02 100644
 --- a/sound/soc/rockchip/Kconfig
@@ -182,10 +200,10 @@ index 65e814d46006..b10f5e7b136d 100644
  
 diff --git a/sound/soc/rockchip/rockchip_i2s_tdm.c b/sound/soc/rockchip/rockchip_i2s_tdm.c
 new file mode 100644
-index 000000000000..c02b66f3c913
+index 000000000000..f31a987feecf
 --- /dev/null
 +++ b/sound/soc/rockchip/rockchip_i2s_tdm.c
-@@ -0,0 +1,1737 @@
+@@ -0,0 +1,1845 @@
 +// SPDX-License-Identifier: GPL-2.0-only
 +/*
 + * ALSA SoC Audio Layer - Rockchip I2S/TDM Controller driver
@@ -196,20 +214,20 @@ index 000000000000..c02b66f3c913
 + *
 + */
 +
-+#include <linux/module.h>
-+#include <linux/mfd/syscon.h>
-+#include <linux/delay.h>
-+#include <linux/of_gpio.h>
-+#include <linux/of_device.h>
-+#include <linux/of_address.h>
 +#include <linux/clk.h>
 +#include <linux/clk-provider.h>
++#include <linux/delay.h>
++#include <linux/mfd/syscon.h>
++#include <linux/module.h>
++#include <linux/of_address.h>
++#include <linux/of_device.h>
++#include <linux/of_gpio.h>
 +#include <linux/pm_runtime.h>
 +#include <linux/regmap.h>
 +#include <linux/reset.h>
 +#include <linux/spinlock.h>
-+#include <sound/pcm_params.h>
 +#include <sound/dmaengine_pcm.h>
++#include <sound/pcm_params.h>
 +
 +#include "rockchip_i2s_tdm.h"
 +
@@ -288,6 +306,8 @@ index 000000000000..c02b66f3c913
 +	int rx_reset_id;
 +	atomic_t refcount;
 +	spinlock_t lock; /* xfer lock */
++	bool has_playback;
++	bool has_capture;
 +};
 +
 +static int to_ch_num(unsigned int val)
@@ -304,40 +324,128 @@ index 000000000000..c02b66f3c913
 +	}
 +}
 +
-+static int i2s_tdm_runtime_suspend(struct device *dev)
++static void i2s_tdm_disable_unprepare_mclk(struct rk_i2s_tdm_dev *i2s_tdm)
 +{
-+	struct rk_i2s_tdm_dev *i2s_tdm = dev_get_drvdata(dev);
-+
-+	regcache_cache_only(i2s_tdm->regmap, true);
 +	if (!IS_ERR(i2s_tdm->mclk_tx))
 +		clk_disable_unprepare(i2s_tdm->mclk_tx);
 +	if (!IS_ERR(i2s_tdm->mclk_rx))
 +		clk_disable_unprepare(i2s_tdm->mclk_rx);
++	if (i2s_tdm->mclk_calibrate) {
++		if (!IS_ERR(i2s_tdm->mclk_tx_src))
++			clk_disable_unprepare(i2s_tdm->mclk_tx_src);
++		if (!IS_ERR(i2s_tdm->mclk_rx_src))
++			clk_disable_unprepare(i2s_tdm->mclk_rx_src);
++		if (!IS_ERR(i2s_tdm->mclk_root0))
++			clk_disable_unprepare(i2s_tdm->mclk_root0);
++		if (!IS_ERR(i2s_tdm->mclk_root1))
++			clk_disable_unprepare(i2s_tdm->mclk_root1);
++	}
++}
++
++/**
++ * i2s_tdm_prepare_enable_mclk - prepare to enable all mclks, disable them on
++ *				 failure.
++ * @i2s_tdm: rk_i2s_tdm_dev struct
++ *
++ * This function attempts to enable all mclk clocks, but cleans up after
++ * itself on failure. Guarantees to balance its calls.
++ *
++ * Returns success (0) or negative errno.
++ */
++static int i2s_tdm_prepare_enable_mclk(struct rk_i2s_tdm_dev *i2s_tdm)
++{
++	int ret = 0;
++
++	if (!IS_ERR(i2s_tdm->mclk_tx)) {
++		ret = clk_prepare_enable(i2s_tdm->mclk_tx);
++		if (ret)
++			goto err_mclk_tx;
++	}
++	if (!IS_ERR(i2s_tdm->mclk_rx)) {
++		ret = clk_prepare_enable(i2s_tdm->mclk_rx);
++		if (ret)
++			goto err_mclk_rx;
++	}
++	if (i2s_tdm->mclk_calibrate) {
++		if (!IS_ERR(i2s_tdm->mclk_tx_src)) {
++			ret = clk_prepare_enable(i2s_tdm->mclk_tx_src);
++			if (ret)
++				goto err_mclk_rx;
++		}
++		if (!IS_ERR(i2s_tdm->mclk_rx_src)) {
++			ret = clk_prepare_enable(i2s_tdm->mclk_rx_src);
++			if (ret)
++				goto err_mclk_rx_src;
++		}
++		if (!IS_ERR(i2s_tdm->mclk_root0)) {
++			ret = clk_prepare_enable(i2s_tdm->mclk_root0);
++			if (ret)
++				goto err_mclk_root0;
++		}
++		if (!IS_ERR(i2s_tdm->mclk_root1)) {
++			ret = clk_prepare_enable(i2s_tdm->mclk_root1);
++			if (ret)
++				goto err_mclk_root1;
++		}
++	}
++
++	return 0;
++
++err_mclk_root1:
++	clk_disable_unprepare(i2s_tdm->mclk_root0);
++err_mclk_root0:
++	clk_disable_unprepare(i2s_tdm->mclk_rx_src);
++err_mclk_rx_src:
++	clk_disable_unprepare(i2s_tdm->mclk_tx_src);
++err_mclk_rx:
++	clk_disable_unprepare(i2s_tdm->mclk_tx);
++err_mclk_tx:
++	return ret;
++}
++
++static int __maybe_unused i2s_tdm_runtime_suspend(struct device *dev)
++{
++	struct rk_i2s_tdm_dev *i2s_tdm = dev_get_drvdata(dev);
++
++	regcache_cache_only(i2s_tdm->regmap, true);
++	i2s_tdm_disable_unprepare_mclk(i2s_tdm);
++
++	if (!IS_ERR(i2s_tdm->hclk))
++		clk_disable_unprepare(i2s_tdm->hclk);
 +
 +	return 0;
 +}
 +
-+static int i2s_tdm_runtime_resume(struct device *dev)
++static int __maybe_unused i2s_tdm_runtime_resume(struct device *dev)
 +{
 +	struct rk_i2s_tdm_dev *i2s_tdm = dev_get_drvdata(dev);
 +	int ret;
 +
-+	if (!IS_ERR(i2s_tdm->mclk_tx))
-+		clk_prepare_enable(i2s_tdm->mclk_tx);
-+	if (!IS_ERR(i2s_tdm->mclk_rx))
-+		clk_prepare_enable(i2s_tdm->mclk_rx);
++	if (!IS_ERR(i2s_tdm->hclk)) {
++		ret = clk_prepare_enable(i2s_tdm->hclk);
++		if (ret)
++			goto err_hclk;
++	}
++
++	ret = i2s_tdm_prepare_enable_mclk(i2s_tdm);
++	if (ret)
++		goto err_mclk;
 +
 +	regcache_cache_only(i2s_tdm->regmap, false);
 +	regcache_mark_dirty(i2s_tdm->regmap);
 +
 +	ret = regcache_sync(i2s_tdm->regmap);
-+	if (ret) {
-+		if (!IS_ERR(i2s_tdm->mclk_tx))
-+			clk_disable_unprepare(i2s_tdm->mclk_tx);
-+		if (!IS_ERR(i2s_tdm->mclk_rx))
-+			clk_disable_unprepare(i2s_tdm->mclk_rx);
-+	}
++	if (ret)
++		goto err_regcache;
 +
++	return 0;
++
++err_regcache:
++	i2s_tdm_disable_unprepare_mclk(i2s_tdm);
++err_mclk:
++	if (!IS_ERR(i2s_tdm->hclk))
++		clk_disable_unprepare(i2s_tdm->hclk);
++err_hclk:
 +	return ret;
 +}
 +
@@ -419,20 +527,19 @@ index 000000000000..c02b66f3c913
 +	rockchip_snd_xfer_reset_assert(i2s_tdm, tx_bank, tx_offset,
 +				       rx_bank, rx_offset);
 +
-+	udelay(150);
++	udelay(10);
 +
 +	rockchip_snd_xfer_reset_deassert(i2s_tdm, tx_bank, tx_offset,
 +					 rx_bank, rx_offset);
++	udelay(10);
 +}
 +
 +static void rockchip_snd_reset(struct reset_control *rc)
 +{
-+	if (IS_ERR(rc))
-+		return;
-+
 +	reset_control_assert(rc);
-+	udelay(1);
++	udelay(10);
 +	reset_control_deassert(rc);
++	udelay(10);
 +}
 +
 +static void rockchip_snd_xfer_clear(struct rk_i2s_tdm_dev *i2s_tdm,
@@ -460,6 +567,7 @@ index 000000000000..c02b66f3c913
 +	regmap_read(i2s_tdm->regmap, I2S_CLR, &val);
 +	/* Wait on the clear operation to finish */
 +	while (val) {
++		udelay(15);
 +		regmap_read(i2s_tdm->regmap, I2S_CLR, &val);
 +		retry--;
 +		if (!retry) {
@@ -554,11 +662,16 @@ index 000000000000..c02b66f3c913
 +				    unsigned int fmt)
 +{
 +	struct rk_i2s_tdm_dev *i2s_tdm = to_info(cpu_dai);
-+	unsigned int mask = 0, val = 0, tdm_val = 0, txcr_val = 0, rxcr_val = 0;
-+	int ret = 0;
++	unsigned int mask, val, tdm_val, txcr_val, rxcr_val;
++	int ret;
 +	bool is_tdm = i2s_tdm->tdm_mode;
 +
-+	pm_runtime_get_sync(cpu_dai->dev);
++	ret = pm_runtime_get_sync(cpu_dai->dev);
++	if (ret < 0 && ret != -EACCES) {
++		pm_runtime_put_noidle(cpu_dai->dev);
++		return ret;
++	}
++
 +	mask = I2S_CKR_MSS_MASK;
 +	switch (fmt & SND_SOC_DAIFMT_MASTER_MASK) {
 +	case SND_SOC_DAIFMT_CBS_CFS:
@@ -831,9 +944,7 @@ index 000000000000..c02b66f3c913
 +		i2s_tdm->mclk_root1_freq = clk_get_rate(i2s_tdm->mclk_root1);
 +	}
 +
-+	ret = clk_set_rate(mclk_parent, mclk_parent_freq);
-+
-+	return ret;
++	return clk_set_rate(mclk_parent, mclk_parent_freq);
 +}
 +
 +static int rockchip_i2s_tdm_set_mclk(struct rk_i2s_tdm_dev *i2s_tdm,
@@ -849,8 +960,7 @@ index 000000000000..c02b66f3c913
 +				"clk_trcm, tx: %d and rx: %d should be same\n",
 +				i2s_tdm->mclk_tx_freq,
 +				i2s_tdm->mclk_rx_freq);
-+			ret = -EINVAL;
-+			return ret;
++			return -EINVAL;
 +		}
 +
 +		ret = clk_set_rate(i2s_tdm->mclk_tx, i2s_tdm->mclk_tx_freq);
@@ -1182,8 +1292,8 @@ index 000000000000..c02b66f3c913
 +	struct rk_i2s_tdm_dev *i2s_tdm = snd_soc_dai_get_drvdata(dai);
 +	int ret = 0, ppm = 0;
 +
-+	if ((ucontrol->value.integer.value[0] < CLK_PPM_MIN) ||
-+	    (ucontrol->value.integer.value[0] > CLK_PPM_MAX))
++	if (ucontrol->value.integer.value[0] < CLK_PPM_MIN ||
++	    ucontrol->value.integer.value[0] > CLK_PPM_MAX)
 +		return -EINVAL;
 +
 +	ppm = ucontrol->value.integer.value[0];
@@ -1214,8 +1324,10 @@ index 000000000000..c02b66f3c913
 +{
 +	struct rk_i2s_tdm_dev *i2s_tdm = snd_soc_dai_get_drvdata(dai);
 +
-+	dai->capture_dma_data = &i2s_tdm->capture_dma_data;
-+	dai->playback_dma_data = &i2s_tdm->playback_dma_data;
++	if (i2s_tdm->has_capture)
++		dai->capture_dma_data = &i2s_tdm->capture_dma_data;
++	if (i2s_tdm->has_playback)
++		dai->playback_dma_data = &i2s_tdm->playback_dma_data;
 +
 +	if (i2s_tdm->mclk_calibrate)
 +		snd_soc_add_dai_controls(dai, &rockchip_i2s_tdm_compensation_control, 1);
@@ -1469,28 +1581,43 @@ index 000000000000..c02b66f3c913
 +	.probe = rockchip_i2s_tdm_dai_probe,
 +	.playback = {
 +		.stream_name  = "Playback",
-+		.channels_min = 2,
-+		.channels_max = 8,
-+		.rates        = SNDRV_PCM_RATE_8000_192000,
-+		.formats      = (SNDRV_PCM_FMTBIT_S8 |
-+				SNDRV_PCM_FMTBIT_S16_LE |
-+				SNDRV_PCM_FMTBIT_S20_3LE |
-+				SNDRV_PCM_FMTBIT_S24_LE |
-+				SNDRV_PCM_FMTBIT_S32_LE),
 +	},
 +	.capture = {
 +		.stream_name  = "Capture",
-+		.channels_min = 2,
-+		.channels_max = 8,
-+		.rates        = SNDRV_PCM_RATE_8000_192000,
-+		.formats      = (SNDRV_PCM_FMTBIT_S8 |
-+				SNDRV_PCM_FMTBIT_S16_LE |
-+				SNDRV_PCM_FMTBIT_S20_3LE |
-+				SNDRV_PCM_FMTBIT_S24_LE |
-+				SNDRV_PCM_FMTBIT_S32_LE),
 +	},
 +	.ops = &rockchip_i2s_tdm_dai_ops,
 +};
++
++static void rockchip_i2s_tdm_init_dai(struct rk_i2s_tdm_dev *i2s_tdm)
++{
++	struct property *dma_names;
++	const char *dma_name;
++	u64 formats = (SNDRV_PCM_FMTBIT_S8 | SNDRV_PCM_FMTBIT_S16_LE |
++		       SNDRV_PCM_FMTBIT_S20_3LE | SNDRV_PCM_FMTBIT_S24_LE |
++		       SNDRV_PCM_FMTBIT_S32_LE);
++	struct device_node *node = i2s_tdm->dev->of_node;
++
++	of_property_for_each_string(node, "dma-names", dma_names, dma_name) {
++		if (!strcmp(dma_name, "tx"))
++			i2s_tdm->has_playback = true;
++		if (!strcmp(dma_name, "rx"))
++			i2s_tdm->has_capture = true;
++	}
++
++	if (i2s_tdm->has_playback) {
++		i2s_tdm_dai.playback.channels_min = 2;
++		i2s_tdm_dai.playback.channels_max = 8;
++		i2s_tdm_dai.playback.rates = SNDRV_PCM_RATE_8000_192000;
++		i2s_tdm_dai.playback.formats = formats;
++	}
++
++	if (i2s_tdm->has_capture) {
++		i2s_tdm_dai.capture.channels_min = 2;
++		i2s_tdm_dai.capture.channels_max = 8;
++		i2s_tdm_dai.capture.rates = SNDRV_PCM_RATE_8000_192000;
++		i2s_tdm_dai.capture.formats = formats;
++	}
++}
 +
 +static int rockchip_i2s_tdm_path_check(struct rk_i2s_tdm_dev *i2s_tdm,
 +				       int num,
@@ -1654,6 +1781,8 @@ index 000000000000..c02b66f3c913
 +	spin_lock_init(&i2s_tdm->lock);
 +	i2s_tdm->soc_data = (struct rk_i2s_soc_data *)of_id->data;
 +
++	rockchip_i2s_tdm_init_dai(i2s_tdm);
++
 +	i2s_tdm->frame_width = 64;
 +	if (!of_property_read_u32(node, "rockchip,frame-width", &val)) {
 +		if (val >= 32 && (val % 2 == 0) && val <= 512) {
@@ -1700,32 +1829,26 @@ index 000000000000..c02b66f3c913
 +		i2s_tdm->rx_reset_id = of_i2s_resetid_get(node, "rx-m");
 +	}
 +
-+	i2s_tdm->tx_reset = devm_reset_control_get(&pdev->dev, "tx-m");
++	i2s_tdm->tx_reset = devm_reset_control_get_exclusive(&pdev->dev,
++							     "tx-m");
 +	if (IS_ERR(i2s_tdm->tx_reset)) {
 +		ret = PTR_ERR(i2s_tdm->tx_reset);
-+		if (ret != -ENOENT)
-+			return dev_err_probe(i2s_tdm->dev, ret,
-+					     "Error in tx-m reset control\n");
++		return dev_err_probe(i2s_tdm->dev, ret,
++				     "Error in tx-m reset control\n");
 +	}
 +
-+	i2s_tdm->rx_reset = devm_reset_control_get(&pdev->dev, "rx-m");
++	i2s_tdm->rx_reset = devm_reset_control_get_exclusive(&pdev->dev,
++							     "rx-m");
 +	if (IS_ERR(i2s_tdm->rx_reset)) {
 +		ret = PTR_ERR(i2s_tdm->rx_reset);
-+		if (ret != -ENOENT)
-+			return dev_err_probe(i2s_tdm->dev, ret,
-+					     "Error in rx-m reset control\n");
++		return dev_err_probe(i2s_tdm->dev, ret,
++				     "Error in rx-m reset control\n");
 +	}
 +
 +	i2s_tdm->hclk = devm_clk_get(&pdev->dev, "hclk");
 +	if (IS_ERR(i2s_tdm->hclk)) {
 +		return dev_err_probe(i2s_tdm->dev, PTR_ERR(i2s_tdm->hclk),
 +				     "Failed to get clock hclk\n");
-+	}
-+
-+	ret = clk_prepare_enable(i2s_tdm->hclk);
-+	if (ret) {
-+		return dev_err_probe(i2s_tdm->dev, ret,
-+				     "Failed to enable clock hclk\n");
 +	}
 +
 +	i2s_tdm->mclk_tx = devm_clk_get(&pdev->dev, "mclk_tx");
@@ -1770,11 +1893,6 @@ index 000000000000..c02b66f3c913
 +					     PTR_ERR(i2s_tdm->mclk_root1),
 +					     "Failed to get clock mclk_root1\n");
 +		}
-+
-+		i2s_tdm->mclk_root0_initial_freq = clk_get_rate(i2s_tdm->mclk_root0);
-+		i2s_tdm->mclk_root1_initial_freq = clk_get_rate(i2s_tdm->mclk_root1);
-+		i2s_tdm->mclk_root0_freq = i2s_tdm->mclk_root0_initial_freq;
-+		i2s_tdm->mclk_root1_freq = i2s_tdm->mclk_root1_initial_freq;
 +	}
 +
 +	res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
@@ -1814,12 +1932,27 @@ index 000000000000..c02b66f3c913
 +	atomic_set(&i2s_tdm->refcount, 0);
 +	dev_set_drvdata(&pdev->dev, i2s_tdm);
 +
-+	pm_runtime_enable(&pdev->dev);
-+	if (!pm_runtime_enabled(&pdev->dev)) {
-+		ret = i2s_tdm_runtime_resume(&pdev->dev);
-+		if (ret)
-+			goto err_pm_disable;
++	ret = clk_prepare_enable(i2s_tdm->hclk);
++	if (ret) {
++		return dev_err_probe(i2s_tdm->dev, ret,
++				     "Failed to enable clock hclk\n");
 +	}
++
++	ret = i2s_tdm_prepare_enable_mclk(i2s_tdm);
++	if (ret) {
++		return dev_err_probe(i2s_tdm->dev, ret,
++				     "Failed to enable one or more mclks\n");
++		goto err_disable_hclk;
++	}
++
++	if (i2s_tdm->mclk_calibrate) {
++		i2s_tdm->mclk_root0_initial_freq = clk_get_rate(i2s_tdm->mclk_root0);
++		i2s_tdm->mclk_root1_initial_freq = clk_get_rate(i2s_tdm->mclk_root1);
++		i2s_tdm->mclk_root0_freq = i2s_tdm->mclk_root0_initial_freq;
++		i2s_tdm->mclk_root1_freq = i2s_tdm->mclk_root1_initial_freq;
++	}
++
++	pm_runtime_enable(&pdev->dev);
 +
 +	regmap_update_bits(i2s_tdm->regmap, I2S_DMACR, I2S_DMACR_TDL_MASK,
 +			   I2S_DMACR_TDL(16));
@@ -1843,7 +1976,7 @@ index 000000000000..c02b66f3c913
 +	ret = devm_snd_dmaengine_pcm_register(&pdev->dev, NULL, 0);
 +	if (ret) {
 +		dev_err(&pdev->dev, "Could not register PCM\n");
-+		return ret;
++		goto err_suspend;
 +	}
 +
 +	return 0;
@@ -1851,32 +1984,26 @@ index 000000000000..c02b66f3c913
 +err_suspend:
 +	if (!pm_runtime_status_suspended(&pdev->dev))
 +		i2s_tdm_runtime_suspend(&pdev->dev);
-+err_pm_disable:
 +	pm_runtime_disable(&pdev->dev);
++
++err_disable_hclk:
++	if (!IS_ERR(i2s_tdm->hclk))
++		clk_disable_unprepare(i2s_tdm->hclk);
 +
 +	return ret;
 +}
 +
 +static int rockchip_i2s_tdm_remove(struct platform_device *pdev)
 +{
-+	struct rk_i2s_tdm_dev *i2s_tdm = dev_get_drvdata(&pdev->dev);
-+
-+	pm_runtime_disable(&pdev->dev);
 +	if (!pm_runtime_status_suspended(&pdev->dev))
 +		i2s_tdm_runtime_suspend(&pdev->dev);
 +
-+	if (!IS_ERR(i2s_tdm->mclk_tx))
-+		clk_prepare_enable(i2s_tdm->mclk_tx);
-+	if (!IS_ERR(i2s_tdm->mclk_rx))
-+		clk_prepare_enable(i2s_tdm->mclk_rx);
-+	if (!IS_ERR(i2s_tdm->hclk))
-+		clk_disable_unprepare(i2s_tdm->hclk);
++	pm_runtime_disable(&pdev->dev);
 +
 +	return 0;
 +}
 +
-+#ifdef CONFIG_PM_SLEEP
-+static int rockchip_i2s_tdm_suspend(struct device *dev)
++static int __maybe_unused rockchip_i2s_tdm_suspend(struct device *dev)
 +{
 +	struct rk_i2s_tdm_dev *i2s_tdm = dev_get_drvdata(dev);
 +
@@ -1885,7 +2012,7 @@ index 000000000000..c02b66f3c913
 +	return 0;
 +}
 +
-+static int rockchip_i2s_tdm_resume(struct device *dev)
++static int __maybe_unused rockchip_i2s_tdm_resume(struct device *dev)
 +{
 +	struct rk_i2s_tdm_dev *i2s_tdm = dev_get_drvdata(dev);
 +	int ret;
@@ -1898,7 +2025,6 @@ index 000000000000..c02b66f3c913
 +
 +	return ret;
 +}
-+#endif
 +
 +static const struct dev_pm_ops rockchip_i2s_tdm_pm_ops = {
 +	SET_RUNTIME_PM_OPS(i2s_tdm_runtime_suspend, i2s_tdm_runtime_resume,
@@ -1925,7 +2051,7 @@ index 000000000000..c02b66f3c913
 +MODULE_DEVICE_TABLE(of, rockchip_i2s_tdm_match);
 diff --git a/sound/soc/rockchip/rockchip_i2s_tdm.h b/sound/soc/rockchip/rockchip_i2s_tdm.h
 new file mode 100644
-index 000000000000..3a9d9e8db262
+index 000000000000..0aa1c6da1e2c
 --- /dev/null
 +++ b/sound/soc/rockchip/rockchip_i2s_tdm.h
 @@ -0,0 +1,398 @@
@@ -1951,7 +2077,7 @@ index 000000000000..3a9d9e8db262
 +#define I2S_TXCR_RCNT_SHIFT	17
 +#define I2S_TXCR_RCNT_MASK	(0x3f << I2S_TXCR_RCNT_SHIFT)
 +#define I2S_TXCR_CSR_SHIFT	15
-+#define I2S_TXCR_CSR(x)		(x << I2S_TXCR_CSR_SHIFT)
++#define I2S_TXCR_CSR(x)		((x) << I2S_TXCR_CSR_SHIFT)
 +#define I2S_TXCR_CSR_MASK	(3 << I2S_TXCR_CSR_SHIFT)
 +#define I2S_TXCR_HWT		BIT(14)
 +#define I2S_TXCR_SJM_SHIFT	12
@@ -1966,7 +2092,7 @@ index 000000000000..3a9d9e8db262
 +#define I2S_TXCR_IBM_RSJM	(2 << I2S_TXCR_IBM_SHIFT)
 +#define I2S_TXCR_IBM_MASK	(3 << I2S_TXCR_IBM_SHIFT)
 +#define I2S_TXCR_PBM_SHIFT	7
-+#define I2S_TXCR_PBM_MODE(x)	(x << I2S_TXCR_PBM_SHIFT)
++#define I2S_TXCR_PBM_MODE(x)	((x) << I2S_TXCR_PBM_SHIFT)
 +#define I2S_TXCR_PBM_MASK	(3 << I2S_TXCR_PBM_SHIFT)
 +#define I2S_TXCR_TFS_SHIFT	5
 +#define I2S_TXCR_TFS_I2S	(0 << I2S_TXCR_TFS_SHIFT)
@@ -1975,7 +2101,7 @@ index 000000000000..3a9d9e8db262
 +#define I2S_TXCR_TFS_TDM_I2S	(3 << I2S_TXCR_TFS_SHIFT)
 +#define I2S_TXCR_TFS_MASK	(3 << I2S_TXCR_TFS_SHIFT)
 +#define I2S_TXCR_VDW_SHIFT	0
-+#define I2S_TXCR_VDW(x)		((x - 1) << I2S_TXCR_VDW_SHIFT)
++#define I2S_TXCR_VDW(x)		(((x) - 1) << I2S_TXCR_VDW_SHIFT)
 +#define I2S_TXCR_VDW_MASK	(0x1f << I2S_TXCR_VDW_SHIFT)
 +
 +/*
@@ -1986,7 +2112,7 @@ index 000000000000..3a9d9e8db262
 +#define I2S_RXCR_PATH_MASK(x)	(0x3 << I2S_RXCR_PATH_SHIFT(x))
 +#define I2S_RXCR_PATH(x, v)	((v) << I2S_RXCR_PATH_SHIFT(x))
 +#define I2S_RXCR_CSR_SHIFT	15
-+#define I2S_RXCR_CSR(x)		(x << I2S_RXCR_CSR_SHIFT)
++#define I2S_RXCR_CSR(x)		((x) << I2S_RXCR_CSR_SHIFT)
 +#define I2S_RXCR_CSR_MASK	(3 << I2S_RXCR_CSR_SHIFT)
 +#define I2S_RXCR_HWT		BIT(14)
 +#define I2S_RXCR_SJM_SHIFT	12
@@ -2001,7 +2127,7 @@ index 000000000000..3a9d9e8db262
 +#define I2S_RXCR_IBM_RSJM	(2 << I2S_RXCR_IBM_SHIFT)
 +#define I2S_RXCR_IBM_MASK	(3 << I2S_RXCR_IBM_SHIFT)
 +#define I2S_RXCR_PBM_SHIFT	7
-+#define I2S_RXCR_PBM_MODE(x)	(x << I2S_RXCR_PBM_SHIFT)
++#define I2S_RXCR_PBM_MODE(x)	((x) << I2S_RXCR_PBM_SHIFT)
 +#define I2S_RXCR_PBM_MASK	(3 << I2S_RXCR_PBM_SHIFT)
 +#define I2S_RXCR_TFS_SHIFT	5
 +#define I2S_RXCR_TFS_I2S	(0 << I2S_RXCR_TFS_SHIFT)
@@ -2010,7 +2136,7 @@ index 000000000000..3a9d9e8db262
 +#define I2S_RXCR_TFS_TDM_I2S	(3 << I2S_RXCR_TFS_SHIFT)
 +#define I2S_RXCR_TFS_MASK	(3 << I2S_RXCR_TFS_SHIFT)
 +#define I2S_RXCR_VDW_SHIFT	0
-+#define I2S_RXCR_VDW(x)		((x - 1) << I2S_RXCR_VDW_SHIFT)
++#define I2S_RXCR_VDW(x)		(((x) - 1) << I2S_RXCR_VDW_SHIFT)
 +#define I2S_RXCR_VDW_MASK	(0x1f << I2S_RXCR_VDW_SHIFT)
 +
 +/*
@@ -2018,7 +2144,7 @@ index 000000000000..3a9d9e8db262
 + * clock generation register
 + */
 +#define I2S_CKR_TRCM_SHIFT	28
-+#define I2S_CKR_TRCM(x)	(x << I2S_CKR_TRCM_SHIFT)
++#define I2S_CKR_TRCM(x)	((x) << I2S_CKR_TRCM_SHIFT)
 +#define I2S_CKR_TRCM_TXRX	(0 << I2S_CKR_TRCM_SHIFT)
 +#define I2S_CKR_TRCM_TXONLY	(1 << I2S_CKR_TRCM_SHIFT)
 +#define I2S_CKR_TRCM_RXONLY	(2 << I2S_CKR_TRCM_SHIFT)
@@ -2040,13 +2166,13 @@ index 000000000000..3a9d9e8db262
 +#define I2S_CKR_TLP_INVERTED	(1 << I2S_CKR_TLP_SHIFT)
 +#define I2S_CKR_TLP_MASK	(1 << I2S_CKR_TLP_SHIFT)
 +#define I2S_CKR_MDIV_SHIFT	16
-+#define I2S_CKR_MDIV(x)		((x - 1) << I2S_CKR_MDIV_SHIFT)
++#define I2S_CKR_MDIV(x)		(((x) - 1) << I2S_CKR_MDIV_SHIFT)
 +#define I2S_CKR_MDIV_MASK	(0xff << I2S_CKR_MDIV_SHIFT)
 +#define I2S_CKR_RSD_SHIFT	8
-+#define I2S_CKR_RSD(x)		((x - 1) << I2S_CKR_RSD_SHIFT)
++#define I2S_CKR_RSD(x)		(((x) - 1) << I2S_CKR_RSD_SHIFT)
 +#define I2S_CKR_RSD_MASK	(0xff << I2S_CKR_RSD_SHIFT)
 +#define I2S_CKR_TSD_SHIFT	0
-+#define I2S_CKR_TSD(x)		((x - 1) << I2S_CKR_TSD_SHIFT)
++#define I2S_CKR_TSD(x)		(((x) - 1) << I2S_CKR_TSD_SHIFT)
 +#define I2S_CKR_TSD_MASK	(0xff << I2S_CKR_TSD_SHIFT)
 +
 +/*
@@ -2072,7 +2198,7 @@ index 000000000000..3a9d9e8db262
 +#define I2S_DMACR_RDE_DISABLE	(0 << I2S_DMACR_RDE_SHIFT)
 +#define I2S_DMACR_RDE_ENABLE	(1 << I2S_DMACR_RDE_SHIFT)
 +#define I2S_DMACR_RDL_SHIFT	16
-+#define I2S_DMACR_RDL(x)	((x - 1) << I2S_DMACR_RDL_SHIFT)
++#define I2S_DMACR_RDL(x)	(((x) - 1) << I2S_DMACR_RDL_SHIFT)
 +#define I2S_DMACR_RDL_MASK	(0x1f << I2S_DMACR_RDL_SHIFT)
 +#define I2S_DMACR_TDE_SHIFT	8
 +#define I2S_DMACR_TDE_DISABLE	(0 << I2S_DMACR_TDE_SHIFT)
@@ -2086,7 +2212,7 @@ index 000000000000..3a9d9e8db262
 + * interrupt control register
 + */
 +#define I2S_INTCR_RFT_SHIFT	20
-+#define I2S_INTCR_RFT(x)	((x - 1) << I2S_INTCR_RFT_SHIFT)
++#define I2S_INTCR_RFT(x)	(((x) - 1) << I2S_INTCR_RFT_SHIFT)
 +#define I2S_INTCR_RXOIC		BIT(18)
 +#define I2S_INTCR_RXOIE_SHIFT	17
 +#define I2S_INTCR_RXOIE_DISABLE	(0 << I2S_INTCR_RXOIE_SHIFT)
@@ -2095,7 +2221,7 @@ index 000000000000..3a9d9e8db262
 +#define I2S_INTCR_RXFIE_DISABLE	(0 << I2S_INTCR_RXFIE_SHIFT)
 +#define I2S_INTCR_RXFIE_ENABLE	(1 << I2S_INTCR_RXFIE_SHIFT)
 +#define I2S_INTCR_TFT_SHIFT	4
-+#define I2S_INTCR_TFT(x)	((x - 1) << I2S_INTCR_TFT_SHIFT)
++#define I2S_INTCR_TFT(x)	(((x) - 1) << I2S_INTCR_TFT_SHIFT)
 +#define I2S_INTCR_TFT_MASK	(0x1f << I2S_INTCR_TFT_SHIFT)
 +#define I2S_INTCR_TXUIC		BIT(2)
 +#define I2S_INTCR_TXUIE_SHIFT	1
@@ -2157,26 +2283,26 @@ index 000000000000..3a9d9e8db262
 + * TDM ctrl register
 + */
 +#define TDM_FSYNC_WIDTH_SEL1_MSK	GENMASK(20, 18)
-+#define TDM_FSYNC_WIDTH_SEL1(x)		((x - 1) << 18)
++#define TDM_FSYNC_WIDTH_SEL1(x)		(((x) - 1) << 18)
 +#define TDM_FSYNC_WIDTH_SEL0_MSK	BIT(17)
 +#define TDM_FSYNC_WIDTH_HALF_FRAME	0
 +#define TDM_FSYNC_WIDTH_ONE_FRAME	BIT(17)
 +#define TDM_SHIFT_CTRL_MSK		GENMASK(16, 14)
 +#define TDM_SHIFT_CTRL(x)		((x) << 14)
 +#define TDM_SLOT_BIT_WIDTH_MSK		GENMASK(13, 9)
-+#define TDM_SLOT_BIT_WIDTH(x)		((x - 1) << 9)
++#define TDM_SLOT_BIT_WIDTH(x)		(((x) - 1) << 9)
 +#define TDM_FRAME_WIDTH_MSK		GENMASK(8, 0)
-+#define TDM_FRAME_WIDTH(x)		((x - 1) << 0)
++#define TDM_FRAME_WIDTH(x)		(((x) - 1) << 0)
 +
 +/*
 + * CLKDIV
 + * Mclk div register
 + */
 +#define I2S_CLKDIV_TXM_SHIFT	0
-+#define I2S_CLKDIV_TXM(x)		((x - 1) << I2S_CLKDIV_TXM_SHIFT)
++#define I2S_CLKDIV_TXM(x)		(((x) - 1) << I2S_CLKDIV_TXM_SHIFT)
 +#define I2S_CLKDIV_TXM_MASK	(0xff << I2S_CLKDIV_TXM_SHIFT)
 +#define I2S_CLKDIV_RXM_SHIFT	8
-+#define I2S_CLKDIV_RXM(x)		((x - 1) << I2S_CLKDIV_RXM_SHIFT)
++#define I2S_CLKDIV_RXM(x)		(((x) - 1) << I2S_CLKDIV_RXM_SHIFT)
 +#define I2S_CLKDIV_RXM_MASK	(0xff << I2S_CLKDIV_RXM_SHIFT)
 +
 +/* Clock divider id */
@@ -2328,14 +2454,14 @@ index 000000000000..3a9d9e8db262
 +
 +#endif /* _ROCKCHIP_I2S_TDM_H */
 
-From patchwork Fri Aug 20 18:27:29 2021
+From patchwork Sat Aug 28 14:02:02 2021
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: 7bit
 X-Patchwork-Submitter: Nicolas Frattaroli <frattaroli.nicolas@gmail.com>
-X-Patchwork-Id: 12450241
+X-Patchwork-Id: 12463523
 Return-Path: 
- <SRS0=Tcyv=NL=lists.infradead.org=linux-arm-kernel-bounces+linux-arm-kernel=archiver.kernel.org@kernel.org>
+ <SRS0=b+1m=NT=lists.infradead.org=linux-rockchip-bounces+linux-rockchip=archiver.kernel.org@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
@@ -2345,17 +2471,17 @@ X-Spam-Status: No, score=-13.7 required=3.0 tests=BAYES_00,
 	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,
 	USER_AGENT_GIT autolearn=unavailable autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 72A98C4320A
-	for <linux-arm-kernel@archiver.kernel.org>;
- Fri, 20 Aug 2021 18:31:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0F18CC4320A
+	for <linux-rockchip@archiver.kernel.org>;
+ Sat, 28 Aug 2021 14:02:51 +0000 (UTC)
 Received: from bombadil.infradead.org (bombadil.infradead.org
  [198.137.202.133])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 4102461040
-	for <linux-arm-kernel@archiver.kernel.org>;
- Fri, 20 Aug 2021 18:31:07 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.1 mail.kernel.org 4102461040
+	by mail.kernel.org (Postfix) with ESMTPS id 9D65560E8B
+	for <linux-rockchip@archiver.kernel.org>;
+ Sat, 28 Aug 2021 14:02:50 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.1 mail.kernel.org 9D65560E8B
 Authentication-Results: mail.kernel.org;
  dmarc=fail (p=none dis=none) header.from=gmail.com
 Authentication-Results: mail.kernel.org;
@@ -2366,101 +2492,100 @@ DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
 	List-Archive:List-Unsubscribe:List-Id:MIME-Version:References:In-Reply-To:
 	Message-Id:Date:Subject:Cc:To:From:Reply-To:Content-ID:Content-Description:
 	Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:
-	List-Owner; bh=PI0FCulBiVfGEvXH7PVVmdc3p6XOn1bO/WbqYGd9x6o=; b=WZuY+fmYuNPJxD
-	ZCcV4fx8AjIqqhzz73SP+FXQuMBM7QK6kf94kn2VphRsCd3tH0GIuLbbFoA0HWTq5RtqR12buy6us
-	eEVlnWDG6Av2fK55dpLraPrJWQjYwSuPs589rim1KtCvKL+9pP+1ssr6nhs5znoaL1oLEiO9c7ikx
-	SeBTdCz96+EB85VoLUyvEwKZxavXCNeDYJ4b1J8HkY4ncGDeWwRMFjsaPxuBPeVIGdQ5f3j+N1VRw
-	qP0mV0/ZfFYtCockP2jgOAzzXDvMSuGo+3iIDdDN0jSaaj+3Jf9GNVuSstFalJWibZiZVVxwBxodj
-	cG6yPTAGr/yNh8UIxBOw==;
+	List-Owner; bh=wcl7dHeSJPTBl7/VMKuyl4qNSPxRm4gSOVhsKEHWvxY=; b=4S4FsvQLZAQpeZ
+	sd+2BB+omzebqjNm2RTckd5EoQJYdjXk/MQyupSq1+JUP2sk2qRD8Fe8HM1A2iPHvs2sbvIyuG88T
+	S+CHibU29bTuEwRmgJBa9K5LKUX8Jo7D34pZmrZpqm7/PX67RxohG2ZIJoTYAFvI62Vb1DYB6tYd0
+	+Q7oeS+GokFUG+4L/EmpyYrfal4v8JTIrE4KZEcH7ckR+ajlgwiYG4BXgyVS/fqEbsPhlTsJvqXKz
+	X0McvIirBB4NejJMXFzgmDoytXRDMgDUtjQSRIXZtDHKOrI+e8OFBGBVKv0HQh7r1r3VV1VpvtZYr
+	03XyUNcZJIL9d5ccsS8A==;
 Received: from localhost ([::1] helo=bombadil.infradead.org)
 	by bombadil.infradead.org with esmtp (Exim 4.94.2 #2 (Red Hat Linux))
-	id 1mH9Ga-00Br3t-SR; Fri, 20 Aug 2021 18:29:21 +0000
-Received: from mail-ed1-x52a.google.com ([2a00:1450:4864:20::52a])
+	id 1mJyuz-00EJ3k-UW; Sat, 28 Aug 2021 14:02:45 +0000
+Received: from mail-ed1-x536.google.com ([2a00:1450:4864:20::536])
  by bombadil.infradead.org with esmtps (Exim 4.94.2 #2 (Red Hat Linux))
- id 1mH9G1-00Bqns-G0; Fri, 20 Aug 2021 18:28:49 +0000
-Received: by mail-ed1-x52a.google.com with SMTP id v2so15220955edq.10;
- Fri, 20 Aug 2021 11:28:45 -0700 (PDT)
+ id 1mJyuo-00EIyY-6i; Sat, 28 Aug 2021 14:02:38 +0000
+Received: by mail-ed1-x536.google.com with SMTP id d6so14284185edt.7;
+ Sat, 28 Aug 2021 07:02:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
  h=from:to:cc:subject:date:message-id:in-reply-to:references
  :mime-version:content-transfer-encoding;
- bh=vZDy1x9D5JtkqfcRQjfd53QGn6iJ9BMpivoJMSl8pJ8=;
- b=fmQa0P4B9hA4sh0ZCmAsSl5LTMxmey8qx3jbAoRjLi+0oI4O4HOkVS7FFZ0N907Lqp
- 8qhlx2ZBPv3XlIllz2kZ4CuSTyJKaXV9m9nyuuevKIn+48fps1JyCaEbbbq49pFyR2RQ
- 9ZKRMXGI4QUhrM4Yj87cGP7wGZPSO/FL+Z9qMR3mn/AhMAxWFIgzgHLom930t8CqxPbB
- /iMI11zNM5hoEgEWEur1rbfM2vxTRt6w0lEZV6BdiVZRq9UgIiqnzen1Me5KAkL5BBsu
- dEIM9LvkdNQjxBqq+2366JTSvRCVzxQORGa036UwBIt7KtaRvfegEDpbwV+uVoIc3iS8
- hg2A==
+ bh=/HwvasmqWTeaBN7HIdpoZgoqAcwnUTfnLYi+w6FCWyc=;
+ b=LiBbEEI49LqvFweuIGCWs+mxPZLxlpGk4gcL0Lt0mj4+xLGCzNBhqO90Mn2sp8O8dE
+ B3562wA0y0ddaoqc7nLkEVE3g0xTz144MhYgfApp6QIJf9Nm8rjEe75W1YsFgNoOfhKm
+ ti85tkUk6+1C6ADu1F19urVsrUm11rV6B0gXy54XtW5MSnsgXaXPVaycRMv+WO4hU4I7
+ d3UzCpcKbYZ3jXiMWUlzijoA7r0UYOki8CVX+4VOqZnBRwlPvYoSvUksNCejfVvavAKP
+ +XpdeTSSPXDOZxJ59kvNoUSWsh/SfKemLX0VixN10GKYzhitxU+jbXlWvPrYo5B2pX73
+ hZUg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
  h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
  :references:mime-version:content-transfer-encoding;
- bh=vZDy1x9D5JtkqfcRQjfd53QGn6iJ9BMpivoJMSl8pJ8=;
- b=roDfjCOYRaxXKlvV9eQzMUtlkjO8bQPyrt0xjKHb4BYzJiWdD1nAuzKYx7CcY/4EEH
- r6ZQl2kPmMf5cGvhCYvBKLFmXCgvR+ArMlV5VRNK0qiS/S3vNFS9Y7SRj4KlIcosaK2E
- BVcDHN6MmtyGTAtcF5M/RdsqAnfyAv6ioNT0A+cK8oiFDfmZE8PJwvWZu48RrJ/2oHAd
- c1ZfZXjqoMdCWLc8uxNeIuwQ1HYHwfm4r6l1ksyhovtgjkEwW9Ug/PE9EwH1CgXofg2+
- FrE79pOSm2wHMzmX4Nj4RfCBlXrn11SIQJkUNFaDimk3iGOm4ydR14hTHsA/7zjbH67m
- a55Q==
-X-Gm-Message-State: AOAM530gdaacSF0GwNNS3JCizkq+unzSYVtBpslcUWdAIwRLhmp7Reym
- gD1fdy2fITJA6GkNuu6QVRY=
+ bh=/HwvasmqWTeaBN7HIdpoZgoqAcwnUTfnLYi+w6FCWyc=;
+ b=d6bYpWUTOnZjplQmf/p1XzjIksVY0G3+tYNBz1E2tIZPkdsFu9eP3VoNkoTUCaJUN/
+ EhuAgTwGSS9k59U0Nei6JaQT5atdZU1I996k6X9q68kNzSYdfq66L9OuaguJ98D2mydz
+ wHbLMBcRK+IZ6w4kcMY7zATjYKrhvE3aMVYWM47kczAWVdRmnffAQRRoJPeivVoyJy0R
+ QSeVtUu5PW9qrEtEeeDwCGiXkDcZmohueqJYs/XXhrcS/1G/3QvZfm11e97U+AMkuXXJ
+ q3T11PHZ+W2RyXDuhh+MFoBiI3r7hWrtGBtKnMGRvh5SBVowBdjAvGf5jV4xqwt/LEBt
+ DTsQ==
+X-Gm-Message-State: AOAM533MqOHuW/2+/ABJifteCJZGXzc5kyzd4ZlkTUjevub5yXuScbM9
+ iz99V0lpukGIEQm0xrNbPeQ=
 X-Google-Smtp-Source: 
- ABdhPJzgSnJsp3iubsjpHromUDbigdKv6m20aPiANrHaRWsq0/+FbeoENQom5o48qfFehAsyu/dtIA==
-X-Received: by 2002:a05:6402:5:: with SMTP id
- d5mr23652880edu.359.1629484124033;
- Fri, 20 Aug 2021 11:28:44 -0700 (PDT)
+ ABdhPJzH3S+Y3NHfuXZM5Ir87DyKg2zfCCWNg5KaxMNUIgRuMqbXx3RlYDhall/te3ioSxFZCUUVSQ==
+X-Received: by 2002:a50:eb95:: with SMTP id y21mr3138318edr.139.1630159352639;
+ Sat, 28 Aug 2021 07:02:32 -0700 (PDT)
 Received: from localhost.localdomain (84-72-105-84.dclient.hispeed.ch.
  [84.72.105.84])
- by smtp.gmail.com with ESMTPSA id n10sm3255724ejk.86.2021.08.20.11.28.43
+ by smtp.gmail.com with ESMTPSA id cn16sm4953982edb.87.2021.08.28.07.02.31
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 20 Aug 2021 11:28:43 -0700 (PDT)
+ Sat, 28 Aug 2021 07:02:32 -0700 (PDT)
 From: Nicolas Frattaroli <frattaroli.nicolas@gmail.com>
-To: Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>,
- Rob Herring <robh+dt@kernel.org>, Heiko Stuebner <heiko@sntech.de>,
- Nicolas Frattaroli <frattaroli.nicolas@gmail.com>
-Cc: alsa-devel@alsa-project.org, devicetree@vger.kernel.org,
- linux-arm-kernel@lists.infradead.org, linux-rockchip@lists.infradead.org,
+To: Nicolas Frattaroli <frattaroli.nicolas@gmail.com>,
+ Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>,
+ Rob Herring <robh+dt@kernel.org>, Heiko Stuebner <heiko@sntech.de>
+Cc: linux-rockchip@lists.infradead.org, alsa-devel@alsa-project.org,
+ devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
  linux-kernel@vger.kernel.org
-Subject: [PATCH v2 2/4] dt-bindings: sound: add rockchip i2s-tdm binding
-Date: Fri, 20 Aug 2021 20:27:29 +0200
-Message-Id: <20210820182731.29370-3-frattaroli.nicolas@gmail.com>
-X-Mailer: git-send-email 2.32.0
-In-Reply-To: <20210820182731.29370-1-frattaroli.nicolas@gmail.com>
-References: <20210820182731.29370-1-frattaroli.nicolas@gmail.com>
+Subject: [PATCH v3 2/4] dt-bindings: sound: add rockchip i2s-tdm binding
+Date: Sat, 28 Aug 2021 16:02:02 +0200
+Message-Id: <20210828140205.21973-3-frattaroli.nicolas@gmail.com>
+X-Mailer: git-send-email 2.33.0
+In-Reply-To: <20210828140205.21973-1-frattaroli.nicolas@gmail.com>
+References: <20210828140205.21973-1-frattaroli.nicolas@gmail.com>
 MIME-Version: 1.0
 X-CRM114-Version: 20100106-BlameMichelson ( TRE 0.8.0 (BSD) ) MR-646709E3 
-X-CRM114-CacheID: sfid-20210820_112845_602607_35FBD92E 
-X-CRM114-Status: GOOD (  17.65  )
-X-BeenThere: linux-arm-kernel@lists.infradead.org
+X-CRM114-CacheID: sfid-20210828_070234_367311_D5A2DB02 
+X-CRM114-Status: GOOD (  20.81  )
+X-BeenThere: linux-rockchip@lists.infradead.org
 X-Mailman-Version: 2.1.34
 Precedence: list
-List-Id: <linux-arm-kernel.lists.infradead.org>
-List-Unsubscribe: 
- <http://lists.infradead.org/mailman/options/linux-arm-kernel>,
- <mailto:linux-arm-kernel-request@lists.infradead.org?subject=unsubscribe>
-List-Archive: <http://lists.infradead.org/pipermail/linux-arm-kernel/>
-List-Post: <mailto:linux-arm-kernel@lists.infradead.org>
-List-Help: <mailto:linux-arm-kernel-request@lists.infradead.org?subject=help>
-List-Subscribe: 
- <http://lists.infradead.org/mailman/listinfo/linux-arm-kernel>,
- <mailto:linux-arm-kernel-request@lists.infradead.org?subject=subscribe>
-Sender: "linux-arm-kernel" <linux-arm-kernel-bounces@lists.infradead.org>
+List-Id: Upstream kernel work for Rockchip platforms
+ <linux-rockchip.lists.infradead.org>
+List-Unsubscribe: <http://lists.infradead.org/mailman/options/linux-rockchip>,
+ <mailto:linux-rockchip-request@lists.infradead.org?subject=unsubscribe>
+List-Archive: <http://lists.infradead.org/pipermail/linux-rockchip/>
+List-Post: <mailto:linux-rockchip@lists.infradead.org>
+List-Help: <mailto:linux-rockchip-request@lists.infradead.org?subject=help>
+List-Subscribe: <http://lists.infradead.org/mailman/listinfo/linux-rockchip>,
+ <mailto:linux-rockchip-request@lists.infradead.org?subject=subscribe>
+Sender: "Linux-rockchip" <linux-rockchip-bounces@lists.infradead.org>
 Errors-To: 
- linux-arm-kernel-bounces+linux-arm-kernel=archiver.kernel.org@lists.infradead.org
+ linux-rockchip-bounces+linux-rockchip=archiver.kernel.org@lists.infradead.org
 
 This adds the YAML bindings for the Rockchip I2S/TDM audio driver.
 
 Signed-off-by: Nicolas Frattaroli <frattaroli.nicolas@gmail.com>
 ---
- .../bindings/sound/rockchip,i2s-tdm.yaml      | 193 ++++++++++++++++++
- 1 file changed, 193 insertions(+)
+ .../bindings/sound/rockchip,i2s-tdm.yaml      | 218 ++++++++++++++++++
+ MAINTAINERS                                   |   1 +
+ 2 files changed, 219 insertions(+)
  create mode 100644 Documentation/devicetree/bindings/sound/rockchip,i2s-tdm.yaml
 
 diff --git a/Documentation/devicetree/bindings/sound/rockchip,i2s-tdm.yaml b/Documentation/devicetree/bindings/sound/rockchip,i2s-tdm.yaml
 new file mode 100644
-index 000000000000..1e8c1500ba40
+index 000000000000..ab8731779805
 --- /dev/null
 +++ b/Documentation/devicetree/bindings/sound/rockchip,i2s-tdm.yaml
-@@ -0,0 +1,193 @@
+@@ -0,0 +1,218 @@
 +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
 +%YAML 1.2
 +---
@@ -2498,21 +2623,39 @@ index 000000000000..1e8c1500ba40
 +
 +  dma-names:
 +    minItems: 1
++    maxItems: 2
 +    items:
-+      - const: rx
-+      - const: tx
++      enum:
++        - rx
++        - tx
 +
 +  clocks:
++    minItems: 3
 +    items:
 +      - description: clock for TX
 +      - description: clock for RX
 +      - description: AHB clock driving the interface
++      - description:
++          Parent clock for mclk_tx (only required when using mclk-calibrate)
++      - description:
++          Parent clock for mclk_rx (only required when using mclk-calibrate)
++      - description:
++          Clock for sample rates that are an integer multiple of 8000
++          (only required when using mclk-calibrate)
++      - description:
++          Clock for sample rates that are an integer multiple of 11025
++          (only required when using mclk-calibrate)
 +
 +  clock-names:
++    minItems: 3
 +    items:
 +      - const: mclk_tx
 +      - const: mclk_rx
 +      - const: hclk
++      - const: mclk_tx_src
++      - const: mclk_rx_src
++      - const: mclk_root0
++      - const: mclk_root1
 +
 +  rockchip,frame-width:
 +    $ref: /schemas/types.yaml#/definitions/uint32
@@ -2537,8 +2680,7 @@ index 000000000000..1e8c1500ba40
 +    $ref: /schemas/types.yaml#/definitions/phandle
 +    description:
 +      The phandle of the cru.
-+      Required if both playback and capture are used, i.e. if rockchip,clk-trcm
-+      is 0.
++      Required if neither trcm-sync-tx-only nor trcm-sync-rx-only are specified.
 +
 +  rockchip,grf:
 +    $ref: /schemas/types.yaml#/definitions/phandle
@@ -2547,7 +2689,9 @@ index 000000000000..1e8c1500ba40
 +
 +  rockchip,mclk-calibrate:
 +    description:
-+      Enable mclk source calibration.
++      Switch between two root clocks depending on the audio sample rate.
++      For integer multiples of 8000 (e.g. 48000 Hz), mclk_root0 is used.
++      For integer multiples of 11025 (e.g. 44100 Hz), mclk_root1 is used.
 +    type: boolean
 +
 +  rockchip,trcm-sync-tx-only:
@@ -2585,6 +2729,12 @@ index 000000000000..1e8c1500ba40
 +
 +  rockchip,tdm-fsync-half-frame:
 +    description: Whether to use half frame fsync.
++    type: boolean
++
++  rockchip,io-multiplex:
++    description:
++      Specify that the GPIO lines on the I2S bus are multiplexed such that
++      the direction (input/output) needs to be dynamically adjusted.
 +    type: boolean
 +
 +
@@ -2654,15 +2804,27 @@ index 000000000000..1e8c1500ba40
 +            status = "okay";
 +        };
 +    };
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 5d459d42672c..d2be16a85009 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -16053,6 +16053,7 @@ ROCKCHIP I2S TDM DRIVER
+ M:	Nicolas Frattaroli <frattaroli.nicolas@gmail.com>
+ L:	linux-rockchip@lists.infradead.org
+ S:	Maintained
++F:	Documentation/devicetree/bindings/sound/rockchip,i2s-tdm.yaml
+ F:	sound/soc/rockchip/rockchip_i2s_tdm.*
+ 
+ ROCKCHIP ISP V1 DRIVER
 
-From patchwork Fri Aug 20 18:27:30 2021
+From patchwork Sat Aug 28 14:02:03 2021
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: 7bit
 X-Patchwork-Submitter: Nicolas Frattaroli <frattaroli.nicolas@gmail.com>
-X-Patchwork-Id: 12450243
+X-Patchwork-Id: 12463527
 Return-Path: 
- <SRS0=Tcyv=NL=lists.infradead.org=linux-arm-kernel-bounces+linux-arm-kernel=archiver.kernel.org@kernel.org>
+ <SRS0=b+1m=NT=lists.infradead.org=linux-rockchip-bounces+linux-rockchip=archiver.kernel.org@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
@@ -2672,17 +2834,17 @@ X-Spam-Status: No, score=-13.7 required=3.0 tests=BAYES_00,
 	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,
 	USER_AGENT_GIT autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AB2DCC4338F
-	for <linux-arm-kernel@archiver.kernel.org>;
- Fri, 20 Aug 2021 18:31:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 50643C432BE
+	for <linux-rockchip@archiver.kernel.org>;
+ Sat, 28 Aug 2021 14:03:26 +0000 (UTC)
 Received: from bombadil.infradead.org (bombadil.infradead.org
  [198.137.202.133])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 763956113B
-	for <linux-arm-kernel@archiver.kernel.org>;
- Fri, 20 Aug 2021 18:31:40 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.1 mail.kernel.org 763956113B
+	by mail.kernel.org (Postfix) with ESMTPS id 0E76D60E8B
+	for <linux-rockchip@archiver.kernel.org>;
+ Sat, 28 Aug 2021 14:03:26 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.1 mail.kernel.org 0E76D60E8B
 Authentication-Results: mail.kernel.org;
  dmarc=fail (p=none dis=none) header.from=gmail.com
 Authentication-Results: mail.kernel.org;
@@ -2693,85 +2855,84 @@ DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
 	List-Archive:List-Unsubscribe:List-Id:MIME-Version:References:In-Reply-To:
 	Message-Id:Date:Subject:Cc:To:From:Reply-To:Content-ID:Content-Description:
 	Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:
-	List-Owner; bh=T8JTwVhUVYTL4WV1e4sUCKeyKZGVSAbKNQ+hQO0b8CY=; b=Hi9vQTifRjW71O
-	AdymDCZpWIKwU8ohR8v/0m4HkGGwxXa9sAUdqAvrzy06ZYebMSX44yg+LRxx5lH1CjMKndcZFl1JE
-	ZOVCqC1ei9XnNcbxdwNkkqgQkHhXYwdR9AtvAao1+D2F7lUaGyc2WvZ7rwwEyoXVxNagI2QR6jGBR
-	kj6VCDgvPRaYbtlfRm5/TblCp6Hj1a3h53+5gIi/H7kQ1j13JBAo9sX/k2pAvzCpQYwxDka9RTPqk
-	RQByMpbzRRE21kFLsqxP34MgLgh+BtX7QhgwixYci9du8ZAW1XFf7NHuGuLf6g4Dy0Mpf4eO+AD3/
-	DlUS2o8UC50rqugntaKg==;
+	List-Owner; bh=VJBpW4EsvYkTSX67WvMoZumB8nyAjplmj5nQbTK3aug=; b=felaeYwunWL0sr
+	4vByoglRDhvgbuvKoXV7Is5BpgLiFlxSIxjaJGU1rrtAJA0Dm/RenTdzZsU4+Q7+Mu99/FUOph8a3
+	+5vcVjXV2Ss8pi/SBDbdiLm5wOUmjf8XmtWNihg+TOOsKn/UrFm4Ya1qG5dgszbeEpMW4xVtu47Wl
+	7m5EC9+XmxVnYPVfoajBZ2g+Eq2qT08Npq+NbfGYUo0okJ+Ie18/LBqaf1+hAtA81GWcMK/UGEcnO
+	GrYCq0GRNPHXaLclgjwDfElFf13U06zRtTSU/5jdcg03R5WnNzAMr1Pv9lfEbLpMSUBw/UkoU8XPX
+	vRvxzrOIQCW6P070deSQ==;
 Received: from localhost ([::1] helo=bombadil.infradead.org)
 	by bombadil.infradead.org with esmtp (Exim 4.94.2 #2 (Red Hat Linux))
-	id 1mH9HG-00BrPH-GG; Fri, 20 Aug 2021 18:30:03 +0000
+	id 1mJyva-00EJLa-1c; Sat, 28 Aug 2021 14:03:22 +0000
 Received: from mail-ej1-x62a.google.com ([2a00:1450:4864:20::62a])
  by bombadil.infradead.org with esmtps (Exim 4.94.2 #2 (Red Hat Linux))
- id 1mH9G5-00Bqpm-TQ; Fri, 20 Aug 2021 18:28:51 +0000
-Received: by mail-ej1-x62a.google.com with SMTP id mf2so3414806ejb.9;
- Fri, 20 Aug 2021 11:28:49 -0700 (PDT)
+ id 1mJyus-00EJ0I-Um; Sat, 28 Aug 2021 14:02:40 +0000
+Received: by mail-ej1-x62a.google.com with SMTP id t19so20301621ejr.8;
+ Sat, 28 Aug 2021 07:02:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
  h=from:to:cc:subject:date:message-id:in-reply-to:references
  :mime-version:content-transfer-encoding;
- bh=cENZLLHwvvAfM8Bz4wGMWapvwPbQelm5zUSRTGsu2cU=;
- b=YgqbJh+/0L5gXYDdr+o23/i/axG68ZmUx2va6Gy2WACDnZuoLfS06sWobv5qmAW0+w
- gdNZcsJP4LTQcH/jlmzkOLrAQcOdBUFc5bfZfOgLKg7RTCWosWyMoktYcy7ldD/d22nW
- hmZc+cMQEILYYtKDZN7miPZrEnQux3BUCBWZE9CVhKIvCTg/CfAgP2Hl8UkJhiWOsGML
- l0rwFF41lh2UNkpQ88tntyR9agKqQshOWKHe1e9DxszUf1oIX7iwWcrzT3nwt9493zUD
- fUqpZkhHIlHUXGVOMrFpITF/gCohkf/MtKUbP44+9G8/+b/lsS/4gr//Ovr0KifatsWV
- sA/w==
+ bh=tyrOm7xpawJP+/ommIWD0ISWok2qoozg6cD1tMaZFAQ=;
+ b=NDrqi0pnyBtaxic7U2vZv57APr6RKXS5EgGD7rDCG/23xL4GyGge2Ex/XFAb5TExTK
+ R33oWBmooBhy1FQS9DAJTIYbi6Nki0gzBpDsgYPTdPRg06ZALAeXfplTWHfWmAdha77U
+ gF4SQkk4kQ5wYyzhCGurEnzNVqHdUy/FZU0+qQIbYz47ExU1evoRIrVpgiIqN/VNO7LN
+ gAhAuP1L0LH3wnfbq5wcSQv2D3XsyEiCAlNJmsSBj7JjT7OJzYPO00ymZN3F20HMaaZB
+ 7j7zjaD0uy2S6odf3FB9gAMYiHYbd9KyXgHsS+VkWmKFQUVwaHy+pHpm7kpi+wPfKCmU
+ UNFw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
  h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
  :references:mime-version:content-transfer-encoding;
- bh=cENZLLHwvvAfM8Bz4wGMWapvwPbQelm5zUSRTGsu2cU=;
- b=OSVT80oEHbPnH3YGcjJi0yHAJbNQJopFwnvx5KelBfJREh4sJS2/M8UqsB2ceZjG64
- ZFYbmOLR6IB8M65RQMQsh3ptq0kDGXSyDE8U/bO9zNRo4cIIGgNZcL6XmDyar8O4eT0B
- aer5bE2GFdyLDmGUghd3uM4ImOr0R565HoWRnpEk//MSn/s5zvWZ3bCpED7Kj1iSnjq0
- pgZ8ZxxXTztTdy+McTZewOAChT8evZh4/4yt0AmI/3LsED/ool3ErpeWjTpP+yNRWNk9
- ToEk7ZH02Gx/kyIhw4WPlLWEl/7UR6WsXrG6GOLoJxMMoftibbycKoI1zzUW5NkeeAj7
- D/Cw==
-X-Gm-Message-State: AOAM531YgxNestGfDbcVj8+EPLjQsIqXUyjzqzgvo/MTa5dx7j3Ly5/6
- mdH3aRKULWGubYQvEcJhC5ZhS9X6HgumsDwU
+ bh=tyrOm7xpawJP+/ommIWD0ISWok2qoozg6cD1tMaZFAQ=;
+ b=X50NY83U2dh8w27ZyHvPC37cE5bqoFxmuZ/FIJWf27+1V6o1JS7jJucLV+BMMSo2x0
+ J8X7/ZiZo00Mw+la2jSI16oBZjB/Z+UoGjt94IN0vnPooeVpUTS+uzYocSy9HwVzz7ag
+ S4HeLd7YGm9Ln/A4xYucwMZrzTOSI7a6JVjmqTpW5JBKRz3iPkK0y5b7lZVFrbFeyZP9
+ v2TRzdufqun6ggzPwJeKKGuyd26woT291DJhamkqESBWOe+n+v+6xxdOU9rqviPtSfr/
+ Wk5TXMCBeNHSIOGusjzEy26w7LW1b2TRx3l0UDB0gFwwlMJW5zn+jrcnHvVlIGjISjoh
+ TLDA==
+X-Gm-Message-State: AOAM533E5qmtXaeswlaTlhCZbpRSbiJozT+YcY1XZm9GuYs9z7GPWLHq
+ DmDiUr+Xawqv5ij/kYAT8Lg=
 X-Google-Smtp-Source: 
- ABdhPJzzDAmM7MkDVx9k6BD8jNsrHQmaI3IcXGRpV0WTAguxnyM2hdb4BYvVc3cMI6DcD4ojJXY7Hw==
-X-Received: by 2002:a17:906:3854:: with SMTP id
- w20mr22731050ejc.537.1629484128360;
- Fri, 20 Aug 2021 11:28:48 -0700 (PDT)
+ ABdhPJwqo8tWbX+5ybYyu3tB5S9rK0+kkjK/8nmzpCxt46RE0NK5Y/58dPTq9aFReCRqNM3y2mqEDg==
+X-Received: by 2002:a17:906:fc7:: with SMTP id
+ c7mr14814325ejk.333.1630159357831;
+ Sat, 28 Aug 2021 07:02:37 -0700 (PDT)
 Received: from localhost.localdomain (84-72-105-84.dclient.hispeed.ch.
  [84.72.105.84])
- by smtp.gmail.com with ESMTPSA id n10sm3255724ejk.86.2021.08.20.11.28.47
+ by smtp.gmail.com with ESMTPSA id cn16sm4953982edb.87.2021.08.28.07.02.37
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 20 Aug 2021 11:28:47 -0700 (PDT)
+ Sat, 28 Aug 2021 07:02:37 -0700 (PDT)
 From: Nicolas Frattaroli <frattaroli.nicolas@gmail.com>
 To: Rob Herring <robh+dt@kernel.org>,
 	Heiko Stuebner <heiko@sntech.de>
 Cc: Nicolas Frattaroli <frattaroli.nicolas@gmail.com>,
  devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
  linux-rockchip@lists.infradead.org, linux-kernel@vger.kernel.org
-Subject: [PATCH v2 3/4] arm64: dts: rockchip: add i2s1 on rk356x
-Date: Fri, 20 Aug 2021 20:27:30 +0200
-Message-Id: <20210820182731.29370-4-frattaroli.nicolas@gmail.com>
-X-Mailer: git-send-email 2.32.0
-In-Reply-To: <20210820182731.29370-1-frattaroli.nicolas@gmail.com>
-References: <20210820182731.29370-1-frattaroli.nicolas@gmail.com>
+Subject: [PATCH v3 3/4] arm64: dts: rockchip: add i2s1 on rk356x
+Date: Sat, 28 Aug 2021 16:02:03 +0200
+Message-Id: <20210828140205.21973-4-frattaroli.nicolas@gmail.com>
+X-Mailer: git-send-email 2.33.0
+In-Reply-To: <20210828140205.21973-1-frattaroli.nicolas@gmail.com>
+References: <20210828140205.21973-1-frattaroli.nicolas@gmail.com>
 MIME-Version: 1.0
 X-CRM114-Version: 20100106-BlameMichelson ( TRE 0.8.0 (BSD) ) MR-646709E3 
-X-CRM114-CacheID: sfid-20210820_112850_025357_BDAD5B3C 
-X-CRM114-Status: GOOD (  12.56  )
-X-BeenThere: linux-arm-kernel@lists.infradead.org
+X-CRM114-CacheID: sfid-20210828_070239_037415_771FEB8E 
+X-CRM114-Status: GOOD (  12.37  )
+X-BeenThere: linux-rockchip@lists.infradead.org
 X-Mailman-Version: 2.1.34
 Precedence: list
-List-Id: <linux-arm-kernel.lists.infradead.org>
-List-Unsubscribe: 
- <http://lists.infradead.org/mailman/options/linux-arm-kernel>,
- <mailto:linux-arm-kernel-request@lists.infradead.org?subject=unsubscribe>
-List-Archive: <http://lists.infradead.org/pipermail/linux-arm-kernel/>
-List-Post: <mailto:linux-arm-kernel@lists.infradead.org>
-List-Help: <mailto:linux-arm-kernel-request@lists.infradead.org?subject=help>
-List-Subscribe: 
- <http://lists.infradead.org/mailman/listinfo/linux-arm-kernel>,
- <mailto:linux-arm-kernel-request@lists.infradead.org?subject=subscribe>
-Sender: "linux-arm-kernel" <linux-arm-kernel-bounces@lists.infradead.org>
+List-Id: Upstream kernel work for Rockchip platforms
+ <linux-rockchip.lists.infradead.org>
+List-Unsubscribe: <http://lists.infradead.org/mailman/options/linux-rockchip>,
+ <mailto:linux-rockchip-request@lists.infradead.org?subject=unsubscribe>
+List-Archive: <http://lists.infradead.org/pipermail/linux-rockchip/>
+List-Post: <mailto:linux-rockchip@lists.infradead.org>
+List-Help: <mailto:linux-rockchip-request@lists.infradead.org?subject=help>
+List-Subscribe: <http://lists.infradead.org/mailman/listinfo/linux-rockchip>,
+ <mailto:linux-rockchip-request@lists.infradead.org?subject=subscribe>
+Sender: "Linux-rockchip" <linux-rockchip-bounces@lists.infradead.org>
 Errors-To: 
- linux-arm-kernel-bounces+linux-arm-kernel=archiver.kernel.org@lists.infradead.org
+ linux-rockchip-bounces+linux-rockchip=archiver.kernel.org@lists.infradead.org
 
 This adds the necessary device tree node on rk3566 and rk3568
 to enable the I2S1 TDM audio controller.
@@ -2823,14 +2984,14 @@ index 13b185e1dc5f..fce760996a64 100644
  		compatible = "arm,pl330", "arm,primecell";
  		reg = <0x0 0xfe530000 0x0 0x4000>;
 
-From patchwork Fri Aug 20 18:27:31 2021
+From patchwork Sat Aug 28 14:02:04 2021
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: 7bit
 X-Patchwork-Submitter: Nicolas Frattaroli <frattaroli.nicolas@gmail.com>
-X-Patchwork-Id: 12450245
+X-Patchwork-Id: 12463529
 Return-Path: 
- <SRS0=Tcyv=NL=lists.infradead.org=linux-arm-kernel-bounces+linux-arm-kernel=archiver.kernel.org@kernel.org>
+ <SRS0=b+1m=NT=lists.infradead.org=linux-rockchip-bounces+linux-rockchip=archiver.kernel.org@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
@@ -2840,17 +3001,17 @@ X-Spam-Status: No, score=-13.7 required=3.0 tests=BAYES_00,
 	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,
 	USER_AGENT_GIT autolearn=unavailable autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 23BC3C4320A
-	for <linux-arm-kernel@archiver.kernel.org>;
- Fri, 20 Aug 2021 18:32:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6E85AC432BE
+	for <linux-rockchip@archiver.kernel.org>;
+ Sat, 28 Aug 2021 14:03:42 +0000 (UTC)
 Received: from bombadil.infradead.org (bombadil.infradead.org
  [198.137.202.133])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id E72D56113D
-	for <linux-arm-kernel@archiver.kernel.org>;
- Fri, 20 Aug 2021 18:32:10 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.1 mail.kernel.org E72D56113D
+	by mail.kernel.org (Postfix) with ESMTPS id 306C560E8B
+	for <linux-rockchip@archiver.kernel.org>;
+ Sat, 28 Aug 2021 14:03:42 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.1 mail.kernel.org 306C560E8B
 Authentication-Results: mail.kernel.org;
  dmarc=fail (p=none dis=none) header.from=gmail.com
 Authentication-Results: mail.kernel.org;
@@ -2861,85 +3022,84 @@ DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
 	List-Archive:List-Unsubscribe:List-Id:MIME-Version:References:In-Reply-To:
 	Message-Id:Date:Subject:Cc:To:From:Reply-To:Content-ID:Content-Description:
 	Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:
-	List-Owner; bh=57LluqCVk2vPhH2BPdW5YlVfOq7p0i8MHNeIKGcBg3k=; b=WJ59pICZNpOYgF
-	wSttrdGM6o+Bn6ddiebpdxXuxyiwpf7y2g4yKB/9mmDOKtbCJwR4PtQ+28fRqpQG4x9eS60/T0ZhM
-	BGh80qL8uSMt07hzRGBSehjsSdyfLdsFOmGU4zFE1o1afsGKgfyahGI93S6b/JwEq/nuw4RVhi8j0
-	q8wRNs4y0coCwgvHO0PuX4wCGC7rOyKjkRpKUuMwV/15UwgQ/X/Z/JUHbMp9LRN32zgZhoG1nPMMz
-	HXgXz7qxl9xNN+w3Jm46RlLmvx9HH6gMO9v9LBwZKF/KBvMOOtYxbmdKNosUqXyBSmsSd/pXWV/KA
-	TW3rIs2eS2t113zz16+w==;
+	List-Owner; bh=Cych10DtjHzeRd0vba4CM2oEbytDZ0BvyEjTA6cf93g=; b=ho5gyhiAfWbr7c
+	QgeLiYFcf4vcz8x9Jen/blQDnjBLeHSvvUZWkEZG3OhytH/OOfYe0fKK9ZR5Yq/12DuUsRZsMEpZJ
+	4E7PnNW4ZWzsbOcYDlIz/pg5wHfJws9Dk2pm7w/R4/5vJFjt7nDFmHJp5tBjAZLg0D9fj6U52iynU
+	5FzBJQqMjmjryVtDi4k7ZU9029UzqCpOsZ/P1SDiZdOf/VcTem9XbVSUdI98buyUkHZp3VN2dle1B
+	ux2+fzgCdwQ5QNPcJ2y44nHHfRKLAlLieuW0/t04BdeC7e1Itvd6LLLCLC89B/G3WY40lzZpFh5X6
+	feGYr2PXSVWag9pid4sg==;
 Received: from localhost ([::1] helo=bombadil.infradead.org)
 	by bombadil.infradead.org with esmtp (Exim 4.94.2 #2 (Red Hat Linux))
-	id 1mH9Hp-00Brgi-Qk; Fri, 20 Aug 2021 18:30:38 +0000
-Received: from mail-ej1-x642.google.com ([2a00:1450:4864:20::642])
+	id 1mJyvq-00EJVW-9a; Sat, 28 Aug 2021 14:03:38 +0000
+Received: from mail-ej1-x641.google.com ([2a00:1450:4864:20::641])
  by bombadil.infradead.org with esmtps (Exim 4.94.2 #2 (Red Hat Linux))
- id 1mH9GB-00BqsN-ET; Fri, 20 Aug 2021 18:28:56 +0000
-Received: by mail-ej1-x642.google.com with SMTP id x11so22078105ejv.0;
- Fri, 20 Aug 2021 11:28:55 -0700 (PDT)
+ id 1mJyux-00EJ20-Kp; Sat, 28 Aug 2021 14:02:45 +0000
+Received: by mail-ej1-x641.google.com with SMTP id ia27so20303154ejc.10;
+ Sat, 28 Aug 2021 07:02:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
  h=from:to:cc:subject:date:message-id:in-reply-to:references
  :mime-version:content-transfer-encoding;
- bh=Y2TFOiJdD6/bVUi+HowGp/lkXbvGkSZjNzeuPAsFmZo=;
- b=Hf88SitH2sHhCyvdUquEOOLpu3bSpXYNlW/Yh2d9WI3ZxRTs9MNQYLvBlecNfNamct
- VXl7SWUq8duQtFMCrLYgcZtvILuUxEe3XOoCWPnnK7EMbVDFslmoSBELjg3ZXo1TFjZ2
- 7nrc0CkXZjQ+Mm+aL4wG+7D8NwcIurb+XYJxmCC9Blt9+QEddvtjuyRiEoUV7ygH6vrW
- NkGfKQjJd5MTT6dw60W2+eC5006o/GUpbjMdmrNaGFtXiyczFNBZr2EcCvefKFTfHacH
- tv0QPfiFr0sjh8N5uy1niNdYnyTl0pA6/0diwuHYu5q2oSD/eXegGRq929PfdPrH62Kd
- +CMg==
+ bh=0ynkhuMfoq8DWmPzT9LpIH9te0RlyWltDsyURvZ4GFQ=;
+ b=WXYsOBvNLvecil2uBWEWlJk7vK1PIV6a6v7sMtXpoaBBntJcsywk3oE3VCbRiV5TOF
+ yj4BDYuZOHQUsCIRfXfCBKDfvyKe1PqTsGJtiaFOZvpaavjsKk/lCPCkhJCUiCh3KdzF
+ wWwOxVM4pvzuhcTaqXxnCARr/7n/K0ZC+ZiGZyNapRC2FYT/0/lI4d9Ds2VVV5lJAKyE
+ wjDCHjARZXw52quChOv0luNIYx7BgD0tGNCh3wqxo9zxAyqHVwJ5koLvYItKo3fjHjvW
+ v6EXZNUyUQHpio7bN99lbzjpfyUyURksUirpAh2IZLTY+RCYQEIH1nAxnXAgEPgRimFH
+ DYTA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
  h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
  :references:mime-version:content-transfer-encoding;
- bh=Y2TFOiJdD6/bVUi+HowGp/lkXbvGkSZjNzeuPAsFmZo=;
- b=udSFIRz5rqRF0qQQrP8RCrg5V9rfcwXuGo16V5rCgXrtFozfNUGD1q0RS5l9s01Y4z
- Pbe3iY6h6HGSzN2+aIXS3x2pl5LPhXUlXOCSx+AgAP/asug5EiCxc9ihuW0P27tNmpvB
- EPvb+9DEqPJOL0qUJStbQymRhw+cJt85NQ8onSf0vm8C8hkwkC5z6GTSmTnLfzzH0JoP
- j/riEw7mbzpP/W7p5W5WVZFbnmZSF77PwXwIfMsK79SXffcQzNiBCNvGWNqXBlievP42
- cQ7X9E+z2c4YLxgCtX6XZl/0+H89qTym1R97g7UgSD20vsvz9yxLuD2EB6qrk6mtepmH
- a2uA==
-X-Gm-Message-State: AOAM532QCEx35sXVG7TWMK7sYZm3JPtUJQ7AOXk21LEjqfYsKZblwaPX
- mQHEMdBXwwSyyNDV1EtfmThXBnd/vhJ0PmZM
+ bh=0ynkhuMfoq8DWmPzT9LpIH9te0RlyWltDsyURvZ4GFQ=;
+ b=o6GATCBoX3fxN9SdWb09kgr86yn65hj5cjuWBUOUZNZMLlMIVutYEBez3J+HAOXBd7
+ VGHHwBW3usu/ZD+AhUukgqhqDSL6IjLwt/eYV2jbgxW2p+59QXopck7wWBmSMNooqybd
+ o/HAkF69B6iKmuq14FGdmxB00GNFZSWDDwKB5Y07csjQlTA4a9wolfc34FgGLQOGmdhD
+ 5fFmBA83UiJNCHQU5SR88DMdr5laXmcPaSGL0MPsUbKPS9gS/68CXsnA21JuKlTeKoe1
+ H6L+qGZ1Z3Y/u5F4OpXYKPG5r4vnl9Q33FUMTskO3PLsNRphzamw22wz4i+93uVtgowg
+ SDoA==
+X-Gm-Message-State: AOAM531c/6CFYC+DcM2YcWcI8UvvEbfXPe3BPAvsDNHHQUBxD4EFgV/C
+ JePGhwLbhx1H77BYUiKi0I8ND3FOjLoR+zoi
 X-Google-Smtp-Source: 
- ABdhPJydRKKIbGPJcmnQMsf+qQjxZ2VmsIQ8pfrRLYKH5AeNCcUX+Ys0M5X+iVaGiUaGIkjboYXspg==
-X-Received: by 2002:a17:906:38ce:: with SMTP id
- r14mr22586377ejd.268.1629484133925;
- Fri, 20 Aug 2021 11:28:53 -0700 (PDT)
+ ABdhPJz9dW2L7uBwqDxr1u6iX12tYpKwwjG4sNxBoGqA//OYMDo3NzxVkobfVlc+80Ecfmm2cTWkmw==
+X-Received: by 2002:a17:907:92c:: with SMTP id
+ au12mr15634084ejc.523.1630159362125;
+ Sat, 28 Aug 2021 07:02:42 -0700 (PDT)
 Received: from localhost.localdomain (84-72-105-84.dclient.hispeed.ch.
  [84.72.105.84])
- by smtp.gmail.com with ESMTPSA id n10sm3255724ejk.86.2021.08.20.11.28.53
+ by smtp.gmail.com with ESMTPSA id cn16sm4953982edb.87.2021.08.28.07.02.41
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 20 Aug 2021 11:28:53 -0700 (PDT)
+ Sat, 28 Aug 2021 07:02:41 -0700 (PDT)
 From: Nicolas Frattaroli <frattaroli.nicolas@gmail.com>
 To: Rob Herring <robh+dt@kernel.org>,
 	Heiko Stuebner <heiko@sntech.de>
 Cc: Nicolas Frattaroli <frattaroli.nicolas@gmail.com>,
  devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
  linux-rockchip@lists.infradead.org, linux-kernel@vger.kernel.org
-Subject: [PATCH v2 4/4] arm64: dts: rockchip: add analog audio on Quartz64
-Date: Fri, 20 Aug 2021 20:27:31 +0200
-Message-Id: <20210820182731.29370-5-frattaroli.nicolas@gmail.com>
-X-Mailer: git-send-email 2.32.0
-In-Reply-To: <20210820182731.29370-1-frattaroli.nicolas@gmail.com>
-References: <20210820182731.29370-1-frattaroli.nicolas@gmail.com>
+Subject: [PATCH v3 4/4] arm64: dts: rockchip: add analog audio on Quartz64
+Date: Sat, 28 Aug 2021 16:02:04 +0200
+Message-Id: <20210828140205.21973-5-frattaroli.nicolas@gmail.com>
+X-Mailer: git-send-email 2.33.0
+In-Reply-To: <20210828140205.21973-1-frattaroli.nicolas@gmail.com>
+References: <20210828140205.21973-1-frattaroli.nicolas@gmail.com>
 MIME-Version: 1.0
 X-CRM114-Version: 20100106-BlameMichelson ( TRE 0.8.0 (BSD) ) MR-646709E3 
-X-CRM114-CacheID: sfid-20210820_112855_536381_026DEC2E 
-X-CRM114-Status: GOOD (  13.83  )
-X-BeenThere: linux-arm-kernel@lists.infradead.org
+X-CRM114-CacheID: sfid-20210828_070243_743199_03492948 
+X-CRM114-Status: GOOD (  13.65  )
+X-BeenThere: linux-rockchip@lists.infradead.org
 X-Mailman-Version: 2.1.34
 Precedence: list
-List-Id: <linux-arm-kernel.lists.infradead.org>
-List-Unsubscribe: 
- <http://lists.infradead.org/mailman/options/linux-arm-kernel>,
- <mailto:linux-arm-kernel-request@lists.infradead.org?subject=unsubscribe>
-List-Archive: <http://lists.infradead.org/pipermail/linux-arm-kernel/>
-List-Post: <mailto:linux-arm-kernel@lists.infradead.org>
-List-Help: <mailto:linux-arm-kernel-request@lists.infradead.org?subject=help>
-List-Subscribe: 
- <http://lists.infradead.org/mailman/listinfo/linux-arm-kernel>,
- <mailto:linux-arm-kernel-request@lists.infradead.org?subject=subscribe>
-Sender: "linux-arm-kernel" <linux-arm-kernel-bounces@lists.infradead.org>
+List-Id: Upstream kernel work for Rockchip platforms
+ <linux-rockchip.lists.infradead.org>
+List-Unsubscribe: <http://lists.infradead.org/mailman/options/linux-rockchip>,
+ <mailto:linux-rockchip-request@lists.infradead.org?subject=unsubscribe>
+List-Archive: <http://lists.infradead.org/pipermail/linux-rockchip/>
+List-Post: <mailto:linux-rockchip@lists.infradead.org>
+List-Help: <mailto:linux-rockchip-request@lists.infradead.org?subject=help>
+List-Subscribe: <http://lists.infradead.org/mailman/listinfo/linux-rockchip>,
+ <mailto:linux-rockchip-request@lists.infradead.org?subject=subscribe>
+Sender: "Linux-rockchip" <linux-rockchip-bounces@lists.infradead.org>
 Errors-To: 
- linux-arm-kernel-bounces+linux-arm-kernel=archiver.kernel.org@lists.infradead.org
+ linux-rockchip-bounces+linux-rockchip=archiver.kernel.org@lists.infradead.org
 
 On the Quartz64 Model A, the I2S1 TDM controller is connected
 to the rk817 codec in I2S mode. Enabling it and adding the
