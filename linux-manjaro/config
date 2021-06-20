@@ -1,6 +1,6 @@
 #
 # Automatically generated file; DO NOT EDIT.
-# Linux/arm64 5.18.6-1 Kernel Configuration
+# Linux/arm64 5.18.11-1 Kernel Configuration
 #
 CONFIG_CC_VERSION_TEXT="gcc (GCC) 12.1.0"
 CONFIG_CC_IS_GCC=y
@@ -3901,7 +3901,9 @@ CONFIG_SERIAL_OF_PLATFORM=y
 # Non-8250 serial port support
 #
 CONFIG_SERIAL_AMBA_PL010=y
+# CONFIG_SERIAL_AMBA_PL010_CONSOLE is not set
 CONFIG_SERIAL_AMBA_PL011=y
+# CONFIG_SERIAL_AMBA_PL011_CONSOLE is not set
 CONFIG_SERIAL_EARLYCON_ARM_SEMIHOST=y
 # CONFIG_SERIAL_KGDB_NMI is not set
 CONFIG_SERIAL_MESON=y
@@ -4027,7 +4029,7 @@ CONFIG_I2C_ALGOPCA=m
 #
 # PC SMBus host controller drivers
 #
-CONFIG_I2C_CCGX_UCSI=m
+CONFIG_I2C_CCGX_UCSI=y
 # CONFIG_I2C_ALI1535 is not set
 # CONFIG_I2C_ALI1563 is not set
 # CONFIG_I2C_ALI15X3 is not set
