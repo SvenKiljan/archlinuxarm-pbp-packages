@@ -2,34 +2,27 @@
 
 _pkgname=pine64-pinebookPro
 _pkgmajorversion=2021.04
-_pkgminorversion=001
+_pkgminorversion=002
 _pkgver=${_pkgmajorversion}-${_pkgminorversion}
 
 pkgname=towboot-pinebookpro-bin
-pkgrel=1
 pkgver=${_pkgmajorversion}.${_pkgminorversion}
+pkgrel=1
 pkgdesc="Tow-Boot for Pinebook Pro"
 arch=('aarch64')
 url='https://github.com/Tow-Boot/Tow-Boot'
 license=('GPL')
+optdepends=('mtd-utils: SPI installation support')
 provides=('uboot')
 conflicts=('uboot')
 install=${pkgname}.install
 source=("https://github.com/Tow-Boot/Tow-Boot/releases/download/release-${_pkgver}/${_pkgname}-${_pkgver}.tar.xz")
-sha256sums=('bab23f5d7c80aabb9209b0ae38bee48bb0aca4d743a729b336b1bc1a456537e7')
-
-prepare() {
-  cd "${_pkgname}-${_pkgver}"
-
-  dd if=disk-image.img of=idbloader.img skip=64 count=16320 conv=notrunc,fsync status=none
-  dd if=disk-image.img of=tow-boot.itb skip=16384 count=16384 conv=notrunc,fsync status=none
-}
+sha256sums=('934e9d03c75c2e95815bb6a6ce96a22f65d826335aa552e79f949a63fdfca676')
 
 package() {
   cd "${_pkgname}-${_pkgver}"
 
   mkdir -p "${pkgdir}/boot/extlinux"
-  install -Dm644 "idbloader.img" -t "${pkgdir}/boot"
-  install -Dm644 "tow-boot.itb" -t "${pkgdir}/boot"
-  install -Dm644 "firmware.spiflash.bin" -T "${pkgdir}/boot/tow-boot.spiflash.bin"
+  install -Dm644 "binaries/Tow-Boot.noenv.bin" -t "${pkgdir}/boot"
+  install -Dm644 "binaries/Tow-Boot.spi.bin" -t "${pkgdir}/boot"
 }

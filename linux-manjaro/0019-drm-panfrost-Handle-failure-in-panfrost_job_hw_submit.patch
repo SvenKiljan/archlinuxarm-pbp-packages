@@ -1,0 +1,158 @@
+From patchwork Wed May 12 15:24:19 2021
+Content-Type: text/plain; charset="utf-8"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7bit
+X-Patchwork-Submitter: Steven Price <Steven.Price@arm.com>
+X-Patchwork-Id: 12254137
+Return-Path: <SRS0=SYvv=KH=lists.freedesktop.org=dri-devel-bounces@kernel.org>
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+	aws-us-west-2-korg-lkml-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-16.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
+	autolearn_force=no version=3.4.0
+Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 95130C433ED
+	for <dri-devel@archiver.kernel.org>; Wed, 12 May 2021 15:24:59 +0000 (UTC)
+Received: from gabe.freedesktop.org (gabe.freedesktop.org [131.252.210.177])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by mail.kernel.org (Postfix) with ESMTPS id 33D736196A
+	for <dri-devel@archiver.kernel.org>; Wed, 12 May 2021 15:24:59 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 33D736196A
+Authentication-Results: mail.kernel.org;
+ dmarc=fail (p=none dis=none) header.from=arm.com
+Authentication-Results: mail.kernel.org;
+ spf=none smtp.mailfrom=dri-devel-bounces@lists.freedesktop.org
+Received: from gabe.freedesktop.org (localhost [127.0.0.1])
+	by gabe.freedesktop.org (Postfix) with ESMTP id 6795C6EC37;
+	Wed, 12 May 2021 15:24:58 +0000 (UTC)
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+ by gabe.freedesktop.org (Postfix) with ESMTP id 55C026EC3A
+ for <dri-devel@lists.freedesktop.org>; Wed, 12 May 2021 15:24:55 +0000 (UTC)
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+ by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id EB59231B;
+ Wed, 12 May 2021 08:24:54 -0700 (PDT)
+Received: from e112269-lin.arm.com (unknown [172.31.20.19])
+ by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 84CF73F718;
+ Wed, 12 May 2021 08:24:53 -0700 (PDT)
+From: Steven Price <steven.price@arm.com>
+To: Daniel Vetter <daniel@ffwll.ch>, David Airlie <airlied@linux.ie>,
+ Rob Herring <robh@kernel.org>, Tomeu Vizoso <tomeu.vizoso@collabora.com>
+Subject: [PATCH] drm/panfrost: Handle failure in panfrost_job_hw_submit()
+Date: Wed, 12 May 2021 16:24:19 +0100
+Message-Id: <20210512152419.30003-1-steven.price@arm.com>
+X-Mailer: git-send-email 2.20.1
+MIME-Version: 1.0
+X-BeenThere: dri-devel@lists.freedesktop.org
+X-Mailman-Version: 2.1.29
+Precedence: list
+List-Id: Direct Rendering Infrastructure - Development
+ <dri-devel.lists.freedesktop.org>
+List-Unsubscribe: <https://lists.freedesktop.org/mailman/options/dri-devel>,
+ <mailto:dri-devel-request@lists.freedesktop.org?subject=unsubscribe>
+List-Archive: <https://lists.freedesktop.org/archives/dri-devel>
+List-Post: <mailto:dri-devel@lists.freedesktop.org>
+List-Help: <mailto:dri-devel-request@lists.freedesktop.org?subject=help>
+List-Subscribe: <https://lists.freedesktop.org/mailman/listinfo/dri-devel>,
+ <mailto:dri-devel-request@lists.freedesktop.org?subject=subscribe>
+Cc: linux-kernel@vger.kernel.org, Zou Wei <zou_wei@huawei.com>,
+ Alyssa Rosenzweig <alyssa.rosenzweig@collabora.com>,
+ dri-devel@lists.freedesktop.org, Steven Price <steven.price@arm.com>
+Errors-To: dri-devel-bounces@lists.freedesktop.org
+Sender: "dri-devel" <dri-devel-bounces@lists.freedesktop.org>
+
+Currently panfrost_job_hw_submit() returns void and therefore cannot
+propagate failures to it's caller, which is a shame because it has two
+failure paths. Currently these are handled by waiting for a job timeout
+on the job even though it was never submitted. But we can do better.
+
+Refactor to return a failure code from panfrost_job_hw_submit() and
+report the failure back to the DRM scheduler. This means there's no need
+to wait for the scheduler to timeout on the job and the failure can be
+handled immediately.
+
+Signed-off-by: Steven Price <steven.price@arm.com>
+---
+This hopefully will also stop future reports of a PM reference
+leak[1][2] which doesn't actually exist.
+
+[1] https://lore.kernel.org/r/20200520110504.24388-1-dinghao.liu%40zju.edu.cn
+[2] https://lore.kernel.org/r/1620714551-106976-1-git-send-email-zou_wei%40huawei.com
+---
+ drivers/gpu/drm/panfrost/panfrost_job.c | 27 ++++++++++++++++---------
+ 1 file changed, 18 insertions(+), 9 deletions(-)
+
+diff --git a/drivers/gpu/drm/panfrost/panfrost_job.c b/drivers/gpu/drm/panfrost/panfrost_job.c
+index 6003cfeb1322..ac1ae38aaf12 100644
+--- a/drivers/gpu/drm/panfrost/panfrost_job.c
++++ b/drivers/gpu/drm/panfrost/panfrost_job.c
+@@ -148,21 +148,22 @@ static void panfrost_job_write_affinity(struct panfrost_device *pfdev,
+ 	job_write(pfdev, JS_AFFINITY_NEXT_HI(js), affinity >> 32);
+ }
+ 
+-static void panfrost_job_hw_submit(struct panfrost_job *job, int js)
++static int panfrost_job_hw_submit(struct panfrost_job *job, int js)
+ {
+ 	struct panfrost_device *pfdev = job->pfdev;
+ 	u32 cfg;
+ 	u64 jc_head = job->jc;
+ 	int ret;
+ 
+-	panfrost_devfreq_record_busy(&pfdev->pfdevfreq);
+-
+-	ret = pm_runtime_get_sync(pfdev->dev);
++	ret = pm_runtime_resume_and_get(pfdev->dev);
+ 	if (ret < 0)
+-		return;
++		return ret;
++
++	panfrost_devfreq_record_busy(&pfdev->pfdevfreq);
+ 
+ 	if (WARN_ON(job_read(pfdev, JS_COMMAND_NEXT(js)))) {
+-		return;
++		pm_runtime_put_autosuspend(pfdev->dev);
++		return -EBUSY;
+ 	}
+ 
+ 	cfg = panfrost_mmu_as_get(pfdev, &job->file_priv->mmu);
+@@ -194,6 +195,8 @@ static void panfrost_job_hw_submit(struct panfrost_job *job, int js)
+ 				job, js, jc_head);
+ 
+ 	job_write(pfdev, JS_COMMAND_NEXT(js), JS_COMMAND_START);
++
++	return 0;
+ }
+ 
+ static void panfrost_acquire_object_fences(struct drm_gem_object **bos,
+@@ -347,12 +350,11 @@ static struct dma_fence *panfrost_job_run(struct drm_sched_job *sched_job)
+ 	struct panfrost_device *pfdev = job->pfdev;
+ 	int slot = panfrost_job_get_slot(job);
+ 	struct dma_fence *fence = NULL;
++	int err;
+ 
+ 	if (unlikely(job->base.s_fence->finished.error))
+ 		return NULL;
+ 
+-	pfdev->jobs[slot] = job;
+-
+ 	fence = panfrost_fence_create(pfdev, slot);
+ 	if (IS_ERR(fence))
+ 		return NULL;
+@@ -361,7 +363,14 @@ static struct dma_fence *panfrost_job_run(struct drm_sched_job *sched_job)
+ 		dma_fence_put(job->done_fence);
+ 	job->done_fence = dma_fence_get(fence);
+ 
+-	panfrost_job_hw_submit(job, slot);
++	err = panfrost_job_hw_submit(job, slot);
++
++	if (err) {
++		dma_fence_put(fence);
++		return NULL;
++	}
++
++	pfdev->jobs[slot] = job;
+ 
+ 	return fence;
+ }
