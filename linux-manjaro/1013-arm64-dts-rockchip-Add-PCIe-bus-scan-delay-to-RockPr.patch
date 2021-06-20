@@ -1,7 +1,7 @@
 From b59f3f0adac345a962223e6e50b8bfbed603a879 Mon Sep 17 00:00:00 2001
 From: Dan Johansen <strit@manjaro.org>
 Date: Thu, 2 Sep 2021 09:44:47 +0200
-Subject: [PATCH] arm64: dts: rockchip: Add pcie bus scan delay to rockpro64
+Subject: [PATCH] arm64: dts: rockchip: Add PCIe bus scan delay to RockPro64
 
 Signed-off-by: Dan Johansen <strit@manjaro.org>
 ---

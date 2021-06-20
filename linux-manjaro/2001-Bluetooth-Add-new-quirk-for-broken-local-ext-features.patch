@@ -1,8 +1,16 @@
-From 942e794211fc05943db36212d41c4e8a68b3c922 Mon Sep 17 00:00:00 2001
-From: Dan Johansen <strit@manjaro.org>
-Date: Mon, 17 Aug 2020 21:32:16 +0200
-Subject: [PATCH] Bluetooth-Add-new-quirk-for-broken-local-ext-features
+From: Vasily Khoruzhick <anarsoul@gmail.com>
+Subject: [PATCH 1/8] Bluetooth: Add new quirk for broken local ext features max_page
+Date: Fri, 18 Jan 2019 09:02:25 -0800
+Message-Id: <20190118170232.16142-2-anarsoul@gmail.com>
 
+Some adapters (e.g. RTL8723CS) advertise that they have more than
+2 pages for local ext features, but they don't support any features
+declared in these pages. RTL8723CS reports max_page = 2 and declares
+support for sync train and secure connection, but it responds with
+either garbage or with error in status on corresponding commands.
+
+Signed-off-by: Vasily Khoruzhick <anarsoul@gmail.com>
+Signed-off-by: Dan Johansen <strit@manjaro.org>
 ---
  include/net/bluetooth/hci.h | 7 +++++++
  net/bluetooth/hci_event.c   | 4 +++-
