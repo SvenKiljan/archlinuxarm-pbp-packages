@@ -8,7 +8,7 @@
 
 pkgname=libdrm-pinebookpro
 _pkgname=libdrm
-pkgver=2.4.109
+pkgver=2.4.110
 pkgrel=1
 pkgdesc="Userspace interface to kernel DRM services"
 url="https://dri.freedesktop.org/"
@@ -23,7 +23,7 @@ provides=($_pkgname)
 source=("https://dri.freedesktop.org/$_pkgname/$_pkgname-$pkgver.tar.xz"
         "0001-Prevent-dirty-tracking-for-Pinebook-Pro.patch"
         "COPYING")
-sha512sums=('45194bb28207421afcff3e247930d2eeab77a5fea58e6be22f67525f2e0aab2f410a9ae0ab315b55ef56b80c481bba40b1660468b7cda539758b2bbb8e814fd8'
+sha512sums=('52f92ef1fe4c218a1d7dba53ef43334dbfca80e3209afe59f3a32c4bf67473126534e990df07a931a12d46a3b997c21ef17c1c4d8a0c88d44d5c6c040e3b6be3'
             '106cc357421f1cfb07e8f27800d6121c9919a544a6511c1bd7577950400793d39216989d5b4c37f1449110315eef0e42ebf04af861eb25b20d7fa2938e3f1301'
             '03dd85ad0f54b84b84a794b89de4e2d2c7b87f09934a09957c6b585a6101fcf3d46bd4889ed83dea6c36704541a84c4e77d659e12d77a4324fd2936e88f4ac11')
             
