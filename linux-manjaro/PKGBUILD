@@ -7,8 +7,8 @@ pkgbase=linux-manjaro
 _srcname=linux-5.14
 _kernelname=${pkgbase#linux}
 _desc="AArch64 multi-platform"
-pkgver=5.14.14
-pkgrel=2
+pkgver=5.14.15
+pkgrel=1
 arch=('aarch64')
 url="http://www.kernel.org/"
 license=('GPL2')
@@ -46,7 +46,6 @@ source=("http://www.kernel.org/pub/linux/kernel/v5.x/${_srcname}.tar.xz"
         '0006-pinetab-accelerometer.patch'
         '0007-enable-jack-detection-pinetab.patch'
         '0008-enable-hdmi-output-pinetab.patch'
-        '0009-drm-panel-Adjust-sync-values-for-Feixin-K101-IM2BYL02-panel.patch' #Applied in linux-next
         '0001-arm64-dts-rockchip-Add-quartz64-a-dts-from-linux-nex.patch' #Applied in linux-next
         '0002-fixes-and-enablement-for-rk356x.patch' #Applied in linux-next
         '0003-Rockchip-I2S-TDM-controller.patch'
@@ -63,7 +62,7 @@ source=("http://www.kernel.org/pub/linux/kernel/v5.x/${_srcname}.tar.xz"
         '60-linux.hook'
         '90-linux.hook')
 md5sums=('a082ef5748b813abca0649dab8be5f52'
-         '7b8dc63cfdb806b3c5953bf9b0615daa'
+         '6e3c6ac02a1f625f5057a2eb6b15565e'
          '9e6b7f44db105fef525d715213dce7cf'
          '754cf09a858498e1d98b44baa043a196'
          '0d47dea87f03bf36262171e01889f832'
@@ -94,7 +93,6 @@ md5sums=('a082ef5748b813abca0649dab8be5f52'
          'd0fd6bd627223d4c9fc001ffff9df401'
          'f79300740a7350d2d24ab5e120831b52'
          '979a787cf84bef9c60da78e72ec96550'
-         'b05068c0ae9edbdb39d6678117e8cb05'
          'bae82c4f8f8ee360df7695537d542e0e'
          'a1c29fc4c7ea01af094a5a90c675620b'
          'e8adada273680ff94b3f2c5a0e8dce31'
@@ -106,7 +104,7 @@ md5sums=('a082ef5748b813abca0649dab8be5f52'
          '7659fe53cc58b9a7ed615b49719f7066'
          'ae85e433bc4fd787c20a4df0d07d528b'
          '15b2d6fd96df0a070a8f1b4fc5399b8b'
-         'a65f500a945572187b33a9003631574f'
+         '162b0f24518c3e4e54810a3e71f6de87'
          '86d4a35722b5410e3b29fc92dae15d4b'
          'ce6c81ad1ad1f8b333fd6077d47abdaf'
          '3dc88030a8f2f5a5f97266d99b149f77')
@@ -154,7 +152,6 @@ prepare() {
   patch -Np1 -i "${srcdir}/0006-pinetab-accelerometer.patch"                                            #accelerometer
   patch -Np1 -i "${srcdir}/0007-enable-jack-detection-pinetab.patch"                                    #Audio
   patch -Np1 -i "${srcdir}/0008-enable-hdmi-output-pinetab.patch"                                       #HDMI
-  patch -Np1 -i "${srcdir}/0009-drm-panel-Adjust-sync-values-for-Feixin-K101-IM2BYL02-panel.patch"      #Display
 
   # Quartz64 development patches, will probably change alot
   #patch -Np1 -i "${srcdir}/0001-arm64-dts-rockchip-Add-quartz64-a-dts-from-linux-nex.patch"             #Main DTS
