@@ -7,7 +7,7 @@
 
 pkgname=uboot-pinebookpro
 pkgver=2022.04
-pkgrel=3
+pkgrel=4
 _tfaver=2.6
 pkgdesc="U-Boot for Pine64 Pinebook Pro"
 arch=('aarch64')
