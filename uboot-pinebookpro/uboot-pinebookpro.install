@@ -1,38 +1,38 @@
-flash_uboot() {
-  echo "A new U-Boot version can be flashed onto your install drive. Please use lsblk to determine your drive, before proceeding."
-    echo "You can do this by running:"
-    echo "# dd if=/boot/idbloader.img of=/dev/mmcblkX seek=64 conv=notrunc,fsync"
-    echo "# dd if=/boot/u-boot.itb of=/dev/mmcblkX seek=16384 conv=notrunc,fsync"
+notice_uboot() {
+  echo "New version of U-Boot firmware can be flashed to your microSD card (mmcblk1)"
+  echo "or eMMC module (mmcblk2).  You can do that by running:"
+  echo "# dd if=/boot/idbloader.img of=/dev/mmcblkX seek=64 conv=notrunc,fsync"
+  echo "# dd if=/boot/u-boot.itb of=/dev/mmcblkX seek=16384 conv=notrunc,fsync"
 }
 
-post_install() {
-  flash_uboot
-  if [ -f /boot/extlinux/extlinux.conf.pacsave ]; then
-  mv /boot/extlinux/extlinux.conf.pacsave /boot/extlinux/extlinux.conf
-  fi
-  if [ -f /boot/extlinux/extlinux.conf ]; then
-  echo "Keeping old extlinux.conf file..."
-  else
-  mkdir -p /boot/extlinux/
+create_config() {
+  mkdir -p /boot/extlinux
   echo "LABEL Arch Linux ARM
 KERNEL /Image
 FDT /dtbs/rockchip/rk3399-pinebook-pro.dtb
 APPEND initrd=/initramfs-linux.img console=ttyS2,1500000 console=tty0 root=LABEL=ROOT_ALARM rw rootwait plymouth.ignore-serial-consoles" > /boot/extlinux/extlinux.conf
+}
+
+post_install() {
+  notice_uboot
+  if [ -f /boot/extlinux/extlinux.conf.pacsave ]; then
+    mv /boot/extlinux/extlinux.conf.pacsave /boot/extlinux/extlinux.conf
+  fi
+  if [ -f /boot/extlinux/extlinux.conf ]; then
+    echo "Keeping old extlinux.conf file..."
+  else
+    create_config
   fi
 }
 
 post_upgrade() {
-  flash_uboot
+  notice_uboot
   if [ -f /boot/extlinux/extlinux.conf.pacsave ]; then
-  mv /boot/extlinux/extlinux.conf.pacsave /boot/extlinux/extlinux.conf
+    mv /boot/extlinux/extlinux.conf.pacsave /boot/extlinux/extlinux.conf
   fi
   if [ -f /boot/extlinux/extlinux.conf ]; then
-  echo "Keeping old extlinux.conf file..."
+    echo "Keeping old extlinux.conf file..."
   else
-  mkdir -p /boot/extlinux/
-  echo "LABEL Arch Linux ARM
-KERNEL /Image
-FDT /dtbs/rockchip/rk3399-pinebook-pro.dtb
-APPEND initrd=/initramfs-linux.img console=ttyS2,1500000 console=tty0 root=LABEL=ROOT_ALARM rw rootwait plymouth.ignore-serial-consoles" > /boot/extlinux/extlinux.conf
+    create_config
   fi
 }
