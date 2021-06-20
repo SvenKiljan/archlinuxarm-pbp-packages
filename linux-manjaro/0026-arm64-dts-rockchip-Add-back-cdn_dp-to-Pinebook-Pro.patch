@@ -1,0 +1,36 @@
+From 7ed9d9ed4276945a2d3615bdf83c1fd64f07a682 Mon Sep 17 00:00:00 2001
+From: Dan Johansen <strit@manjaro.org>
+Date: Thu, 4 Nov 2021 17:32:34 +0100
+Subject: [PATCH] arm64: dts: rockchip: Add back cdn_dp to Pinebook Pro CDN_DP
+ was removed in commit 2513fa5c25d42f55ca5f0f0ab247af7c9fbfa3b1 ("arm64: dts:
+ rockchip: Disable CDN DP on Pinebook Pro") because the Pinebook Pro dts does
+ not have the extcon to use it, which results in a black screen if enabled.
+
+But since we (Manjaro ARM) apply patches to enable extcon
+to it, add back the dts node for Pinebook Pro.
+
+Fixes: 2513fa5c25d42f55ca5f0f0ab247af7c9fbfa3b1 ("arm64: dts: rockchip: Disable CDN DP on Pinebook Pro")
+
+Signed-off-by: Dan Johansen <strit@manjaro.org>
+---
+ arch/arm64/boot/dts/rockchip/rk3399-pinebook-pro.dts | 4 ++++
+ 1 file changed, 4 insertions(+)
+
+diff --git a/arch/arm64/boot/dts/rockchip/rk3399-pinebook-pro.dts b/arch/arm64/boot/dts/rockchip/rk3399-pinebook-pro.dts
+index c2f021a1a18f..229176677fea 100644
+--- a/arch/arm64/boot/dts/rockchip/rk3399-pinebook-pro.dts
++++ b/arch/arm64/boot/dts/rockchip/rk3399-pinebook-pro.dts
+@@ -386,6 +386,10 @@ mains_charger: dc-charger {
+ 	};
+ };
+ 
++&cdn_dp {
++	status = "okay";
++};
++
+ &cpu_b0 {
+ 	cpu-supply = <&vdd_cpu_b>;
+ };
+-- 
+2.33.0
+
