@@ -5,8 +5,8 @@
 # Contributor: Dragan Simic <dsimic@buserror.io>
 
 pkgbase=linux-manjaro
-pkgver=6.2.1
-pkgrel=2
+pkgver=6.2.2
+pkgrel=1
 _newversion=false
 _stopbuild=false     # Will also stop if ${_newversion} is true
 _srcname="linux-${pkgver/%.0/}"
@@ -56,7 +56,7 @@ source=("http://www.kernel.org/pub/linux/kernel/v6.x/${_srcname}.tar.xz"
         'linux.preset'
         '60-linux.hook'
         '90-linux.hook')
-md5sums=('153c2edd8c2113d5302b588a735f5128'
+md5sums=('03b17feb98f92131a465b09f3a12e715'
          'e6fe272dc95a1c0a8f871924699fea16'
          '6f592c11f6adc1de0f06e5d18f8c2862'
          'f8f0b124c741be61d86bea8d44e875f9'
