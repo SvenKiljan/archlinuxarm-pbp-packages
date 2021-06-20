@@ -1,0 +1,121 @@
+From e5e7cf0a0241caa331364ef97d743ebfdc8238d8 Mon Sep 17 00:00:00 2001
+From: Dan Johansen <strit@manjaro.org>
+Date: Tue, 19 Jan 2021 12:50:04 +0100
+Subject: [PATCH] dt-bindings-arm-sunxi-add-PineTab-Early-Adopter-edition
+
+---
+ .../devicetree/bindings/arm/sunxi.yaml        |  7 ++++-
+ arch/arm64/boot/dts/allwinner/Makefile        |  1 +
+ .../sun50i-a64-pinetab-early-adopter.dts      | 26 +++++++++++++++++++
+ .../boot/dts/allwinner/sun50i-a64-pinetab.dts |  2 +-
+ drivers/gpu/drm/panel/panel-ilitek-ili9881c.c | 12 ++++-----
+ 5 files changed, 40 insertions(+), 8 deletions(-)
+ create mode 100644 arch/arm64/boot/dts/allwinner/sun50i-a64-pinetab-early-adopter.dts
+
+diff --git a/Documentation/devicetree/bindings/arm/sunxi.yaml b/Documentation/devicetree/bindings/arm/sunxi.yaml
+index 6db32fbf813f..7eec85be7ab9 100644
+--- a/Documentation/devicetree/bindings/arm/sunxi.yaml
++++ b/Documentation/devicetree/bindings/arm/sunxi.yaml
+@@ -695,11 +695,16 @@ properties:
+           - const: pine64,pinephone-1.2
+           - const: allwinner,sun50i-a64
+ 
+-      - description: Pine64 PineTab
++      - description: Pine64 PineTab, Development Sample
+         items:
+           - const: pine64,pinetab
+           - const: allwinner,sun50i-a64
+ 
++      - description: Pine64 PineTab, Early Adopter's batch (and maybe later ones)
++        items:
++          - const: pine64,pinetab-early-adopter
++          - const: allwinner,sun50i-a64
++
+       - description: Pine64 SoPine Baseboard
+         items:
+           - const: pine64,sopine-baseboard
+diff --git a/arch/arm64/boot/dts/allwinner/Makefile b/arch/arm64/boot/dts/allwinner/Makefile
+index 211d1e9d4701..41ce680e5f8d 100644
+--- a/arch/arm64/boot/dts/allwinner/Makefile
++++ b/arch/arm64/boot/dts/allwinner/Makefile
+@@ -13,6 +13,7 @@ dtb-$(CONFIG_ARCH_SUNXI) += sun50i-a64-pinephone-1.0.dtb
+ dtb-$(CONFIG_ARCH_SUNXI) += sun50i-a64-pinephone-1.1.dtb
+ dtb-$(CONFIG_ARCH_SUNXI) += sun50i-a64-pinephone-1.2.dtb
+ dtb-$(CONFIG_ARCH_SUNXI) += sun50i-a64-pinetab.dtb
++dtb-$(CONFIG_ARCH_SUNXI) += sun50i-a64-pinetab-early-adopter.dtb
+ dtb-$(CONFIG_ARCH_SUNXI) += sun50i-a64-sopine-baseboard.dtb
+ dtb-$(CONFIG_ARCH_SUNXI) += sun50i-a64-teres-i.dtb
+ dtb-$(CONFIG_ARCH_SUNXI) += sun50i-a100-allwinner-perf1.dtb
+diff --git a/arch/arm64/boot/dts/allwinner/sun50i-a64-pinetab-early-adopter.dts b/arch/arm64/boot/dts/allwinner/sun50i-a64-pinetab-early-adopter.dts
+new file mode 100644
+index 000000000000..652fc0cce304
+--- /dev/null
++++ b/arch/arm64/boot/dts/allwinner/sun50i-a64-pinetab-early-adopter.dts
+@@ -0,0 +1,26 @@
++// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
++/*
++ * Copyright (C) 2020 Icenowy Zheng <icenowy@aosc.io>
++ *
++ */
++
++/dts-v1/;
++
++#include "sun50i-a64-pinetab.dts"
++
++/ {
++	model = "PineTab, Early Adopter's version";
++	compatible = "pine64,pinetab-early-adopter", "allwinner,sun50i-a64";
++};
++
++&dsi {
++	/delete-node/ panel@0;
++
++	panel@0 {
++		compatible = "feixin,k101-im2byl02";
++		reg = <0>;
++		power-supply = <&reg_dc1sw>;
++		reset-gpios = <&pio 3 24 GPIO_ACTIVE_LOW>; /* PD24 */
++		backlight = <&backlight>;
++	};
++};
+diff --git a/arch/arm64/boot/dts/allwinner/sun50i-a64-pinetab.dts b/arch/arm64/boot/dts/allwinner/sun50i-a64-pinetab.dts
+index 0494bfaf2ffa..422a8507f674 100644
+--- a/arch/arm64/boot/dts/allwinner/sun50i-a64-pinetab.dts
++++ b/arch/arm64/boot/dts/allwinner/sun50i-a64-pinetab.dts
+@@ -14,7 +14,7 @@
+ #include <dt-bindings/pwm/pwm.h>
+ 
+ / {
+-	model = "PineTab";
++	model = "PineTab, Development Sample";
+ 	compatible = "pine64,pinetab", "allwinner,sun50i-a64";
+ 
+ 	aliases {
+diff --git a/drivers/gpu/drm/panel/panel-ilitek-ili9881c.c b/drivers/gpu/drm/panel/panel-ilitek-ili9881c.c
+index 0145129d7c66..534dd7414d42 100644
+--- a/drivers/gpu/drm/panel/panel-ilitek-ili9881c.c
++++ b/drivers/gpu/drm/panel/panel-ilitek-ili9881c.c
+@@ -590,14 +590,14 @@ static const struct drm_display_mode k101_im2byl02_default_mode = {
+ 	.clock		= 69700,
+ 
+ 	.hdisplay	= 800,
+-	.hsync_start	= 800 + 6,
+-	.hsync_end	= 800 + 6 + 15,
+-	.htotal		= 800 + 6 + 15 + 16,
++	.hsync_start	= 800 + 52,
++	.hsync_end	= 800 + 52 + 8,
++	.htotal		= 800 + 52 + 8 + 48,
+ 
+ 	.vdisplay	= 1280,
+-	.vsync_start	= 1280 + 8,
+-	.vsync_end	= 1280 + 8 + 48,
+-	.vtotal		= 1280 + 8 + 48 + 52,
++	.vsync_start	= 1280 + 16,
++	.vsync_end	= 1280 + 16 + 6,
++	.vtotal		= 1280 + 16 + 6 + 15,
+ 
+ 	.width_mm	= 135,
+ 	.height_mm	= 217,
+-- 
+2.29.2
+

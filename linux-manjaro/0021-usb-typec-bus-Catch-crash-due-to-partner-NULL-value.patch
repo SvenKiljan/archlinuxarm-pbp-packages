@@ -1,0 +1,35 @@
+From e01fc4ff0bbe2ed3ba9076905bc1e9570917f1bf Mon Sep 17 00:00:00 2001
+From: Tobias Schramm <t.schramm@manjaro.org>
+Date: Thu, 28 May 2020 14:22:09 +0200
+Subject: [PATCH] usb: typec: bus: Catch crash due to partner NULL value
+
+Think this has been fixed upstream, have not seen it happen for ages.
+Drop on next rebase.
+
+Signed-off-by: Tobias Schramm <t.schramm@manjaro.org>
+---
+ drivers/usb/typec/bus.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
+
+diff --git a/drivers/usb/typec/bus.c b/drivers/usb/typec/bus.c
+index e8ddb81cb6df..1d0265f46441 100644
+--- a/drivers/usb/typec/bus.c
++++ b/drivers/usb/typec/bus.c
+@@ -154,8 +154,14 @@ EXPORT_SYMBOL_GPL(typec_altmode_exit);
+  */
+ void typec_altmode_attention(struct typec_altmode *adev, u32 vdo)
+ {
+-	struct typec_altmode *pdev = &to_altmode(adev)->partner->adev;
++	struct typec_altmode *pdev;
++	WARN_ONCE(!adev, "typec bus attention: adev is NULL!");
++	WARN_ONCE(!to_altmode(adev)->partner, "typec bus attention: partner is NULL!");
++	if(!adev || !to_altmode(adev)->partner) {
++		return;
++	}
+ 
++	pdev = &to_altmode(adev)->partner->adev;
+ 	if (pdev->ops && pdev->ops->attention)
+ 		pdev->ops->attention(pdev, vdo);
+ }
+-- 
+GitLab 

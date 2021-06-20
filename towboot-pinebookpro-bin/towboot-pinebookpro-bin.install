@@ -1,0 +1,38 @@
+flash_towboot() {
+  echo "A new Tow-Boot version can be flashed onto your install drive. Please use lsblk to determine your drive, before proceeding."
+    echo "You can do this by running:"
+    echo "# dd if=/boot/idbloader.img of=/dev/mmcblkX seek=64 conv=notrunc,fsync"
+    echo "# dd if=/boot/tow-boot.itb of=/dev/mmcblkX seek=16384 conv=notrunc,fsync"
+}
+
+post_install() {
+  flash_towboot
+  if [ -f /boot/extlinux/extlinux.conf.pacsave ]; then
+  mv /boot/extlinux/extlinux.conf.pacsave /boot/extlinux/extlinux.conf
+  fi
+  if [ -f /boot/extlinux/extlinux.conf ]; then
+  echo "Keeping old extlinux.conf file..."
+  else
+  mkdir -p /boot/extlinux/
+  echo "LABEL Arch Linux ARM
+KERNEL /Image
+FDT /dtbs/rockchip/rk3399-pinebook-pro.dtb
+APPEND initrd=/initramfs-linux.img console=ttyS2,1500000 console=tty0 root=LABEL=ROOT_ALARM rw rootwait plymouth.ignore-serial-consoles" > /boot/extlinux/extlinux.conf
+  fi
+}
+
+post_upgrade() {
+  flash_towboot
+  if [ -f /boot/extlinux/extlinux.conf.pacsave ]; then
+  mv /boot/extlinux/extlinux.conf.pacsave /boot/extlinux/extlinux.conf
+  fi
+  if [ -f /boot/extlinux/extlinux.conf ]; then
+  echo "Keeping old extlinux.conf file..."
+  else
+  mkdir -p /boot/extlinux/
+  echo "LABEL Arch Linux ARM
+KERNEL /Image
+FDT /dtbs/rockchip/rk3399-pinebook-pro.dtb
+APPEND initrd=/initramfs-linux.img console=ttyS2,1500000 console=tty0 root=LABEL=ROOT_ALARM rw rootwait plymouth.ignore-serial-consoles" > /boot/extlinux/extlinux.conf
+  fi
+}

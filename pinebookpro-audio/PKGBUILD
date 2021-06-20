@@ -1,0 +1,29 @@
+# Maintainer: Sven Kiljan <sven dot archlinuxarm dash pbp at kiljan dot org>
+# Contributor: Tobias Schram <tsys@manjaro.org>
+# Contributor: Furkan Kardame <furkan@fkardame.com>
+
+pkgname=pinebookpro-audio
+pkgver=1
+pkgrel=2
+pkgdesc="Pine64 Pinebook Pro - Audo Switch Audio Output"
+arch=('aarch64')
+url="https://gitlab.manjaro.org/tsys/hpdet-pinebookpro"
+license=('GPL')
+depends=('acpid' 'alsa-utils')
+install=${pkgname}.install
+source=("audio_jack_plugged_in"
+        'audio_jack_plugged_in.sh'
+        'sync.sh'
+        'pinebookpro-audio.service')
+md5sums=('03a8c88234b393f5b1c38e75ff68aa2a'
+         'b4bdb27aaef72801c32ef8df42084f9b'
+         'cdfed43fbb28c824bae3db9e7b6bfa77'
+         'b82521af28ea956b0ee256905d25a4a6')
+
+package() {
+    install -Dm644 "${srcdir}/audio_jack_plugged_in" -t "${pkgdir}/etc/acpi/events/"
+    install -Dm755 "${srcdir}/audio_jack_plugged_in.sh" -t "${pkgdir}/etc/acpi/"
+    install -Dm755 "${srcdir}/sync.sh" -t "${pkgdir}/usr/bin/"
+    install -Dm644 "${srcdir}/pinebookpro-audio.service" -t "${pkgdir}/usr/lib/systemd/system/"
+} 
+ 

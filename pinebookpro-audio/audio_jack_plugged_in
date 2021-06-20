@@ -1,0 +1,2 @@
+event=jack/headphone/*
+action=/etc/acpi/audio_jack_plugged_in.sh %e

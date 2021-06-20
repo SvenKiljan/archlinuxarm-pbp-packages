@@ -1,0 +1,23 @@
+# Maintainer: Sven Kiljan <sven dot archlinuxarm dash pbp at kiljan dot org>
+# Contributor: Dan Johansen <strit@manjaro.org>
+
+pkgname=pinebookpro-post-install
+pkgver=20$(date +%y%m%d)
+pkgrel=1
+pkgdesc="Arch Linux ARM Pinebook Pro install files"
+arch=('any')
+url="https://github.com/SvenKiljan/archlinuxarm-pbp"
+conflicts=('pinebook-post-install')
+license=('GPL')
+depends=('pinebookpro-audio')
+source=("10-usb-kbd.hwdb"
+        "asound.state")
+install=${pkgname}.install
+md5sums=('cd33e32e8317d8a4e43e55d445aa9c69'
+         '265c6d35f1df6984888452b440ac8471')
+
+package() {
+    install -Dm644 "${srcdir}/10-usb-kbd.hwdb" -t "${pkgdir}/etc/udev/hwdb.d/"
+    install -Dm644 "${srcdir}/asound.state" -t "${pkgdir}/var/lib/alsa/"
+    ln -s "/usr/lib/firmware" "${pkgdir}/etc/firmware"
+}

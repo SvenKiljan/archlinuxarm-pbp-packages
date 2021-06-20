@@ -1,0 +1,32 @@
+From 6971f1a2d45e85d43a9f335550c45c30b49227cf Mon Sep 17 00:00:00 2001
+From: Toni Spets <toni.spets@iki.fi>
+Date: Wed, 17 Feb 2021 20:54:21 +0200
+Subject: [PATCH] Prevent dirty tracking for Pinebook Pro
+
+---
+ xf86drmMode.c | 9 +--------
+ 1 file changed, 1 insertion(+), 8 deletions(-)
+
+diff --git a/xf86drmMode.c b/xf86drmMode.c
+index 3d6bdfd6..3389d8a8 100644
+--- a/xf86drmMode.c
++++ b/xf86drmMode.c
+@@ -333,14 +333,7 @@ drm_public drmModeFBPtr drmModeGetFB(int fd, uint32_t buf)
+ drm_public int drmModeDirtyFB(int fd, uint32_t bufferId,
+ 		   drmModeClipPtr clips, uint32_t num_clips)
+ {
+-	struct drm_mode_fb_dirty_cmd dirty;
+-
+-	memclear(dirty);
+-	dirty.fb_id = bufferId;
+-	dirty.clips_ptr = VOID2U64(clips);
+-	dirty.num_clips = num_clips;
+-
+-	return DRM_IOCTL(fd, DRM_IOCTL_MODE_DIRTYFB, &dirty);
++	return -ENOSYS;
+ }
+ 
+ /*
+-- 
+2.27.0
+

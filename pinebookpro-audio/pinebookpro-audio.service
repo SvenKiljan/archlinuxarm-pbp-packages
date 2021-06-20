@@ -1,0 +1,10 @@
+[Unit]
+Description=Sync initial headphone plug state
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/sync.sh
+RemainAfterExit=true
+
+[Install]
+WantedBy=multi-user.target
