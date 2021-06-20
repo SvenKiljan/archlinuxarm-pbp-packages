@@ -1,6 +1,6 @@
 #
 # Automatically generated file; DO NOT EDIT.
-# Linux/arm64 5.17.7-2 Kernel Configuration
+# Linux/arm64 5.17.9-2 Kernel Configuration
 #
 CONFIG_CC_VERSION_TEXT="gcc (GCC) 11.2.0"
 CONFIG_CC_IS_GCC=y
@@ -934,7 +934,7 @@ CONFIG_FRONTSWAP=y
 CONFIG_CMA=y
 # CONFIG_CMA_DEBUG is not set
 CONFIG_CMA_DEBUGFS=y
-# CONFIG_CMA_SYSFS is not set
+CONFIG_CMA_SYSFS=y
 CONFIG_CMA_AREAS=7
 CONFIG_ZSWAP=y
 # CONFIG_ZSWAP_COMPRESSOR_DEFAULT_DEFLATE is not set
@@ -9853,6 +9853,6 @@ CONFIG_ARCH_HAS_KCOV=y
 CONFIG_CC_HAS_SANCOV_TRACE_PC=y
 # CONFIG_RUNTIME_TESTING_MENU is not set
 CONFIG_ARCH_USE_MEMTEST=y
-# CONFIG_MEMTEST is not set
+CONFIG_MEMTEST=y
 # end of Kernel Testing and Coverage
 # end of Kernel hacking

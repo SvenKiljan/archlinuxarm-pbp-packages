@@ -7,7 +7,7 @@
 
 pkgname=uboot-pinebookpro
 pkgver=2022.04
-pkgrel=1
+pkgrel=2
 _tfaver=2.6
 pkgdesc="U-Boot for Pine64 Pinebook Pro"
 arch=('aarch64')
@@ -22,21 +22,24 @@ source=("ftp://ftp.denx.de/pub/u-boot/u-boot-${pkgver/rc/-rc}.tar.bz2"
         "0001-PBP-Fix-panel-reset.patch"
         "0002-Correct-boot-order-to-be-USB-SD-eMMC.patch"
         "0003-Turn-power-and-standby-LEDs-on-early.patch"
-        "0004-mmc-sdhci-allow-disabling-sdma-in-spl.patch")    # From list: https://patchwork.ozlabs.org/project/uboot/patch/20220222013131.3114990-3-pgwipeout@gmail.com/
+        "0004-mmc-sdhci-allow-disabling-sdma-in-spl.patch"       # From list: https://patchwork.ozlabs.org/project/uboot/patch/20220222013131.3114990-3-pgwipeout@gmail.com/
+        "0005-arm-dts-Work-around-daughterboard-issues.patch")   # Will be upstreamed by the author
 sha256sums=('68e065413926778e276ec3abd28bb32fa82abaa4a6898d570c1f48fbdb08bcd0'
             '4e59f02ccb042d5d18c89c849701b96e6cf4b788709564405354b5d313d173f7'
             'c3ea09a18b766a3ce0728234b097b29e2ed610c7f04b138b7fba42e118a7ae33'
             '017d33aac55f8a5ed22170c97b4792ba755a4dad04f6c0cdd85119bbc81e87b3'
             'e82b207c56f41c0cc7b85f9057936816ea2ed58533e2dd2f6d665e28c415be60'
-            '7014c3f1ada93536787a4ce30b484dfe651c339391bd46869c61933825a0edcc')
+            '7014c3f1ada93536787a4ce30b484dfe651c339391bd46869c61933825a0edcc'
+            'ff082f1bfc8666ca372d5e43924c47e60df637f5d2722b47a19b30a1306e8c74')
 
 prepare() {
   cd u-boot-${pkgver/rc/-rc}
 
-  patch -N -p1 -i "${srcdir}/0001-PBP-Fix-panel-reset.patch"                      # Panel reset fix
-  patch -N -p1 -i "${srcdir}/0002-Correct-boot-order-to-be-USB-SD-eMMC.patch"     # Boot from USB first
-  patch -N -p1 -i "${srcdir}/0003-Turn-power-and-standby-LEDs-on-early.patch"     # Orange status LED
-  patch -N -p1 -i "${srcdir}/0004-mmc-sdhci-allow-disabling-sdma-in-spl.patch"    # RK3399 suspend/resume
+  patch -N -p1 -i "${srcdir}/0001-PBP-Fix-panel-reset.patch"                         # Panel reset fix
+  patch -N -p1 -i "${srcdir}/0002-Correct-boot-order-to-be-USB-SD-eMMC.patch"        # Boot from USB first
+  patch -N -p1 -i "${srcdir}/0003-Turn-power-and-standby-LEDs-on-early.patch"        # Orange status LED
+  patch -N -p1 -i "${srcdir}/0004-mmc-sdhci-allow-disabling-sdma-in-spl.patch"       # RK3399 suspend/resume
+  patch -N -p1 -i "${srcdir}/0005-arm-dts-Work-around-daughterboard-issues.patch"    # MicroSD issues
 }
 
 build() {

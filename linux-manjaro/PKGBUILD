@@ -6,7 +6,7 @@
 
 pkgbase=linux-manjaro
 pkgver=5.17.9
-pkgrel=1
+pkgrel=2
 _newversion=false
 _stopbuild=false     # Will also stop if ${_newversion} is true
 _srcname="linux-${pkgver/%.0/}"
@@ -47,6 +47,7 @@ source=("http://www.kernel.org/pub/linux/kernel/v5.x/${_srcname}.tar.xz"
         '2007-arm64-dts-allwinner-pinetab-enable-jack-detection.patch'             # PineTab Audio
         '2008-brcmfmac-USB-probing-provides-no-board-type.patch'                   # Bluetooth;  Will be submitted upstream by the author
         '2009-dts-rockchip-Adapt-and-adopt-Type-C-support-from-Pin.patch'          # RockPro64 DP Alt Mode;  Not upstreamable
+        '2010-arm64-dts-rockchip-Work-around-daughterboard-issues.patch'           # Pinebook Pro microSD;  Will be submitted upstream by the author
         '3170-arm64-dts-rk3399-pinebook-pro-Fix-USB-PD-charging.patch'             # Third set of patches: START
         '3172-arm64-dts-rk3399-pinebook-pro-Improve-Type-C-support.patch'          # Pinebook Pro Type-C patches from megous; original patch numbers found
         '3174-arm64-dts-rk3399-pinebook-pro-Remove-redundant-pinct.patch'          # on https://xff.cz/kernels/5.17/patches/ are retained, with just the first
@@ -95,6 +96,7 @@ md5sums=('3080991d35e3c490f4cef781394a31bb'
          'f79300740a7350d2d24ab5e120831b52'
          'd2654df7fc87e5c874505a2d98cbce1c'
          '3d1c9ff232929189de8df70614304e13'
+         '59c20ef6082f4b4c6b54c4f532931ff4'
          '5e893acf3d94e12b34b8cff473c26218'
          'ac41d6c08c54c55d13c8fe894475ad65'
          '78cef676142df1365bba76957c3d3568'
@@ -109,7 +111,7 @@ md5sums=('3080991d35e3c490f4cef781394a31bb'
          '482a6974207197cff14e77a61f66a810'
          'a76a46e31f4229e7c4349f90ac36601b'
          '04eec4b27d9c26f6d53317100fbab7fb'
-         'f944fb5b392a3c6ec56f24105a08cb96'
+         '5b8866f0cf14f7d1ca44bc5d6761af0b'
          '86d4a35722b5410e3b29fc92dae15d4b'
          'ce6c81ad1ad1f8b333fd6077d47abdaf'
          '3dc88030a8f2f5a5f97266d99b149f77')
