@@ -6,7 +6,7 @@
 
 pkgbase=linux-manjaro
 pkgver=6.0.0
-pkgrel=1
+pkgrel=2
 _newversion=false
 _stopbuild=false     # Will also stop if ${_newversion} is true
 _srcname="linux-${pkgver/%.0/}"
@@ -36,7 +36,8 @@ source=("http://www.kernel.org/pub/linux/kernel/v6.x/${_srcname}.tar.xz"
         '1016-arm64-dts-allwinner-h6-Enable-hdmi-sound-card-on-boards.patch'       # Allwinner H6 HDMI audio (by Furkan)
         '1017-arm64-dts-allwinner-add-OrangePi-3-LTS.patch'                        # Orange Pi 3 LTS (by Furkan)
         '1018-arm64-dts-rockchip-add-rk3568-station-p2.patch'                      # Firefly Station P2 (by Furkan)
-        '1019-Add-support-for-the-Hardkernel-ODROID-M1-board.patch'                # Odroid M1; From list: https://patchwork.kernel.org/project/linux-rockchip/list/?series=680647
+        '1019-dt-bindings-rockchip-Add-Hardkernel-ODROID-M1-board.patch'           # Odroid M1; V1
+        '1020-arm64-dts-rockchip-Add-Hardkernel-ODROID-M1-board.patch'             # Odroid M1; V1
         '1020-arm64-dts-meson-radxa-zero-add-support-for-the-usb-t.patch'          # Radxa Zero (by Furkan)
         '1021-arm64-dts-rockchip-add-OrangePi-4-LTS.patch'                         # Orange Pi 4 LTS (by Furkan)
         '1022-Add-YT8531C-phy-support.patch'                                       # Motorcomm PHY (by Furkan)
@@ -87,7 +88,8 @@ md5sums=('d681bd1d62d48049a4874646f6774d92'
          '717c673c7caa564fc06e76ff9a0eebaa'
          'e285b47405d8eab611ba17bcbf2f9cbf'
          'aca8e5610b67e054176b6ff02c4830b0'
-         'e621a901ec9a313a5465903196bfbb85'
+         '7627f72a1fb2d932d5eb8738912164e1'
+         '1d8c900d58e07d57d007c176647c03a0'
          '9799998aa9b72fae2eb55e92d840dad5'
          '227466ec46ffce1684835c87640c46c2'
          '77200aa6b89276b9035f13c4bb422b98'
