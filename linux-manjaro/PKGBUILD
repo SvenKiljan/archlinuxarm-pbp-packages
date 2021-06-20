@@ -8,7 +8,7 @@ _srcname=linux-5.16
 _kernelname=${pkgbase#linux}
 _desc="AArch64 multi-platform"
 pkgver=5.16.0
-pkgrel=1
+pkgrel=2
 arch=('aarch64')
 url="http://www.kernel.org/"
 license=('GPL2')
@@ -47,14 +47,6 @@ source=("http://www.kernel.org/pub/linux/kernel/v5.x/${_srcname}.tar.xz"
         '0005-staging-add-rtl8723cs-driver.patch' #Not upstreamable
         '0006-pinetab-accelerometer.patch'
         '0007-enable-jack-detection-pinetab.patch'
-        '0001-drm-rockchip-RK356x-VOP2-support.patch' #From list: https://patchwork.kernel.org/project/linux-rockchip/cover/20211117143347.314294-1-s.hauer@pengutronix.de/ (this is v2, we are still using v1)
-        '0002-arm64-dts-rockchip-enable-vop2-and-hdmi-tx-on-quartz64a.patch' #From list: https://patchwork.kernel.org/project/linux-rockchip/patch/20211117154429.2274443-1-michael.riesch@wolfvision.net/
-        '0003-add-GPU-for-RK356x-SoCs.patch' #From list: https://patchwork.kernel.org/project/linux-rockchip/cover/20211126151729.1026566-1-knaerzche@gmail.com/
-        '0004-power-supply-Add-Support-for-RK817-Charger.patch' #From list: https://patchwork.kernel.org/project/linux-rockchip/cover/20210824040955.29112-1-macroalpha82@gmail.com/
-        '0005-phy-rockchip-inno-usb2-support-rk356x-usb2phy.patch' #Applied in linux-next
-        '0006-HDMI-Audio-on-RK356x-Quartz64-Model-A.patch' #From list: https://patchwork.kernel.org/project/linux-rockchip/cover/20211126122718.631506-1-frattaroli.nicolas@gmail.com/
-        '0007-phy-rockchip-add-naneng-combo-phy-for-RK3568.patch' #From Peter Geis' tree
-        '0008-arm64-dts-rockchip-enable-sdmmc1-on-Quartz64-Model-A.patch' #From Peter Geis' tree
         'config'
         'linux.preset'
         '60-linux.hook'
@@ -91,15 +83,7 @@ md5sums=('e6680ce7c989a3efe58b51e3f3f0bf93'
          '959c2cb33566b27f880c178039d6c12f'
          'd0fd6bd627223d4c9fc001ffff9df401'
          'f79300740a7350d2d24ab5e120831b52'
-         'd6801ca84255746cdea4539e11366736'
-         'c9b9c17ac168fb2e5e9c42172c991a47'
-         '8edc3f11399148b15a337f38d13aceb1'
-         '7659fe53cc58b9a7ed615b49719f7066'
-         'e8964d248a7511abae689d01d5a2d70d'
-         'ae8a39e7070c32db907a49c6a6adc449'
-         '4bf751001b57a53fbf4a9ad4cbb953aa'
-         '3fdf84791d441fca6ad327bf53a09553'
-         'f27c500d8d4d1642cdd057b60d075815'
+         '36d2e7302cdc22598b29f7c9f25855cc'
          '86d4a35722b5410e3b29fc92dae15d4b'
          'ce6c81ad1ad1f8b333fd6077d47abdaf'
          '3dc88030a8f2f5a5f97266d99b149f77')
@@ -146,16 +130,6 @@ prepare() {
   patch -Np1 -i "${srcdir}/0005-staging-add-rtl8723cs-driver.patch"                                     #Wifi
   patch -Np1 -i "${srcdir}/0006-pinetab-accelerometer.patch"                                            #accelerometer
   patch -Np1 -i "${srcdir}/0007-enable-jack-detection-pinetab.patch"                                    #Audio
-  
-  # Quartz64 development patches, will probably change alot
-  patch -Np1 -i "${srcdir}/0001-drm-rockchip-RK356x-VOP2-support.patch"                                 #HDMI for rk356x
-  patch -Np1 -i "${srcdir}/0002-arm64-dts-rockchip-enable-vop2-and-hdmi-tx-on-quartz64a.patch"          #HDMI
-  patch -Np1 -i "${srcdir}/0003-add-GPU-for-RK356x-SoCs.patch"                                          #GPU
-  patch -Np1 -i "${srcdir}/0004-power-supply-Add-Support-for-RK817-Charger.patch"                       #Charger
-  patch -Np1 -i "${srcdir}/0005-phy-rockchip-inno-usb2-support-rk356x-usb2phy.patch"                    #USB2PHY
-  patch -Np1 -i "${srcdir}/0006-HDMI-Audio-on-RK356x-Quartz64-Model-A.patch"                            #Audio
-  patch -Np1 -i "${srcdir}/0007-phy-rockchip-add-naneng-combo-phy-for-RK3568.patch"                     #PCIe/SATA/USB3
-  patch -Np1 -i "${srcdir}/0008-arm64-dts-rockchip-enable-sdmmc1-on-Quartz64-Model-A.patch"             #SDMMC1
   
   cat "${srcdir}/config" > ./.config
 
