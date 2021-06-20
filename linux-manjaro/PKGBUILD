@@ -6,7 +6,7 @@
 
 pkgbase=linux-manjaro
 pkgver=5.18.1
-pkgrel=1
+pkgrel=2
 _newversion=false
 _stopbuild=false     # Will also stop if ${_newversion} is true
 _srcname="linux-${pkgver/%.0/}"
