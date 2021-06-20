@@ -1,3 +1,7 @@
+From: Dragan Simic <dragan.simic@gmail.com>
+Subject: [PATCH] panfrost: Fix scheduler priority and do various cleanups
+Date: Fri, 17 Sep 2021 17:47:38 +0200
+
 diff -pruN -X linux-5.15-rc1-ORIG/Documentation/dontdiff linux-5.15-rc1-ORIG/drivers/gpu/drm/panfrost/panfrost_job.c linux-5.15-rc1-panfrost/drivers/gpu/drm/panfrost/panfrost_job.c
 --- linux-5.15-rc1-ORIG/drivers/gpu/drm/panfrost/panfrost_job.c	2021-09-13 01:28:37.000000000 +0200
 +++ linux-5.15-rc1-panfrost/drivers/gpu/drm/panfrost/panfrost_job.c	2021-09-17 17:47:38.287735915 +0200
