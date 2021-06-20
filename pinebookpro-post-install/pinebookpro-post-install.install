@@ -17,7 +17,7 @@ post_install() {
 
   # Edit mkinitcpio.conf
   echo "Editing mkinitcpio.conf..."
-  sed -i s/"MODULES=()"/"MODULES=(rockchipdrm panel_simple pwm_bl)"/g /etc/mkinitcpio.conf
+  sed -i s/"MODULES=()"/"MODULES=(rtc_rk808 rockchipdrm panel_simple pwm_bl)"/g /etc/mkinitcpio.conf
 
   # Enable services
   systemctl enable acpid.service
@@ -28,4 +28,13 @@ post_upgrade() {
   # Enable services
   systemctl enable acpid.service
   systemctl enable pinebookpro-audio.service
+
+  # Provide instructions
+  if ! grep -q '^MODULES=(.*rtc_rk808' /etc/mkinitcpio.conf; then
+    echo "To prevent journal corruption on boot, please add 'rtc_rk808' to the start"
+    echo "of the 'MODULES' list in /etc/mkinitcpio.conf and rebuild the initcpio images."
+    echo "You can do this by running:"
+    echo "# sed -i 's/^MODULES=(/MODULES=(rtc_rk808 /g' /etc/mkinitcpio.conf"
+    echo "# mkinitcpio -P"
+  fi
 }
