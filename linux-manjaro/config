@@ -1,6 +1,6 @@
 #
 # Automatically generated file; DO NOT EDIT.
-# Linux/arm64 5.14.13-2 Kernel Configuration
+# Linux/arm64 5.14.14-2 Kernel Configuration
 #
 CONFIG_CC_VERSION_TEXT="gcc (GCC) 10.2.0"
 CONFIG_CC_IS_GCC=y
@@ -4325,8 +4325,6 @@ CONFIG_CHARGER_SMB347=m
 CONFIG_CHARGER_CROS_USBPD=m
 # CONFIG_CHARGER_UCS1002 is not set
 # CONFIG_CHARGER_BD99954 is not set
-CONFIG_BATTERY_RK818=y
-# CONFIG_CHARGER_RK818 is not set
 CONFIG_HWMON=y
 CONFIG_HWMON_VID=m
 # CONFIG_HWMON_DEBUG_CHIP is not set

@@ -8,7 +8,7 @@ _srcname=linux-5.14
 _kernelname=${pkgbase#linux}
 _desc="AArch64 multi-platform"
 pkgver=5.14.14
-pkgrel=1
+pkgrel=2
 arch=('aarch64')
 url="http://www.kernel.org/"
 license=('GPL2')
@@ -58,11 +58,6 @@ source=("http://www.kernel.org/pub/linux/kernel/v5.x/${_srcname}.tar.xz"
         '0009-power-supply-Add-Support-for-RK817-Charger.patch'
         '0010-dt-bindings-pwm-rockchip-add-description-for-rk3568.patch'
         '0011-phy-rockchip-inno-usb2-support-rk356x-usb2phy.patch'
-        '00023-arm64-dts-rk3399-pinephonepro-.patch'
-        '00024-arm64-rk3399-pinephonepro-battery.patch'
-        '00025-pinephonepro-hannstar-display.patch'
-        '00026-arm64-rk3399-pinephonepro-mipi.patch'
-        '00027-pinephonepro-wifi-power.patch'
         'config'
         'linux.preset'
         '60-linux.hook'
@@ -111,12 +106,7 @@ md5sums=('a082ef5748b813abca0649dab8be5f52'
          '7659fe53cc58b9a7ed615b49719f7066'
          'ae85e433bc4fd787c20a4df0d07d528b'
          '15b2d6fd96df0a070a8f1b4fc5399b8b'
-         'fae94a146b859fff89fa0b4d7db4a04d'
-         '99a8a31f3d2335a5b06398a8fa406388'
-         '91505e89d82bb74b3ee28341af0b6a3a'
-         '2d04e72debed7d0813b6ec5fcfdc8871'
-         '9fc5be06c730a2add72234d3e7f43bf2'
-         'a7120c264b8a8abc77bdc27530b52c12'
+         'a65f500a945572187b33a9003631574f'
          '86d4a35722b5410e3b29fc92dae15d4b'
          'ce6c81ad1ad1f8b333fd6077d47abdaf'
          '3dc88030a8f2f5a5f97266d99b149f77')
@@ -165,13 +155,6 @@ prepare() {
   patch -Np1 -i "${srcdir}/0007-enable-jack-detection-pinetab.patch"                                    #Audio
   patch -Np1 -i "${srcdir}/0008-enable-hdmi-output-pinetab.patch"                                       #HDMI
   patch -Np1 -i "${srcdir}/0009-drm-panel-Adjust-sync-values-for-Feixin-K101-IM2BYL02-panel.patch"      #Display
-  
- # Pine64 PinePhone Pro Patches
-  patch -Np1 -i "${srcdir}/00023-arm64-dts-rk3399-pinephonepro-.patch"                                  #DTS
-  patch -Np1 -i "${srcdir}/00024-arm64-rk3399-pinephonepro-battery.patch"                               #Battery
-  patch -Np1 -i "${srcdir}/00025-pinephonepro-hannstar-display.patch"                                   #Display
-  patch -Np1 -i "${srcdir}/00026-arm64-rk3399-pinephonepro-mipi.patch"                                  #MIPI
-  patch -Np1 -i "${srcdir}/00027-pinephonepro-wifi-power.patch"                                         #Wifi
 
   # Quartz64 development patches, will probably change alot
   #patch -Np1 -i "${srcdir}/0001-arm64-dts-rockchip-Add-quartz64-a-dts-from-linux-nex.patch"             #Main DTS
