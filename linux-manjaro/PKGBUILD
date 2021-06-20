@@ -26,7 +26,7 @@ source=("http://www.kernel.org/pub/linux/kernel/v5.x/${_srcname}.tar.xz"
         '1006-arm64-dts-rockchip-Add-Firefly-Station-p1-support.patch'             # Firefly Station P1
         '1007-drm-rockchip-add-support-for-modeline-32MHz-e.patch'                 # DP Alt Mode
         '1008-rk3399-rp64-pcie-Reimplement-rockchip-PCIe-bus-scan-delay.patch'     # RockPro64
-        '1009-drm-meson-encoder-add-YUV422-output-support.patch'                   # Meson G12B;  Disabled
+        '1009-drm-meson-encoder-add-YUV422-output-support.patch'                   # Meson G12B
         '1010-arm64-dts-amlogic-add-initial-Beelink-GT1-Ultimate-dev.patch'        # Beelink GT1 Ultimate
         '1011-arm64-dts-amlogic-add-meson-g12b-ugoos-am6-plus.patch'               # Meson Ugoos
         '1012-drm-panfrost-scheduler-improvements.patch'                           # Panfrost;  Will be submitted upstream by the author
