@@ -5,7 +5,7 @@
 # Contributor: Dragan Simic <dsimic@buserror.io>
 
 pkgbase=linux-manjaro
-pkgver=6.1.12
+pkgver=6.2.0
 pkgrel=1
 _newversion=false
 _stopbuild=false     # Will also stop if ${_newversion} is true
@@ -27,31 +27,23 @@ source=("http://www.kernel.org/pub/linux/kernel/v6.x/${_srcname}.tar.xz"
         '1007-arm64-dts-rockchip-Add-PCIe-bus-scan-delay-to-RockPr.patch'          # RockPro64 (relies on patch 1005)
         '1008-arm64-dts-rockchip-switch-to-hs200-on-rockpi4.patch'                 # Radxa Rock Pi 4;  Temporary hotfix, not for upstreaming (by Dragan)
         '1009-arm64-dts-rockchip-Add-PCIe-bus-scan-delay-to-Rock-P.patch'          # Radxa Rock Pi 4 (relies on patch 1005)
-        '1010-ASOC-sun9i-hdmi-audio-Initial-implementation.patch'                  # Allwinner H6 HDMI audio (by Furkan)
-        '1011-arm64-dts-allwinner-h6-Add-hdmi-sound-card.patch'                    # Allwinner H6 HDMI audio (by Furkan)
-        '1012-arm64-dts-allwinner-h6-Enable-hdmi-sound-card-on-boards.patch'       # Allwinner H6 HDMI audio (by Furkan)
-        '1013-arm64-dts-allwinner-add-OrangePi-3-LTS.patch'                        # Orange Pi 3 LTS (by Furkan)
-        '1014-Add-support-for-the-Hardkernel-ODROID-M1-board.patch'                # Odroid M1; V3 From list: https://patchwork.kernel.org/project/linux-rockchip/list/?series=682120 (applied in linux-next)
-        '1015-arm64-dts-rockchip-add-rk3568-station-p2.patch'                      # Firefly Station P2 (by Furkan)
-        '1016-arm64-dts-meson-radxa-zero-add-support-for-the-usb-t.patch'          # Radxa Zero (by Furkan)
-        '1017-arm64-dts-rockchip-add-OrangePi-4-LTS.patch'                         # Orange Pi 4 LTS (by Furkan)
-        '1018-Add-YT8531C-phy-support.patch'                                       # Motorcomm PHY (by Furkan)
+        '1010-arm64-dts-rockchip-add-rk3568-station-p2.patch'                      # Firefly Station P2 (by Furkan)
+        '1011-arm64-dts-meson-radxa-zero-add-support-for-the-usb-t.patch'          # Radxa Zero (by Furkan)
         '2001-staging-add-rtl8723cs-driver.patch'                                  # Realtek WiFi;  Not upstreamable
-        #'2002-brcmfmac-USB-probing-provides-no-board-type.patch'                   # Bluetooth;  Will be submitted upstream by Dragan (needs to be redone for 6.1)
+        #'2002-brcmfmac-USB-probing-provides-no-board-type.patch'                   # Bluetooth;  Will be submitted upstream by Dragan (needs to be redone)
         '2003-arm64-dts-rockchip-Work-around-daughterboard-issues.patch'           # Pinebook Pro microSD;  Will be submitted upstream by Dragan
         '2004-arm64-dts-allwinner-add-hdmi-sound-to-pine-devices.patch'            # Allwinner HDMI Sound; (by Dan)
-        '3001-irqchip-gic-v3-add-hackaround-for-rk3568-its.patch'                  # RK356X and associated patches that are still being upstreamed: START
+        '3001-irqchip-gic-v3-add-hackaround-for-rk3568-its.patch'
         '3002-arm64-dts-rockchip-Lower-sd-speed-on-soquartz.patch'
         '3003-arm64-dts-rockchip-Add-hdmi-cec-assigned-clocks-to-r.patch'
         '3004-arm64-dts-rockchip-rk356x-update-pcie-io-ranges.patch'               # From https://github.com/neggles/linux-quartz64/commit/2c1e3811e6d7430f7d46dbb01d3773192c51cdcf (by Neggles)
         '3005-arm64-dts-rockchip-Add-Quartz64-B-eeprom.patch'
-        '3006-Misc-SOQuartz-Enablement.patch'                                      # From list: https://patchwork.kernel.org/project/linux-rockchip/cover/20221112160404.70868-1-frattaroli.nicolas@gmail.com/ (applied in linux-next)
-        '3007-arm64-dts-rockchip-Enable-pcie2-and-audio-jack-on-rk3566-roc-pc.patch'  # Station M2; (by Furkan) (parts applied in linux-next)
-        '3008-drm-panel-simple-Add-init-sequence-support.patch'                    # (may not be needed)
-        '3009-arm64-dts-rockchip-Move-Quartz64-A-to-mdio-setup.patch'
-        '3010-arm64-dts-rockchip-Add-Quartz64-A-battery-node.patch'
-        '3011-board-rock3a-gmac1.patch'                                            # RK356X and associated patches that are still being upstreamed: END Rock 3A; From Armbian: https://github.com/armbian/build/blob/master/patch/kernel/archive/rockchip64-5.19/board-rock3a-gmac1.patch
-        #'4001-arm64-dts-rk3399-pinebook-pro-Fix-USB-PD-charging.patch'             # Pinebook Pro series from Megi: https://github.com/torvalds/linux/compare/master...megous:linux:pbp-6.2
+        '3006-arm64-dts-rockchip-Enable-pcie2-and-audio-jack-on-rk3566-roc-pc.patch'  # Station M2; (by Furkan) (applied in linux-next)
+        '3007-arm64-dts-rockchip-Move-Quartz64-A-to-mdio-setup.patch'
+        '3008-arm64-dts-rockchip-Add-Quartz64-A-battery-node.patch'
+        '3009-board-rock3a-gmac1.patch'                                            # Rock 3A; Ethernet. Based on Armbian patch
+        '3010-drm-rockchip-dw_hdmi-Add-4k-30-support.patch'                        # Rockchip; from list: https://patchwork.kernel.org/project/linux-rockchip/list/?series=722440
+        #'4001-arm64-dts-rk3399-pinebook-pro-Fix-USB-PD-charging.patch'             # Pinebook Pro series from Megi START
         #'4002-arm64-dts-rk3399-pinebook-pro-Improve-Type-C-support-on-Pinebook-Pro.patch'
         #'4003-arm64-dts-rk3399-pinebook-pro-Remove-redundant-pinctrl-properties-from-edp.patch'
         #'4004-arm64-dts-rk3399-pinebook-pro-Remove-unused-features.patch'
@@ -64,7 +56,7 @@ source=("http://www.kernel.org/pub/linux/kernel/v6.x/${_srcname}.tar.xz"
         'linux.preset'
         '60-linux.hook'
         '90-linux.hook')
-md5sums=('3bfdd172c1aa5c5f1bbba34486cc720f'
+md5sums=('787862593d7bf354cf1a5c37e21fc147'
          'e6fe272dc95a1c0a8f871924699fea16'
          '6f592c11f6adc1de0f06e5d18f8c2862'
          'f8f0b124c741be61d86bea8d44e875f9'
@@ -74,15 +66,8 @@ md5sums=('3bfdd172c1aa5c5f1bbba34486cc720f'
          '28982d87c45ed8f5aab966d82f8455d8'
          'a0f649f78c857a01e1680b89b58b05eb'
          'a0cf3209d3f856522ef14c4618837ae7'
-         '48aaca95111b1e8016414e72486bca18'
-         'f666606de61576007a756e6e80e1f1fe'
-         '717c673c7caa564fc06e76ff9a0eebaa'
-         'e285b47405d8eab611ba17bcbf2f9cbf'
-         'a0c5eef4fbb129f3ca7b569b220e6681'
          '206dadb349d169d5ba226c291fd05430'
-         'e9377e7295ebd76cc68b9dd42891c0c8'
-         '227466ec46ffce1684835c87640c46c2'
-         '77200aa6b89276b9035f13c4bb422b98'
+         '9799998aa9b72fae2eb55e92d840dad5'
          '3cb7e8c18b920bb49ff1e51e92732db2'
          '59c20ef6082f4b4c6b54c4f532931ff4'
          '9aa0591c2d601a104d664a802a44728c'
@@ -91,13 +76,12 @@ md5sums=('3bfdd172c1aa5c5f1bbba34486cc720f'
          '467b3ff965db6867f4289f5d256ca93e'
          '080d29aed29a49fe3ef7953e816ea4f4'
          '56605685714f21646f88fbc187a4bf47'
-         'a5bef922ecbc2e54e453cfd1905372bc'
-         '03467f269d8861dc15fe282243b96607'
-         '742bcd8aa51845850a8e5144221ea770'
+         '7a1c6aa53ffeea415e4c9746244aecf0'
          '61ed22ed1254727bd97902ce849d3df4'
          'fa9babdfffadf76454b00fc22593eaba'
-         'e8ea5b4f0937c3799a846991a9259b4b'
-         '0e0868e48e3761ace7788c49195ba93d'
+         '8fb62d56ea03359cf3999564e3dab15f'
+         '9613e1d890f44f405b6227fe0dcd8f7d'
+         '783161e167d9d2e2dd09eb6702665ee8'
          '86d4a35722b5410e3b29fc92dae15d4b'
          'ce6c81ad1ad1f8b333fd6077d47abdaf'
          '3dc88030a8f2f5a5f97266d99b149f77')
@@ -126,7 +110,7 @@ prepare() {
   apply_patches 3
 
   # Pinebook Pro patches by Megi: https://github.com/torvalds/linux/compare/master...megous:linux:pbp-6.2
-  apply_patches 4
+  # apply_patches 4
 
   # Apply our kernel configuration
   cat "${srcdir}/config" > .config

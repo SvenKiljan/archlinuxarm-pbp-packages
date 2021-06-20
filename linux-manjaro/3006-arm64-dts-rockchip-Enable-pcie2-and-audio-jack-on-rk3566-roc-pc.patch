@@ -1,0 +1,116 @@
+From 729f82b84120a0ad6e333ecf862c650f46b18705 Mon Sep 17 00:00:00 2001
+From: Furkan Kardame <f.kardame@manjaro.org>
+Date: Mon, 9 Jan 2023 23:07:19 +0300
+Subject: [PATCH] arm64: dts: rockchip: add rk3566 audio nodes
+
+This patch adds simple audio card nodes
+Enabled i2s0_8ch as it is needed for hdmi audio
+Added i2s1_8ch as it is needed for 3.5mm audio jack
+
+Signed-off-by: Furkan Kardame <f.kardame@manjaro.org>
+---
+ .../arm64/boot/dts/rockchip/rk3566-roc-pc.dts | 60 ++++++++++++++++++-
+ 1 file changed, 58 insertions(+), 2 deletions(-)
+
+diff --git a/arch/arm64/boot/dts/rockchip/rk3566-roc-pc.dts b/arch/arm64/boot/dts/rockchip/rk3566-roc-pc.dts
+index 61c7a3ad7..793d07f0c 100644
+--- a/arch/arm64/boot/dts/rockchip/rk3566-roc-pc.dts
++++ b/arch/arm64/boot/dts/rockchip/rk3566-roc-pc.dts
+@@ -39,6 +39,28 @@ hdmi_con_in: endpoint {
+ 		};
+ 	};
+ 
++	i2s1_8ch: i2s@fe410000 {
++		compatible = "rockchip,rk3568-i2s-tdm";
++		reg = <0x0 0xfe410000 0x0 0x1000>;
++		interrupts = <GIC_SPI 53 IRQ_TYPE_LEVEL_HIGH>;
++		assigned-clocks = <&cru CLK_I2S1_8CH_TX_SRC>, <&cru CLK_I2S1_8CH_RX_SRC>;
++		assigned-clock-rates = <1188000000>, <1188000000>;
++		clocks = <&cru MCLK_I2S1_8CH_TX>, <&cru MCLK_I2S1_8CH_RX>,
++			 <&cru HCLK_I2S1_8CH>;
++		clock-names = "mclk_tx", "mclk_rx", "hclk";
++		dmas = <&dmac1 3>, <&dmac1 2>;
++		dma-names = "rx", "tx";
++		resets = <&cru SRST_M_I2S1_8CH_TX>, <&cru SRST_M_I2S1_8CH_RX>;
++		reset-names = "tx-m", "rx-m";
++		rockchip,grf = <&grf>;
++		pinctrl-names = "default";
++		pinctrl-0 = <&i2s1m0_sclktx &i2s1m0_sclkrx
++			     &i2s1m0_lrcktx &i2s1m0_lrckrx
++			     &i2s1m0_sdi0   &i2s1m0_sdo0>;
++		#sound-dai-cells = <0>;
++		status = "disabled";
++	};
++
+ 	leds {
+ 		compatible = "gpio-leds";
+ 
+@@ -53,6 +75,22 @@ led-user {
+ 		};
+ 	};
+ 
++	rk809-sound {
++		compatible = "simple-audio-card";
++		simple-audio-card,format = "i2s";
++		simple-audio-card,name = "STATION-M2-FRONT";
++		simple-audio-card,mclk-fs = <256>;
++		status = "okay";
++
++		simple-audio-card,cpu {
++			sound-dai = <&i2s1_8ch>;
++		};
++
++		simple-audio-card,codec {
++			sound-dai = <&rk809>;
++		};
++	};
++
+ 	sdio_pwrseq: sdio-pwrseq {
+ 		status = "okay";
+ 		compatible = "mmc-pwrseq-simple";
+@@ -226,9 +264,13 @@ rk809: pmic@20 {
+ 		interrupt-parent = <&gpio0>;
+ 		interrupts = <RK_PA7 IRQ_TYPE_LEVEL_LOW>;
+ 		clock-output-names = "rk808-clkout1", "rk808-clkout2";
+-
++		assigned-clocks = <&cru I2S1_MCLKOUT_TX>;
++		assigned-clock-parents = <&cru CLK_I2S1_8CH_TX>;
++		clock-names = "mclk";
++		clocks = <&cru I2S1_MCLKOUT_TX>;
++		pinctrl-0 = <&pmic_int>, <&i2s1m0_mclk>;
++		#sound-dai-cells = <0>;
+ 		pinctrl-names = "default";
+-		pinctrl-0 = <&pmic_int>;
+ 		rockchip,system-power-controller;
+ 		wakeup-source;
+ 		#clock-cells = <1>;
+@@ -435,6 +477,11 @@ vcc3v3_sd: SWITCH_REG2 {
+ 				regulator-boot-on;
+ 			};
+ 		};
++
++		codec {
++			mic-in-differential;
++		};
++
+ 	};
+ };
+ 
+@@ -452,6 +499,15 @@ &i2c3 {
+ 	status = "okay";
+ };
+ 
++&i2s0_8ch {
++	status = "okay";
++};
++
++&i2s1_8ch {
++	rockchip,trcm-sync-tx-only;
++	status = "okay";
++};
++
+ &mdio1 {
+ 	rgmii_phy1: ethernet-phy@0 {
+ 		compatible = "ethernet-phy-ieee802.3-c22";
+-- 
+2.39.0
