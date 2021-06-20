@@ -1,14 +1,15 @@
-From f461ee33af0f79551334cfe82dd439ffe0051bef Mon Sep 17 00:00:00 2001
-From: Dan Johansen <strit@manjaro.org>
-Date: Tue, 30 Mar 2021 14:12:59 +0200
-Subject: [PATCH] drm/panel fix PineTab display
+From 1216073cd4e71039b4e4cd52e8675a26a1b93720 Mon Sep 17 00:00:00 2001
+From: Marius Gripsgard <marius@ubports.com>
+Date: Thu, 6 Aug 2020 01:09:47 +0200
+Subject: [PATCH] drm/panel:Adjust sync values for Feixin K101-IM2BYL02 panel
 
+This adjusts sync values according to the datasheet
 ---
  drivers/gpu/drm/panel/panel-ilitek-ili9881c.c | 12 ++++++------
  1 file changed, 6 insertions(+), 6 deletions(-)
 
 diff --git a/drivers/gpu/drm/panel/panel-ilitek-ili9881c.c b/drivers/gpu/drm/panel/panel-ilitek-ili9881c.c
-index 0145129d7c66..534dd7414d42 100644
+index 0145129d7c661..534dd7414d428 100644
 --- a/drivers/gpu/drm/panel/panel-ilitek-ili9881c.c
 +++ b/drivers/gpu/drm/panel/panel-ilitek-ili9881c.c
 @@ -590,14 +590,14 @@ static const struct drm_display_mode k101_im2byl02_default_mode = {
@@ -32,6 +33,3 @@ index 0145129d7c66..534dd7414d42 100644
  
  	.width_mm	= 135,
  	.height_mm	= 217,
--- 
-2.31.0
-
