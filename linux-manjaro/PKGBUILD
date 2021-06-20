@@ -5,8 +5,8 @@
 # Contributor: Dragan Simic <dsimic@buserror.io>
 
 pkgbase=linux-manjaro
-pkgver=6.0.2
-pkgrel=3
+pkgver=6.0.3
+pkgrel=1
 _newversion=false
 _stopbuild=false     # Will also stop if ${_newversion} is true
 _srcname="linux-${pkgver/%.0/}"
@@ -58,7 +58,6 @@ source=("http://www.kernel.org/pub/linux/kernel/v6.x/${_srcname}.tar.xz"
         '3011-drm-panel-simple-Add-init-sequence-support.patch'
         '3012-arm64-dts-rockchip-Move-Quartz64-A-to-mdio-setup.patch'
         '3013-arm64-dts-rockchip-Add-Quartz64-A-battery-node.patch'
-        '3014-phy-rockchip-inno-usb2-Return-zero-after-otg-sync.patch'             # From list: https://patchwork.kernel.org/project/linux-rockchip/patch/20220824122543.174730-1-pgwipeout@gmail.com/ (applied in linux-rc)
         '3015-arm64-dts-rockchip-Add-HDMI-sound-node-to-Quartz64-B.patch'          # (applied in linux-rc)
         '3016-arm64-dts-rockchip-Add-HDMI-sound-node-to-SoQuartz-C.patch'
         '3017-arm64-dts-rockchip-Add-PCIe-2-nodes-to-quartz64-b.patch'             # Quartz64 and associated patches that are still being upstreamed: END (applied in linux-rc)
@@ -68,7 +67,7 @@ source=("http://www.kernel.org/pub/linux/kernel/v6.x/${_srcname}.tar.xz"
         'linux.preset'
         '60-linux.hook'
         '90-linux.hook')
-md5sums=('5a7ea40f0ec23b0800e8b52cb44ed04c'
+md5sums=('17b03d3505493cfe966f131c7aacbc4e'
          '9aa0591c2d601a104d664a802a44728c'
          'e6fe272dc95a1c0a8f871924699fea16'
          '9f27b2a05eaeb1995fc0fcf6a8b923c4'
@@ -109,7 +108,6 @@ md5sums=('5a7ea40f0ec23b0800e8b52cb44ed04c'
          '742bcd8aa51845850a8e5144221ea770'
          '61ed22ed1254727bd97902ce849d3df4'
          'fa9babdfffadf76454b00fc22593eaba'
-         '905f6a0443d8af923bdc506b1fe2396e'
          'a2271452ecf71f2ee160ad76f8bcadef'
          '7a39de5aa1c29e81d03096c2f9163456'
          '92d5c7dd3052f5d7a670bd06213d75fb'
