@@ -5,21 +5,19 @@
 # Contributor: Dragan Simic <dsimic@buserror.io>
 
 pkgbase=linux-manjaro
-_srcname=linux-5.17
-_kernelname=${pkgbase#linux}
-_newversion=false
-_minorpatch=true    # Also update the lists of sources and hashes
-_stopbuild=false     # Will also stop if ${_newversion} is true
-_desc="AArch64 multi-platform"
 pkgver=5.17.1
-pkgrel=1
+pkgrel=2
+_newversion=false
+_stopbuild=false     # Will also stop if ${_newversion} is true
+_srcname="linux-${pkgver/%.0/}"
+_kernelname="${pkgbase#linux}"
+_desc="AArch64 multi-platform"
 arch=('aarch64')
 url="http://www.kernel.org/"
 license=('GPL2')
 makedepends=('xmlto' 'docbook-xsl' 'kmod' 'inetutils' 'bc' 'git' 'dtc')
 options=('!strip')
 source=("http://www.kernel.org/pub/linux/kernel/v5.x/${_srcname}.tar.xz"
-        "http://www.kernel.org/pub/linux/kernel/v5.x/patch-${pkgver}.xz"
         '1001-arm64-dts-allwinner-add-hdmi-sound-to-pine-devices.patch'
         '1002-arm64-dts-allwinner-add-ohci-ehci-to-h5-nanopi.patch'
         '1003-drm-bridge-analogix_dp-Add-enable_psr-param.patch'                   # From list: https://patchwork.kernel.org/project/dri-devel/patch/20200626033023.24214-2-shawn@anastas.io/
@@ -66,8 +64,7 @@ source=("http://www.kernel.org/pub/linux/kernel/v5.x/${_srcname}.tar.xz"
         'linux.preset'
         '60-linux.hook'
         '90-linux.hook')
-md5sums=('07321a70a48d062cebd0358132f11771'
-         '5a015eeaa9a3bf5bea84290f54ccf48d'
+md5sums=('1b96df11f2eda625c1637d3e941848ad'
          '9aa0591c2d601a104d664a802a44728c'
          'e6fe272dc95a1c0a8f871924699fea16'
          '9f27b2a05eaeb1995fc0fcf6a8b923c4'
@@ -117,13 +114,6 @@ md5sums=('07321a70a48d062cebd0358132f11771'
 
 prepare() {
   cd ${_srcname}
-
-  # Apply the minor version patch
-  if [[ "${_minorpatch}" = true ]]; then
-    patch -Np1 -i "${srcdir}/patch-${pkgver}"
-  fi
-
-  # Assorted ALARM patches
 
   # Assorted Manjaro ARM patches
   patch -Np1 -i "${srcdir}/1001-arm64-dts-allwinner-add-hdmi-sound-to-pine-devices.patch"            # Pine64
@@ -196,11 +186,11 @@ build() {
   # Configure the kernel; adjust the line below to your choice
   # or simply manually edit the ".config" file
   if [[ "${_newversion}" = true ]]; then
-    make menuconfig # CLI menu for configuration
+    make menuconfig   # CLI menu for configuration
   fi
-  #make nconfig   # New CLI menu for configuration
-  #make xconfig   # X-based configuration
-  #make oldconfig # Using old config from previous kernel version
+  #make nconfig       # New CLI menu for configuration
+  #make xconfig       # X-based configuration
+  #make oldconfig     # Using old config from previous kernel version
 
   # Stash the configuration (use with new major kernel version)
   if [[ "${_newversion}" = true ]]; then
