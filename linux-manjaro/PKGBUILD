@@ -7,8 +7,8 @@ pkgbase=linux-manjaro
 _srcname=linux-5.14
 _kernelname=${pkgbase#linux}
 _desc="AArch64 multi-platform"
-pkgver=5.14.13
-pkgrel=2
+pkgver=5.14.14
+pkgrel=1
 arch=('aarch64')
 url="http://www.kernel.org/"
 license=('GPL2')
@@ -46,7 +46,7 @@ source=("http://www.kernel.org/pub/linux/kernel/v5.x/${_srcname}.tar.xz"
         '0006-pinetab-accelerometer.patch'
         '0007-enable-jack-detection-pinetab.patch'
         '0008-enable-hdmi-output-pinetab.patch'
-        '0009-drm-panel-Adjust-sync-values-for-Feixin-K101-IM2BYL02-panel.patch' #Submitted upstream https://patchwork.kernel.org/project/dri-devel/patch/20210818214818.298089-1-strit@manjaro.org/
+        '0009-drm-panel-Adjust-sync-values-for-Feixin-K101-IM2BYL02-panel.patch' #Applied in linux-next
         '0001-arm64-dts-rockchip-Add-quartz64-a-dts-from-linux-nex.patch' #Applied in linux-next
         '0002-fixes-and-enablement-for-rk356x.patch' #Applied in linux-next
         '0003-Rockchip-I2S-TDM-controller.patch'
@@ -59,16 +59,16 @@ source=("http://www.kernel.org/pub/linux/kernel/v5.x/${_srcname}.tar.xz"
         '0010-dt-bindings-pwm-rockchip-add-description-for-rk3568.patch'
         '0011-phy-rockchip-inno-usb2-support-rk356x-usb2phy.patch'
         '00023-arm64-dts-rk3399-pinephonepro-.patch'
-	'00024-arm64-rk3399-pinephonepro-battery.patch'
-	'00025-pinephonepro-hannstar-display.patch'
-	'00026-arm64-rk3399-pinephonepro-mipi.patch'
-	'00027-pinephonepro-wifi-power.patch'
-	'config'
+        '00024-arm64-rk3399-pinephonepro-battery.patch'
+        '00025-pinephonepro-hannstar-display.patch'
+        '00026-arm64-rk3399-pinephonepro-mipi.patch'
+        '00027-pinephonepro-wifi-power.patch'
+        'config'
         'linux.preset'
         '60-linux.hook'
         '90-linux.hook')
 md5sums=('a082ef5748b813abca0649dab8be5f52'
-         'bab035d9d7ccf5e31d39f5b345cf3172'
+         '7b8dc63cfdb806b3c5953bf9b0615daa'
          '9e6b7f44db105fef525d715213dce7cf'
          '754cf09a858498e1d98b44baa043a196'
          '0d47dea87f03bf36262171e01889f832'
@@ -167,11 +167,11 @@ prepare() {
   patch -Np1 -i "${srcdir}/0009-drm-panel-Adjust-sync-values-for-Feixin-K101-IM2BYL02-panel.patch"      #Display
   
  # Pine64 PinePhone Pro Patches
-  patch -Np1 -i "${srcdir}/00023-arm64-dts-rk3399-pinephonepro-.patch"
-  patch -Np1 -i "${srcdir}/00024-arm64-rk3399-pinephonepro-battery.patch"
-  patch -Np1 -i "${srcdir}/00025-pinephonepro-hannstar-display.patch"
-  patch -Np1 -i "${srcdir}/00026-arm64-rk3399-pinephonepro-mipi.patch"
-  patch -Np1 -i "${srcdir}/00027-pinephonepro-wifi-power.patch"
+  patch -Np1 -i "${srcdir}/00023-arm64-dts-rk3399-pinephonepro-.patch"                                  #DTS
+  patch -Np1 -i "${srcdir}/00024-arm64-rk3399-pinephonepro-battery.patch"                               #Battery
+  patch -Np1 -i "${srcdir}/00025-pinephonepro-hannstar-display.patch"                                   #Display
+  patch -Np1 -i "${srcdir}/00026-arm64-rk3399-pinephonepro-mipi.patch"                                  #MIPI
+  patch -Np1 -i "${srcdir}/00027-pinephonepro-wifi-power.patch"                                         #Wifi
 
   # Quartz64 development patches, will probably change alot
   #patch -Np1 -i "${srcdir}/0001-arm64-dts-rockchip-Add-quartz64-a-dts-from-linux-nex.patch"             #Main DTS
