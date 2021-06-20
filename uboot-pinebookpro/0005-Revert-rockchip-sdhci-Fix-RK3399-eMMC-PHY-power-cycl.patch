@@ -1,0 +1,160 @@
+From 994944065f048636da973f08fcb74ccafa7b4a1b Mon Sep 17 00:00:00 2001
+From: Dan Johansen <strit@manjaro.org>
+Date: Sun, 5 Feb 2023 09:11:19 +0100
+Subject: [PATCH 5/8] Revert "rockchip: sdhci: Fix RK3399 eMMC PHY power
+ cycling"
+
+This reverts commit ee5a284b296f31302fe2aaddd07af9b04d3ce54f.
+---
+ drivers/mmc/rockchip_sdhci.c | 76 +++++-------------------------------
+ 1 file changed, 10 insertions(+), 66 deletions(-)
+
+diff --git a/drivers/mmc/rockchip_sdhci.c b/drivers/mmc/rockchip_sdhci.c
+index b91df05de4ff..278473899c7c 100644
+--- a/drivers/mmc/rockchip_sdhci.c
++++ b/drivers/mmc/rockchip_sdhci.c
+@@ -90,33 +90,9 @@ struct rockchip_sdhc {
+ };
+ 
+ struct sdhci_data {
++	int (*emmc_set_clock)(struct sdhci_host *host, unsigned int clock);
+ 	int (*emmc_phy_init)(struct udevice *dev);
+ 	int (*get_phy)(struct udevice *dev);
+-
+-	/**
+-	 * set_control_reg() - Set SDHCI control registers
+-	 *
+-	 * This is the set_control_reg() SDHCI operation that should be
+-	 * used for the hardware this driver data is associated with.
+-	 * Normally, this is used to set up control registers for
+-	 * voltage level and UHS speed mode.
+-	 *
+-	 * @host: SDHCI host structure
+-	 */
+-	void (*set_control_reg)(struct sdhci_host *host);
+-
+-	/**
+-	 * set_ios_post() - Host specific hook after set_ios() calls
+-	 *
+-	 * This is the set_ios_post() SDHCI operation that should be
+-	 * used for the hardware this driver data is associated with.
+-	 * Normally, this is a hook that is called after sdhci_set_ios()
+-	 * that does any necessary host-specific configuration.
+-	 *
+-	 * @host: SDHCI host structure
+-	 * Return: 0 if successful, -ve on error
+-	 */
+-	int (*set_ios_post)(struct sdhci_host *host);
+ };
+ 
+ static int rk3399_emmc_phy_init(struct udevice *dev)
+@@ -206,28 +182,15 @@ static int rk3399_emmc_get_phy(struct udevice *dev)
+ 	return 0;
+ }
+ 
+-static void rk3399_sdhci_set_control_reg(struct sdhci_host *host)
++static int rk3399_sdhci_emmc_set_clock(struct sdhci_host *host, unsigned int clock)
+ {
+ 	struct rockchip_sdhc *priv = container_of(host, struct rockchip_sdhc, host);
+-	struct mmc *mmc = host->mmc;
+-	uint clock = mmc->tran_speed;
+ 	int cycle_phy = host->clock != clock && clock > EMMC_MIN_FREQ;
+ 
+ 	if (cycle_phy)
+ 		rk3399_emmc_phy_power_off(priv->phy);
+ 
+-	sdhci_set_control_reg(host);
+-};
+-
+-static int rk3399_sdhci_set_ios_post(struct sdhci_host *host)
+-{
+-	struct rockchip_sdhc *priv = container_of(host, struct rockchip_sdhc, host);
+-	struct mmc *mmc = host->mmc;
+-	uint clock = mmc->tran_speed;
+-	int cycle_phy = host->clock != clock && clock > EMMC_MIN_FREQ;
+-
+-	if (!clock)
+-		clock = mmc->clock;
++	sdhci_set_clock(host->mmc, clock);
+ 
+ 	if (cycle_phy)
+ 		rk3399_emmc_phy_power_on(priv->phy, clock);
+@@ -306,8 +269,10 @@ static int rk3568_emmc_get_phy(struct udevice *dev)
+ 	return 0;
+ }
+ 
+-static int rk3568_sdhci_set_ios_post(struct sdhci_host *host)
++static int rockchip_sdhci_set_ios_post(struct sdhci_host *host)
+ {
++	struct rockchip_sdhc *priv = container_of(host, struct rockchip_sdhc, host);
++	struct sdhci_data *data = (struct sdhci_data *)dev_get_driver_data(priv->dev);
+ 	struct mmc *mmc = host->mmc;
+ 	uint clock = mmc->tran_speed;
+ 	u32 reg;
+@@ -315,7 +280,8 @@ static int rk3568_sdhci_set_ios_post(struct sdhci_host *host)
+ 	if (!clock)
+ 		clock = mmc->clock;
+ 
+-	rk3568_sdhci_emmc_set_clock(host, clock);
++	if (data->emmc_set_clock)
++		data->emmc_set_clock(host, clock);
+ 
+ 	if (mmc->selected_mode == MMC_HS_400 || mmc->selected_mode == MMC_HS_400_ES) {
+ 		reg = sdhci_readw(host, SDHCI_HOST_CONTROL2);
+@@ -329,26 +295,6 @@ static int rk3568_sdhci_set_ios_post(struct sdhci_host *host)
+ 	return 0;
+ }
+ 
+-static void rockchip_sdhci_set_control_reg(struct sdhci_host *host)
+-{
+-	struct rockchip_sdhc *priv = container_of(host, struct rockchip_sdhc, host);
+-	struct sdhci_data *data = (struct sdhci_data *)dev_get_driver_data(priv->dev);
+-
+-	if (data->set_control_reg)
+-		data->set_control_reg(host);
+-}
+-
+-static int rockchip_sdhci_set_ios_post(struct sdhci_host *host)
+-{
+-	struct rockchip_sdhc *priv = container_of(host, struct rockchip_sdhc, host);
+-	struct sdhci_data *data = (struct sdhci_data *)dev_get_driver_data(priv->dev);
+-
+-	if (data->set_ios_post)
+-		return data->set_ios_post(host);
+-
+-	return 0;
+-}
+-
+ static int rockchip_sdhci_execute_tuning(struct mmc *mmc, u8 opcode)
+ {
+ 	struct sdhci_host *host = dev_get_priv(mmc->dev);
+@@ -412,7 +358,6 @@ static int rockchip_sdhci_execute_tuning(struct mmc *mmc, u8 opcode)
+ static struct sdhci_ops rockchip_sdhci_ops = {
+ 	.set_ios_post	= rockchip_sdhci_set_ios_post,
+ 	.platform_execute_tuning = &rockchip_sdhci_execute_tuning,
+-	.set_control_reg = rockchip_sdhci_set_control_reg,
+ };
+ 
+ static int rockchip_sdhci_probe(struct udevice *dev)
+@@ -491,16 +436,15 @@ static int rockchip_sdhci_bind(struct udevice *dev)
+ }
+ 
+ static const struct sdhci_data rk3399_data = {
++	.emmc_set_clock = rk3399_sdhci_emmc_set_clock,
+ 	.get_phy = rk3399_emmc_get_phy,
+ 	.emmc_phy_init = rk3399_emmc_phy_init,
+-	.set_control_reg = rk3399_sdhci_set_control_reg,
+-	.set_ios_post = rk3399_sdhci_set_ios_post,
+ };
+ 
+ static const struct sdhci_data rk3568_data = {
++	.emmc_set_clock = rk3568_sdhci_emmc_set_clock,
+ 	.get_phy = rk3568_emmc_get_phy,
+ 	.emmc_phy_init = rk3568_emmc_phy_init,
+-	.set_ios_post = rk3568_sdhci_set_ios_post,
+ };
+ 
+ static const struct udevice_id sdhci_ids[] = {
+-- 
+2.39.1
+

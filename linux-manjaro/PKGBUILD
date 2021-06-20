@@ -5,8 +5,8 @@
 # Contributor: Dragan Simic <dsimic@buserror.io>
 
 pkgbase=linux-manjaro
-pkgver=6.1.9
-pkgrel=1
+pkgver=6.1.10
+pkgrel=2
 _newversion=false
 _stopbuild=false     # Will also stop if ${_newversion} is true
 _srcname="linux-${pkgver/%.0/}"
@@ -36,7 +36,7 @@ source=("http://www.kernel.org/pub/linux/kernel/v6.x/${_srcname}.tar.xz"
         '1016-arm64-dts-meson-radxa-zero-add-support-for-the-usb-t.patch'          # Radxa Zero (by Furkan)
         '1017-arm64-dts-rockchip-add-OrangePi-4-LTS.patch'                         # Orange Pi 4 LTS (by Furkan)
         '1018-Add-YT8531C-phy-support.patch'                                       # Motorcomm PHY (by Furkan)
-        '1019-Revert-mmc-meson-gx-add-SDIO-interrupt-support.patch'                # GT King wifi temp fix
+        '1019-arm64-dts-amlogic-Make-mmc-host-controller-interrupts-level-sensitive.patch'  # AMlogic wifi fix (applied in linux-next)
         '2001-staging-add-rtl8723cs-driver.patch'                                  # Realtek WiFi;  Not upstreamable
         #'2002-brcmfmac-USB-probing-provides-no-board-type.patch'                   # Bluetooth;  Will be submitted upstream by Dragan (needs to be redone for 6.1)
         '2003-arm64-dts-rockchip-Work-around-daughterboard-issues.patch'           # Pinebook Pro microSD;  Will be submitted upstream by Dragan
@@ -66,7 +66,7 @@ source=("http://www.kernel.org/pub/linux/kernel/v6.x/${_srcname}.tar.xz"
         'linux.preset'
         '60-linux.hook'
         '90-linux.hook')
-md5sums=('ab1ac5556bd2c808e62bde0db04915f6'
+md5sums=('6a62cb00f6cf4296105fc041c641aa91'
          'e6fe272dc95a1c0a8f871924699fea16'
          '6f592c11f6adc1de0f06e5d18f8c2862'
          'f8f0b124c741be61d86bea8d44e875f9'
@@ -85,7 +85,7 @@ md5sums=('ab1ac5556bd2c808e62bde0db04915f6'
          '9799998aa9b72fae2eb55e92d840dad5'
          '227466ec46ffce1684835c87640c46c2'
          '77200aa6b89276b9035f13c4bb422b98'
-         'f91b305c9cf0bf98a3a5bacb8364e049'
+         '1709dc0f0622ee378dc7a9bcf0683cb3'
          '3cb7e8c18b920bb49ff1e51e92732db2'
          '59c20ef6082f4b4c6b54c4f532931ff4'
          '9aa0591c2d601a104d664a802a44728c'

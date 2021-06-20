@@ -1,0 +1,28 @@
+From 1638d66941e4205135dccf4aaa0709beb677ff82 Mon Sep 17 00:00:00 2001
+From: Dan Johansen <strit@manjaro.org>
+Date: Sun, 5 Feb 2023 09:11:41 +0100
+Subject: [PATCH 6/8] Revert "mmc: rockchip_sdhci: enable strobe line for
+ HS400"
+
+This reverts commit 022f552704b6467966e4fad39c85a6aca9204c94.
+---
+ drivers/mmc/rockchip_sdhci.c | 3 ---
+ 1 file changed, 3 deletions(-)
+
+diff --git a/drivers/mmc/rockchip_sdhci.c b/drivers/mmc/rockchip_sdhci.c
+index 278473899c7c..1ac00587d44c 100644
+--- a/drivers/mmc/rockchip_sdhci.c
++++ b/drivers/mmc/rockchip_sdhci.c
+@@ -143,9 +143,6 @@ static void rk3399_emmc_phy_power_on(struct rockchip_emmc_phy *phy, u32 clock)
+ 	writel(RK_CLRSETBITS(3 << 12, freqsel << 12), &phy->emmcphy_con[0]);
+ 	writel(RK_CLRSETBITS(1 << 1, 1 << 1), &phy->emmcphy_con[6]);
+ 
+-	/* REN Enable on STRB Line for HS400 */
+-	writel(RK_CLRSETBITS(0, 1 << 9), &phy->emmcphy_con[2]);
+-
+ 	read_poll_timeout(readl, &phy->emmcphy_status, dllrdy,
+ 			  PHYCTRL_DLL_LOCK_WO_TMOUT(dllrdy), 1, 5000);
+ }
+-- 
+2.39.1
+
