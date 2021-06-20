@@ -1,0 +1,35 @@
+From: Yifeng Zhao <yifeng.zhao@rock-chips.com>
+To: Kever Yang <kever.yang@rock-chips.com>
+Cc: sjg <sjg@chromium.org>, Peter Robinson <pbrobinson@gmail.com>,
+ Philipp Tomsich <philipp.tomsich@theobroma-systems.com>,
+ u-boot@lists.denx.de, Jack Mitchell <ml@embed.me.uk>,
+ Yifeng Zhao <yifeng.zhao@rock-chips.com>
+Subject: [PATCH] dts: rockchip: rk3399: enable emmc phy for spl
+Date: Mon,  1 Nov 2021 12:43:47 +0800
+
+adapting commit ac804143cf ("mmc: rockchip_sdhci: add phy and clock
+config for rk3399") to fix the issue "Not found emmc phy device".
+
+Signed-off-by: Yifeng Zhao <yifeng.zhao@rock-chips.com>
+Reviewed-by: Peter Robinson <pbrobinson@gmail.com>
+Tested-by: Peter Robinson <pbrobinson@gmail.com> - on a Rock960
+---
+
+ arch/arm/dts/rk3399-u-boot.dtsi | 4 ++++
+ 1 file changed, 4 insertions(+)
+
+diff --git a/arch/arm/dts/rk3399-u-boot.dtsi b/arch/arm/dts/rk3399-u-boot.dtsi
+index 73922c328a..716b9a433a 100644
+--- a/arch/arm/dts/rk3399-u-boot.dtsi
++++ b/arch/arm/dts/rk3399-u-boot.dtsi
+@@ -88,6 +88,10 @@
+ 	u-boot,dm-pre-reloc;
+ };
+ 
++&emmc_phy {
++	u-boot,dm-pre-reloc;
++};
++
+ &grf {
+ 	u-boot,dm-pre-reloc;
+ };

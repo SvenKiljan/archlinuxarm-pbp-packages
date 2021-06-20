@@ -10,7 +10,8 @@ create_config() {
   echo "LABEL Arch Linux ARM
 KERNEL /Image
 FDT /dtbs/rockchip/rk3399-pinebook-pro.dtb
-APPEND initrd=/initramfs-linux.img console=ttyS2,1500000 root=LABEL=ROOT_MNJRO rw rootwait plymouth.ignore-serial-consoles" > /boot/extlinux/extlinux.conf
+APPEND initrd=/initramfs-linux.img console=ttyS2,1500000 root=LABEL=ROOT_MNJRO rw rootwait audit=0 splash plymouth.ignore-serial-consoles" \
+    > /boot/extlinux/extlinux.conf
 }
 
 post_install() {
