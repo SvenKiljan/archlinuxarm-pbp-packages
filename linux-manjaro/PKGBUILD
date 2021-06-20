@@ -6,7 +6,7 @@
 
 pkgbase=linux-manjaro
 pkgver=6.2.1
-pkgrel=1
+pkgrel=2
 _newversion=false
 _stopbuild=false     # Will also stop if ${_newversion} is true
 _srcname="linux-${pkgver/%.0/}"
@@ -67,7 +67,7 @@ md5sums=('153c2edd8c2113d5302b588a735f5128'
          'a0f649f78c857a01e1680b89b58b05eb'
          'a0cf3209d3f856522ef14c4618837ae7'
          '206dadb349d169d5ba226c291fd05430'
-         '9799998aa9b72fae2eb55e92d840dad5'
+         'e9377e7295ebd76cc68b9dd42891c0c8'
          '3cb7e8c18b920bb49ff1e51e92732db2'
          '59c20ef6082f4b4c6b54c4f532931ff4'
          '9aa0591c2d601a104d664a802a44728c'
