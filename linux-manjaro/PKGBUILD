@@ -32,10 +32,10 @@ source=("http://www.kernel.org/pub/linux/kernel/v5.x/${_srcname}.tar.xz"
         '1012-drm-panfrost-scheduler-improvements.patch'                           # Panfrost;  Will be submitted upstream by the author
         '1013-arm64-dts-rockchip-Add-PCIe-bus-scan-delay-to-RockPr.patch'          # RockPro64
         '1014-drm-rockchip-support-gamma-control-on-RK3399.patch'                  # RK3399 VOP;  From list: https://patchwork.kernel.org/project/linux-arm-kernel/cover/20211019215843.42718-1-sigmaris@gmail.com/
-        '1016-arm64-dts-rockchip-switch-to-hs200-on-rockpi4.patch'                 # Radxa Rock Pi 4;  Temporary hotfix, not for upstreaming
-        '1017-arm64-dts-meson-remove-CPU-opps-below-1GHz-for-G12B-boards.patch'    # AMLogic [1/2];  From list: https://patchwork.kernel.org/project/linux-amlogic/patch/20220210100638.19130-2-christianshewitt@gmail.com/
-        '1018-arm64-dts-meson-remove-CPU-opps-below-1GHz-for-SM1-boards.patch'     # AMLogic [2/2];  From list: https://patchwork.kernel.org/project/linux-amlogic/patch/20220210100638.19130-3-christianshewitt@gmail.com/
-        '1019-arm64-dts-rockchip-Add-PCIe-bus-scan-delay-to-Rock-P.patch'          # Radxa Rock Pi 4
+        '1015-arm64-dts-rockchip-switch-to-hs200-on-rockpi4.patch'                 # Radxa Rock Pi 4;  Temporary hotfix, not for upstreaming
+        '1016-arm64-dts-meson-remove-CPU-opps-below-1GHz-for-G12B-boards.patch'    # AMLogic [1/2];  From list: https://patchwork.kernel.org/project/linux-amlogic/patch/20220210100638.19130-2-christianshewitt@gmail.com/
+        '1017-arm64-dts-meson-remove-CPU-opps-below-1GHz-for-SM1-boards.patch'     # AMLogic [2/2];  From list: https://patchwork.kernel.org/project/linux-amlogic/patch/20220210100638.19130-3-christianshewitt@gmail.com/
+        '1018-arm64-dts-rockchip-Add-PCIe-bus-scan-delay-to-Rock-P.patch'          # Radxa Rock Pi 4
         '2001-Bluetooth-Add-new-quirk-for-broken-local-ext-features.patch'         # Bluetooth;  From list: https://patchwork.kernel.org/project/bluetooth/patch/20200705195110.405139-2-anarsoul@gmail.com/
         '2002-Bluetooth-btrtl-add-support-for-the-RTL8723CS.patch'                 # Bluetooth;  From list: https://patchwork.kernel.org/project/bluetooth/patch/20200705195110.405139-3-anarsoul@gmail.com/
         '2003-arm64-allwinner-a64-enable-Bluetooth-On-Pinebook.patch'              # Bluetooth;  From list: https://patchwork.kernel.org/project/bluetooth/patch/20200705195110.405139-4-anarsoul@gmail.com/
