@@ -1,0 +1,38 @@
+From fd447a41449732c5d7272c42dc9a695b41ee6c6c Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Kamil=20Trzci=C5=84ski?= <ayufan@ayufan.eu>
+Date: Mon, 4 Jan 2021 17:57:49 +0100
+Subject: [PATCH] ayufan: rk818: configure `rk808-clkout2` function (fix for
+ wifi/bt)
+
+---
+ drivers/mfd/rk808.c       | 1 +
+ include/linux/mfd/rk808.h | 2 ++
+ 2 files changed, 3 insertions(+)
+
+diff --git a/drivers/mfd/rk808.c b/drivers/mfd/rk808.c
+index d109b9f14407..d8c2c9c43bf3 100644
+--- a/drivers/mfd/rk808.c
++++ b/drivers/mfd/rk808.c
+@@ -222,6 +222,7 @@ static const struct rk808_reg_data rk818_pre_init_reg[] = {
+ 	{ RK818_H5V_EN_REG,	  BIT(0),	    RK818_H5V_EN },
+ 	{ RK808_VB_MON_REG,	  MASK_ALL,	    VB_LO_ACT |
+ 						    VB_LO_SEL_3500MV },
++	{ RK808_CLK32OUT_REG, CLK32KOUT2_FUNC_MASK, CLK32KOUT2_FUNC },
+ };
+ 
+ static const struct regmap_irq rk805_irqs[] = {
+diff --git a/include/linux/mfd/rk808.h b/include/linux/mfd/rk808.h
+index e07f6e61cd38..0e11d250b448 100644
+--- a/include/linux/mfd/rk808.h
++++ b/include/linux/mfd/rk808.h
+@@ -381,6 +381,8 @@ enum rk805_reg {
+ 
+ #define VOUT_LO_INT	BIT(0)
+ #define CLK32KOUT2_EN	BIT(0)
++#define CLK32KOUT2_FUNC		(0 << 1)
++#define CLK32KOUT2_FUNC_MASK	BIT(1)
+ 
+ #define TEMP115C			0x0c
+ #define TEMP_HOTDIE_MSK			0x0c
+-- 
+GitLab
