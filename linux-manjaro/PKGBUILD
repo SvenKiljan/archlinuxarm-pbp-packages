@@ -5,8 +5,8 @@
 # Contributor: Dragan Simic <dsimic@buserror.io>
 
 pkgbase=linux-manjaro
-pkgver=5.19.2
-pkgrel=2
+pkgver=5.19.3
+pkgrel=1
 _newversion=false
 _stopbuild=false     # Will also stop if ${_newversion} is true
 _srcname="linux-${pkgver/%.0/}"
@@ -83,7 +83,7 @@ source=("http://www.kernel.org/pub/linux/kernel/v5.x/${_srcname}.tar.xz"
         'linux.preset'
         '60-linux.hook'
         '90-linux.hook')
-md5sums=('391274e2e49a881403b0ff2e0712bf82'
+md5sums=('5af3311ecafa00f607c99e82dbd2ebbe'
          '9aa0591c2d601a104d664a802a44728c'
          'e6fe272dc95a1c0a8f871924699fea16'
          '9f27b2a05eaeb1995fc0fcf6a8b923c4'
