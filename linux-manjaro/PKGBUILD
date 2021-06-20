@@ -6,7 +6,7 @@
 
 pkgbase=linux-manjaro
 pkgver=5.19.3
-pkgrel=1
+pkgrel=2
 _newversion=false
 _stopbuild=false     # Will also stop if ${_newversion} is true
 _srcname="linux-${pkgver/%.0/}"
@@ -143,7 +143,7 @@ md5sums=('5af3311ecafa00f607c99e82dbd2ebbe'
          'a2271452ecf71f2ee160ad76f8bcadef'
          '7a39de5aa1c29e81d03096c2f9163456'
          '92d5c7dd3052f5d7a670bd06213d75fb'
-         '19dc5bf00ae14575b618d20c45c6d684'
+         '4debb3dadeca414923145732cf5a4153'
          '86d4a35722b5410e3b29fc92dae15d4b'
          'ce6c81ad1ad1f8b333fd6077d47abdaf'
          '3dc88030a8f2f5a5f97266d99b149f77')
