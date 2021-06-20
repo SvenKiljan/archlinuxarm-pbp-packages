@@ -6,7 +6,7 @@
 
 pkgbase=linux-manjaro
 pkgver=5.17.5
-pkgrel=3
+pkgrel=4
 _newversion=false
 _stopbuild=false     # Will also stop if ${_newversion} is true
 _srcname="linux-${pkgver/%.0/}"
@@ -36,10 +36,10 @@ source=("http://www.kernel.org/pub/linux/kernel/v5.x/${_srcname}.tar.xz"
         '1016-arm64-dts-meson-remove-CPU-opps-below-1GHz-for-G12B-boards.patch'    # AMLogic [1/2];  From list: https://patchwork.kernel.org/project/linux-amlogic/patch/20220210100638.19130-2-christianshewitt@gmail.com/
         '1017-arm64-dts-meson-remove-CPU-opps-below-1GHz-for-SM1-boards.patch'     # AMLogic [2/2];  From list: https://patchwork.kernel.org/project/linux-amlogic/patch/20220210100638.19130-3-christianshewitt@gmail.com/
         '1018-arm64-dts-rockchip-Add-PCIe-bus-scan-delay-to-Rock-P.patch'          # Radxa Rock Pi 4
-	'1019-add-h6-hdmi-audio-driver.patch'           			   # H6 HDMI Audio Driver
-	'1020-add-h6-hdmi-audio-dtsi.patch'					   # H6 HDMI Audio DTSI
-	'1021-add-h6-hdmi-audio-driver-dts.patch'				   # H6 HDMI Audio DTS	
-	'1022-add-opi3-lts-dts.patch'						   # OPI 3 LTS DTS
+        '1019-ASOC-sun9i-hdmi-audio-Initial-implementation.patch'                  # Allwinner H6 HDMI audio
+        '1020-arm64-dts-allwinner-h6-Add-hdmi-sound-card.patch'                    # Allwinner H6 HDMI audio
+        '1021-arm64-dts-allwinner-h6-Enable-hdmi-sound-card-on-boards.patch'       # Allwinner H6 HDMI audio
+        '1022-arm64-dts-allwinner-add-OrangePi-3-LTS.patch'                        # OrangePi 3 LTS
         '2001-Bluetooth-Add-new-quirk-for-broken-local-ext-features.patch'         # Bluetooth;  From list: https://patchwork.kernel.org/project/bluetooth/patch/20200705195110.405139-2-anarsoul@gmail.com/
         '2002-Bluetooth-btrtl-add-support-for-the-RTL8723CS.patch'                 # Bluetooth;  From list: https://patchwork.kernel.org/project/bluetooth/patch/20200705195110.405139-3-anarsoul@gmail.com/
         '2003-arm64-allwinner-a64-enable-Bluetooth-On-Pinebook.patch'              # Bluetooth;  From list: https://patchwork.kernel.org/project/bluetooth/patch/20200705195110.405139-4-anarsoul@gmail.com/
@@ -87,7 +87,7 @@ md5sums=('2d9d725a716d27c82ea31d2b4e802158'
          'ee8eb5a23404c879fcfd09e5b7c124b8'
          'a0cf3209d3f856522ef14c4618837ae7'
          '680aec843f385e7233763d37b98ed2e0'
-         '38a98d96bd76ab22a4c5ecb34cec0204'
+         'f666606de61576007a756e6e80e1f1fe'
          '717c673c7caa564fc06e76ff9a0eebaa'
          'e285b47405d8eab611ba17bcbf2f9cbf'
          '372260658bc5fe55ee9b5690d8f67cb9'
