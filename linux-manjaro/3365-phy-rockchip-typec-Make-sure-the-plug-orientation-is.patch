@@ -1,7 +1,7 @@
-From 4f9167affd8b3647ebc1b13cc3a0ff1b949b0c49 Mon Sep 17 00:00:00 2001
-From: Ondrej Jirman <megous@megous.com>
+From 4ad64a0571fb80a67aae0ad0428ffeba4365b087 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Ond=C5=99ej=20Jirman?= <megi@xff.cz>
 Date: Tue, 23 Nov 2021 17:32:18 +0100
-Subject: [PATCH 402/463] phy: rockchip-typec: Make sure the plug orientation
+Subject: [PATCH 365/437] phy: rockchip-typec: Make sure the plug orientation
  is respected
 
 RK3399 TRM says about bit 8:
@@ -14,13 +14,13 @@ typec_conn_dir_sel: TypeC connect direction select
 This means that by default, typec_conn_dir bit is not respected.
 Fix setting of typec_conn_dir by setting typec_conn_dir to 0 first.
 
-Signed-off-by: Ondrej Jirman <megous@megous.com>
+Signed-off-by: Ondrej Jirman <megi@xff.cz>
 ---
  drivers/phy/rockchip/phy-rockchip-typec.c | 5 +++++
  1 file changed, 5 insertions(+)
 
 diff --git a/drivers/phy/rockchip/phy-rockchip-typec.c b/drivers/phy/rockchip/phy-rockchip-typec.c
-index d2bbdc96a167..fa10ee9a5794 100644
+index d2bbdc96a1672..fa10ee9a5794e 100644
 --- a/drivers/phy/rockchip/phy-rockchip-typec.c
 +++ b/drivers/phy/rockchip/phy-rockchip-typec.c
 @@ -350,6 +350,7 @@ struct usb3phy_reg {
@@ -64,5 +64,5 @@ index d2bbdc96a167..fa10ee9a5794 100644
  	tcphy_dp_aux_set_flip(tcphy);
  
 -- 
-2.35.0
+2.35.1
 
