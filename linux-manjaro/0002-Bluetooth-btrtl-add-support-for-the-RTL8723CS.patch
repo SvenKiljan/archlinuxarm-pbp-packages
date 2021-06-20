@@ -1,8 +1,9 @@
-From 1c13fd1ec688ee957b815a2641b9fa91126f7847 Mon Sep 17 00:00:00 2001
+From 206c567dd2b46cb0df855441dcce28a0af18f051 Mon Sep 17 00:00:00 2001
 From: Dan Johansen <strit@manjaro.org>
-Date: Mon, 1 Mar 2021 09:47:32 +0100
-Subject: [PATCH] Bluetooth-btrtl-add-support-for-the-RTL8723CS
+Date: Mon, 13 Sep 2021 08:53:55 +0200
+Subject: [PATCH] Bluetooth/btrtl: add support for the RTL8723CS
 
+Signed-off-by: Dan Johansen <strit@manjaro.org>
 ---
  drivers/bluetooth/btrtl.c  | 129 ++++++++++++++++++++++++++++++++++++-
  drivers/bluetooth/btrtl.h  |  12 ++++
@@ -10,7 +11,7 @@ Subject: [PATCH] Bluetooth-btrtl-add-support-for-the-RTL8723CS
  3 files changed, 144 insertions(+), 3 deletions(-)
 
 diff --git a/drivers/bluetooth/btrtl.c b/drivers/bluetooth/btrtl.c
-index e7fe5fb22753..39ec254f33ac 100644
+index 1f8afa0244d8..51da5f97ed7c 100644
 --- a/drivers/bluetooth/btrtl.c
 +++ b/drivers/bluetooth/btrtl.c
 @@ -17,7 +17,11 @@
@@ -81,7 +82,7 @@ index e7fe5fb22753..39ec254f33ac 100644
  	/* 8723D */
  	{ IC_INFO(RTL_ROM_LMP_8723B, 0xd, 0x8, HCI_USB),
  	  .config_needed = true,
-@@ -168,7 +207,8 @@ static const struct id_table ic_id_table[] = {
+@@ -175,7 +214,8 @@ static const struct id_table ic_id_table[] = {
  	};
  
  static const struct id_table *btrtl_match_ic(u16 lmp_subver, u16 hci_rev,
@@ -91,7 +92,7 @@ index e7fe5fb22753..39ec254f33ac 100644
  {
  	int i;
  
-@@ -185,6 +225,9 @@ static const struct id_table *btrtl_match_ic(u16 lmp_subver, u16 hci_rev,
+@@ -192,6 +232,9 @@ static const struct id_table *btrtl_match_ic(u16 lmp_subver, u16 hci_rev,
  		if ((ic_id_table[i].match_flags & IC_MATCH_FL_HCIBUS) &&
  		    (ic_id_table[i].hci_bus != hci_bus))
  			continue;
@@ -101,7 +102,7 @@ index e7fe5fb22753..39ec254f33ac 100644
  
  		break;
  	}
-@@ -267,6 +310,7 @@ static int rtlbt_parse_firmware(struct hci_dev *hdev,
+@@ -274,6 +317,7 @@ static int rtlbt_parse_firmware(struct hci_dev *hdev,
  		{ RTL_ROM_LMP_8723B, 1 },
  		{ RTL_ROM_LMP_8821A, 2 },
  		{ RTL_ROM_LMP_8761A, 3 },
@@ -109,7 +110,7 @@ index e7fe5fb22753..39ec254f33ac 100644
  		{ RTL_ROM_LMP_8822B, 8 },
  		{ RTL_ROM_LMP_8723B, 9 },	/* 8723D */
  		{ RTL_ROM_LMP_8821A, 10 },	/* 8821C */
-@@ -545,6 +589,48 @@ static int btrtl_setup_rtl8723b(struct hci_dev *hdev,
+@@ -552,6 +596,48 @@ static int btrtl_setup_rtl8723b(struct hci_dev *hdev,
  	return ret;
  }
  
@@ -158,7 +159,7 @@ index e7fe5fb22753..39ec254f33ac 100644
  void btrtl_free(struct btrtl_device_info *btrtl_dev)
  {
  	kvfree(btrtl_dev->fw_data);
-@@ -561,7 +647,7 @@ struct btrtl_device_info *btrtl_initialize(struct hci_dev *hdev,
+@@ -568,7 +654,7 @@ struct btrtl_device_info *btrtl_initialize(struct hci_dev *hdev,
  	struct hci_rp_read_local_version *resp;
  	char cfg_name[40];
  	u16 hci_rev, lmp_subver;
@@ -167,7 +168,7 @@ index e7fe5fb22753..39ec254f33ac 100644
  	int ret;
  	u16 opcode;
  	u8 cmd[2];
-@@ -631,8 +717,14 @@ struct btrtl_device_info *btrtl_initialize(struct hci_dev *hdev,
+@@ -638,8 +724,14 @@ struct btrtl_device_info *btrtl_initialize(struct hci_dev *hdev,
  out_free:
  	kfree_skb(skb);
  
@@ -183,7 +184,7 @@ index e7fe5fb22753..39ec254f33ac 100644
  
  	if (!btrtl_dev->ic_info) {
  		rtl_dev_info(hdev, "unknown IC info, lmp subver %04x, hci rev %04x, hci ver %04x",
-@@ -711,6 +803,7 @@ int btrtl_download_firmware(struct hci_dev *hdev,
+@@ -722,6 +814,7 @@ int btrtl_download_firmware(struct hci_dev *hdev,
  	case RTL_ROM_LMP_8761A:
  	case RTL_ROM_LMP_8822B:
  	case RTL_ROM_LMP_8852A:
@@ -191,9 +192,9 @@ index e7fe5fb22753..39ec254f33ac 100644
  		return btrtl_setup_rtl8723b(hdev, btrtl_dev);
  	default:
  		rtl_dev_info(hdev, "assuming no firmware upload needed");
-@@ -751,6 +844,12 @@ int btrtl_setup_realtek(struct hci_dev *hdev)
- 		break;
- 	}
+@@ -768,6 +861,12 @@ int btrtl_setup_realtek(struct hci_dev *hdev)
+ 
+ 	btrtl_set_quirks(hdev, btrtl_dev);
  
 +	if (ret)
 +		goto out_free;
@@ -204,7 +205,7 @@ index e7fe5fb22753..39ec254f33ac 100644
  	btrtl_free(btrtl_dev);
  	return ret;
  }
-@@ -884,6 +983,24 @@ int btrtl_get_uart_settings(struct hci_dev *hdev,
+@@ -901,6 +1000,24 @@ int btrtl_get_uart_settings(struct hci_dev *hdev,
  }
  EXPORT_SYMBOL_GPL(btrtl_get_uart_settings);
  
@@ -229,7 +230,7 @@ index e7fe5fb22753..39ec254f33ac 100644
  MODULE_AUTHOR("Daniel Drake <drake@endlessm.com>");
  MODULE_DESCRIPTION("Bluetooth support for Realtek devices ver " VERSION);
  MODULE_VERSION(VERSION);
-@@ -893,6 +1010,12 @@ MODULE_FIRMWARE("rtl_bt/rtl8723b_fw.bin");
+@@ -910,6 +1027,12 @@ MODULE_FIRMWARE("rtl_bt/rtl8723b_fw.bin");
  MODULE_FIRMWARE("rtl_bt/rtl8723b_config.bin");
  MODULE_FIRMWARE("rtl_bt/rtl8723bs_fw.bin");
  MODULE_FIRMWARE("rtl_bt/rtl8723bs_config.bin");
@@ -243,7 +244,7 @@ index e7fe5fb22753..39ec254f33ac 100644
  MODULE_FIRMWARE("rtl_bt/rtl8723ds_config.bin");
  MODULE_FIRMWARE("rtl_bt/rtl8761a_fw.bin");
 diff --git a/drivers/bluetooth/btrtl.h b/drivers/bluetooth/btrtl.h
-index 2a582682136d..152ed2ece4c2 100644
+index 2c441bda390a..6548dc9543f2 100644
 --- a/drivers/bluetooth/btrtl.h
 +++ b/drivers/bluetooth/btrtl.h
 @@ -14,6 +14,11 @@
@@ -258,7 +259,7 @@ index 2a582682136d..152ed2ece4c2 100644
  struct rtl_download_cmd {
  	__u8 index;
  	__u8 data[RTL_FRAG_LEN];
-@@ -60,6 +65,8 @@ int btrtl_get_uart_settings(struct hci_dev *hdev,
+@@ -62,6 +67,8 @@ int btrtl_get_uart_settings(struct hci_dev *hdev,
  			    struct btrtl_device_info *btrtl_dev,
  			    unsigned int *controller_baudrate,
  			    u32 *device_baudrate, bool *flow_control);
@@ -267,7 +268,7 @@ index 2a582682136d..152ed2ece4c2 100644
  
  #else
  
-@@ -96,6 +103,11 @@ static inline int btrtl_get_uart_settings(struct hci_dev *hdev,
+@@ -103,6 +110,11 @@ static inline int btrtl_get_uart_settings(struct hci_dev *hdev,
  					  bool *flow_control)
  {
  	return -ENOENT;
@@ -280,10 +281,10 @@ index 2a582682136d..152ed2ece4c2 100644
  
  #endif
 diff --git a/drivers/bluetooth/hci_h5.c b/drivers/bluetooth/hci_h5.c
-index 27e96681d583..35de379cebcd 100644
+index 0c0dedece59c..f240eded0556 100644
 --- a/drivers/bluetooth/hci_h5.c
 +++ b/drivers/bluetooth/hci_h5.c
-@@ -898,6 +898,10 @@ static int h5_btrtl_setup(struct h5 *h5)
+@@ -928,6 +928,10 @@ static int h5_btrtl_setup(struct h5 *h5)
  	}
  	/* Give the device some time to set up the new baudrate. */
  	usleep_range(10000, 20000);
@@ -294,15 +295,15 @@ index 27e96681d583..35de379cebcd 100644
  
  	serdev_device_set_baudrate(h5->hu->serdev, controller_baudrate);
  	serdev_device_set_flow_control(h5->hu->serdev, flow_control);
-@@ -1029,6 +1033,8 @@ static const struct of_device_id rtl_bluetooth_of_match[] = {
- 	  .data = (const void *)&rtl_vnd },
+@@ -1096,6 +1100,8 @@ static const struct of_device_id rtl_bluetooth_of_match[] = {
+ 	  .data = (const void *)&h5_data_rtl8723bs },
  	{ .compatible = "realtek,rtl8723ds-bt",
- 	  .data = (const void *)&rtl_vnd },
+ 	  .data = (const void *)&h5_data_rtl8723bs },
 +	{ .compatible = "realtek,rtl8723cs-bt",
 +	  .data = (const void *)&rtl_vnd },
  #endif
  	{ },
  };
 -- 
-2.30.1
+2.33.0
 
