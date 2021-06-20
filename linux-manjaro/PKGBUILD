@@ -5,8 +5,8 @@
 # Contributor: Dragan Simic <dsimic@buserror.io>
 
 pkgbase=linux-manjaro
-pkgver=5.18.1
-pkgrel=4
+pkgver=5.18.2
+pkgrel=1
 _newversion=false
 _stopbuild=false     # Will also stop if ${_newversion} is true
 _srcname="linux-${pkgver/%.0/}"
@@ -37,9 +37,9 @@ source=("http://www.kernel.org/pub/linux/kernel/v5.x/${_srcname}.tar.xz"
         '1017-ASOC-sun9i-hdmi-audio-Initial-implementation.patch'                  # Allwinner H6 HDMI audio
         '1018-arm64-dts-allwinner-h6-Add-hdmi-sound-card.patch'                    # Allwinner H6 HDMI audio
         '1019-arm64-dts-allwinner-h6-Enable-hdmi-sound-card-on-boards.patch'       # Allwinner H6 HDMI audio
-        '1020-arm64-dts-allwinner-add-OrangePi-3-LTS.patch'                        # OrangePi 3 LTS
+        '1020-arm64-dts-allwinner-add-OrangePi-3-LTS.patch'                        # Orange Pi 3 LTS
         '1021-arm64-dts-meson-radxa-zero-add-support-for-the-usb-t.patch'          # Radxa Zero
-	"1022-arm64-dts-rockchip-opi4-lts.patch::https://github.com/spikerguy/linux/commit/e744e4fecea518c0815054d6991857dbe9efaaa6.patch"	#Add OPI4LTS DTS
+        '1022-arm64-dts-rockchip-add-OrangePi-4-LTS.patch'                         # Orange Pi 4 LTS
         '2001-Bluetooth-Add-new-quirk-for-broken-local-ext-features.patch'         # Bluetooth;  From list: https://patchwork.kernel.org/project/bluetooth/patch/20200705195110.405139-2-anarsoul@gmail.com/
         '2002-Bluetooth-btrtl-add-support-for-the-RTL8723CS.patch'                 # Bluetooth;  From list: https://patchwork.kernel.org/project/bluetooth/patch/20200705195110.405139-3-anarsoul@gmail.com/
         '2003-arm64-allwinner-a64-enable-Bluetooth-On-Pinebook.patch'              # Bluetooth;  From list: https://patchwork.kernel.org/project/bluetooth/patch/20200705195110.405139-4-anarsoul@gmail.com/
@@ -53,7 +53,7 @@ source=("http://www.kernel.org/pub/linux/kernel/v5.x/${_srcname}.tar.xz"
         'linux.preset'
         '60-linux.hook'
         '90-linux.hook')
-md5sums=('5ee0353e80e17cf1dd33474bd05e353e'
+md5sums=('b04ef6c41e2a8965201c28e6963beaf8'
          '9aa0591c2d601a104d664a802a44728c'
          'e6fe272dc95a1c0a8f871924699fea16'
          '9f27b2a05eaeb1995fc0fcf6a8b923c4'
@@ -75,7 +75,7 @@ md5sums=('5ee0353e80e17cf1dd33474bd05e353e'
          '717c673c7caa564fc06e76ff9a0eebaa'
          'e285b47405d8eab611ba17bcbf2f9cbf'
          '9799998aa9b72fae2eb55e92d840dad5'
-         'ec944abd5547a9ea8bc97282f588ef39'
+         '9aa78625895ab5ceaea046ae4ef6a3ea'
          '372260658bc5fe55ee9b5690d8f67cb9'
          'a100d32aa6c345290061d2a773bf1232'
          '9510821113c122f91f47b9d0f7ca7264'
@@ -85,7 +85,7 @@ md5sums=('5ee0353e80e17cf1dd33474bd05e353e'
          'f79300740a7350d2d24ab5e120831b52'
          'd2654df7fc87e5c874505a2d98cbce1c'
          '59c20ef6082f4b4c6b54c4f532931ff4'
-         '73469323b9779fa90d873c82deb0aeb4'
+         '608aa844faf634c3e909f761eeacb333'
          '86d4a35722b5410e3b29fc92dae15d4b'
          'ce6c81ad1ad1f8b333fd6077d47abdaf'
          '3dc88030a8f2f5a5f97266d99b149f77')
