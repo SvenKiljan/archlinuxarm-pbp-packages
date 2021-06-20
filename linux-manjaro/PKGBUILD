@@ -7,7 +7,7 @@ pkgbase=linux-manjaro
 _srcname=linux-5.13
 _kernelname=${pkgbase#linux}
 _desc="AArch64 multi-platform"
-pkgver=5.13.12
+pkgver=5.13.13
 pkgrel=1
 arch=('aarch64')
 url="http://www.kernel.org/"
@@ -32,7 +32,7 @@ source=("http://www.kernel.org/pub/linux/kernel/v5.x/${_srcname}.tar.xz"
         '0014-drm-meson-add-YUV422-output-support.patch'
         '0015-arm64-dts-meson-add-initial-Beelink-GT1-Ultimate-dev.patch'
         '0016-add-ugoos-device.patch'
-        '0018-drm-bridge-dw-hdmi-disable-loading-of-DW-HDMI-CEC-sub-driver.patch' #Applied for -next
+        '0018-drm-bridge-dw-hdmi-disable-loading-of-DW-HDMI-CEC-sub-driver.patch' #Applied for RC
         '0019-drm-panfrost-Handle-failure-in-panfrost_job_hw_submit.patch'
         '0001-phy-rockchip-typec-Set-extcon-capabilities.patch'
         '0002-usb-typec-altmodes-displayport-Add-hacky-generic-altmode.patch'
@@ -53,7 +53,7 @@ source=("http://www.kernel.org/pub/linux/kernel/v5.x/${_srcname}.tar.xz"
         '60-linux.hook'
         '90-linux.hook')
 md5sums=('76c60fb304510a7bbd9c838790bc5fe4'
-         '7d83ac5db385ebe63f68a7ee1774c685'
+         'e816e72007fc05e223fc1cbdc6b0db60'
          '9e6b7f44db105fef525d715213dce7cf'
          'a8954ca19639be0e0e9053d23711f670'
          'fa586447846ec5aef8ab972058c5548e'
