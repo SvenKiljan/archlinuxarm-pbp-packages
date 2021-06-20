@@ -6,7 +6,7 @@
 
 pkgbase=linux-manjaro
 pkgver=5.18.5
-pkgrel=1
+pkgrel=2
 _newversion=false
 _stopbuild=false     # Will also stop if ${_newversion} is true
 _srcname="linux-${pkgver/%.0/}"
@@ -19,36 +19,36 @@ makedepends=('xmlto' 'docbook-xsl' 'kmod' 'inetutils' 'bc' 'git' 'dtc')
 options=('!strip')
 source=("http://www.kernel.org/pub/linux/kernel/v5.x/${_srcname}.tar.xz"
         '1001-arm64-dts-allwinner-add-hdmi-sound-to-pine-devices.patch'            # A64-based devices
-        '1002-arm64-dts-allwinner-add-ohci-ehci-to-h5-nanopi.patch'                # Nanopi Neo Plus 2
-        '1003-drm-bridge-analogix_dp-Add-enable_psr-param.patch'                   # Pinebook Pro;  From list: https://patchwork.kernel.org/project/dri-devel/patch/20200626033023.24214-2-shawn@anastas.io/
-        '1004-gpu-drm-add-new-display-resolution-2560x1440.patch'                  # Odroid
-        '1005-panfrost-Silence-Panfrost-gem-shrinker-loggin.patch'                 # Panfrost
-        '1006-arm64-dts-rockchip-Add-Firefly-Station-p1-support.patch'             # Firefly Station P1
-        '1007-drm-rockchip-add-support-for-modeline-32MHz-e.patch'                 # DP Alt Mode
-        '1008-rk3399-rp64-pcie-Reimplement-rockchip-PCIe-bus-scan-delay.patch'     # RockPro64
-        '1009-drm-meson-encoder-add-YUV422-output-support.patch'                   # Meson G12B
-        '1010-arm64-dts-amlogic-add-initial-Beelink-GT1-Ultimate-dev.patch'        # Beelink GT1 Ultimate
-        '1011-arm64-dts-amlogic-add-meson-g12b-ugoos-am6-plus.patch'               # Meson Ugoos
-        '1012-drm-panfrost-scheduler-improvements.patch'                           # Panfrost;  Will be submitted upstream by the author
-        '1013-arm64-dts-rockchip-Add-PCIe-bus-scan-delay-to-RockPr.patch'          # RockPro64
-        '1014-drm-rockchip-support-gamma-control-on-RK3399.patch'                  # RK3399 VOP;  From list: https://patchwork.kernel.org/project/linux-arm-kernel/cover/20211019215843.42718-1-sigmaris@gmail.com/
-        '1015-arm64-dts-rockchip-switch-to-hs200-on-rockpi4.patch'                 # Radxa Rock Pi 4;  Temporary hotfix, not for upstreaming
-        '1016-arm64-dts-rockchip-Add-PCIe-bus-scan-delay-to-Rock-P.patch'          # Radxa Rock Pi 4
-        '1017-ASOC-sun9i-hdmi-audio-Initial-implementation.patch'                  # Allwinner H6 HDMI audio
-        '1018-arm64-dts-allwinner-h6-Add-hdmi-sound-card.patch'                    # Allwinner H6 HDMI audio
-        '1019-arm64-dts-allwinner-h6-Enable-hdmi-sound-card-on-boards.patch'       # Allwinner H6 HDMI audio
-        '1020-arm64-dts-allwinner-add-OrangePi-3-LTS.patch'                        # Orange Pi 3 LTS
-        '1021-arm64-dts-meson-radxa-zero-add-support-for-the-usb-t.patch'          # Radxa Zero
-        '1022-arm64-dts-rockchip-add-OrangePi-4-LTS.patch'                         # Orange Pi 4 LTS
-        '2001-Bluetooth-Add-new-quirk-for-broken-local-ext-features.patch'         # Bluetooth;  From list: https://patchwork.kernel.org/project/bluetooth/patch/20200705195110.405139-2-anarsoul@gmail.com/
-        '2002-Bluetooth-btrtl-add-support-for-the-RTL8723CS.patch'                 # Bluetooth;  From list: https://patchwork.kernel.org/project/bluetooth/patch/20200705195110.405139-3-anarsoul@gmail.com/
-        '2003-arm64-allwinner-a64-enable-Bluetooth-On-Pinebook.patch'              # Bluetooth;  From list: https://patchwork.kernel.org/project/bluetooth/patch/20200705195110.405139-4-anarsoul@gmail.com/
-        '2004-arm64-dts-allwinner-enable-bluetooth-pinetab-pinepho.patch'          # Bluetooth;  The PinePhone part is in linux-next
+        '1002-arm64-dts-allwinner-add-ohci-ehci-to-h5-nanopi.patch'                # Nanopi Neo Plus 2 (by Furkan?)
+        '1003-drm-bridge-analogix_dp-Add-enable_psr-param.patch'                   # Pinebook Pro;  From list: https://patchwork.kernel.org/project/dri-devel/patch/20200626033023.24214-2-shawn@anastas.io/ (no updates since June 2020)
+        '1004-gpu-drm-add-new-display-resolution-2560x1440.patch'                  # Odroid;  Not upstreamable
+        '1005-panfrost-Silence-Panfrost-gem-shrinker-loggin.patch'                 # Panfrost (preference patch, might not be upstreamable)
+        '1006-arm64-dts-rockchip-Add-Firefly-Station-p1-support.patch'             # Firefly Station P1 (by Furkan)
+        '1007-drm-rockchip-add-support-for-modeline-32MHz-e.patch'                 # DP Alt Mode;  Scheduled for deletion (not needed)
+        '1008-rk3399-rp64-pcie-Reimplement-rockchip-PCIe-bus-scan-delay.patch'     # RockPro64 (by @nuumio, perhaps upstreamable?)
+        '1009-drm-meson-encoder-add-YUV422-output-support.patch'                   # Meson G12B (applied in linux-next)
+        '1010-arm64-dts-amlogic-add-initial-Beelink-GT1-Ultimate-dev.patch'        # Beelink GT1 Ultimate (by Furkan)
+        '1011-arm64-dts-amlogic-add-meson-g12b-ugoos-am6-plus.patch'               # Meson Ugoos (by Furkan)
+        '1012-drm-panfrost-scheduler-improvements.patch'                           # Panfrost;  Will be submitted upstream by Dragan
+        '1013-arm64-dts-rockchip-Add-PCIe-bus-scan-delay-to-RockPr.patch'          # RockPro64 (relies on patch 1008)
+        '1014-drm-rockchip-support-gamma-control-on-RK3399.patch'                  # RK3399 VOP;  From list: https://patchwork.kernel.org/project/linux-arm-kernel/cover/20211019215843.42718-1-sigmaris@gmail.com/ (no updates since October 2020)
+        '1015-arm64-dts-rockchip-switch-to-hs200-on-rockpi4.patch'                 # Radxa Rock Pi 4;  Temporary hotfix, not for upstreaming (by Dragan)
+        '1016-arm64-dts-rockchip-Add-PCIe-bus-scan-delay-to-Rock-P.patch'          # Radxa Rock Pi 4 (relies on patch 1008)
+        '1017-ASOC-sun9i-hdmi-audio-Initial-implementation.patch'                  # Allwinner H6 HDMI audio (by Furkan)
+        '1018-arm64-dts-allwinner-h6-Add-hdmi-sound-card.patch'                    # Allwinner H6 HDMI audio (by Furkan)
+        '1019-arm64-dts-allwinner-h6-Enable-hdmi-sound-card-on-boards.patch'       # Allwinner H6 HDMI audio (by Furkan)
+        '1020-arm64-dts-allwinner-add-OrangePi-3-LTS.patch'                        # Orange Pi 3 LTS (by Furkan)
+        '1021-arm64-dts-meson-radxa-zero-add-support-for-the-usb-t.patch'          # Radxa Zero (by Furkan)
+        '1022-arm64-dts-rockchip-add-OrangePi-4-LTS.patch'                         # Orange Pi 4 LTS (by Furkan)
+        '2001-Bluetooth-Add-new-quirk-for-broken-local-ext-features.patch'         # Bluetooth;  From list: https://patchwork.kernel.org/project/bluetooth/patch/20200705195110.405139-2-anarsoul@gmail.com/ (no updates since July 2020)
+        '2002-Bluetooth-btrtl-add-support-for-the-RTL8723CS.patch'                 # Bluetooth;  From list: https://patchwork.kernel.org/project/bluetooth/patch/20200705195110.405139-3-anarsoul@gmail.com/ (no updates since July 2020)
+        '2003-arm64-allwinner-a64-enable-Bluetooth-On-Pinebook.patch'              # Bluetooth;  From list: https://patchwork.kernel.org/project/bluetooth/patch/20200705195110.405139-4-anarsoul@gmail.com/ (no updates since July 2020)
+        '2004-arm64-dts-allwinner-enable-bluetooth-pinetab-pinepho.patch'          # Bluetooth;  The PinePhone part is in linux-next (not needed)
         '2005-staging-add-rtl8723cs-driver.patch'                                  # Realtek WiFi;  Not upstreamable
-        '2006-arm64-dts-allwinner-pinetab-add-accelerometer.patch'                 # PineTab Accelerometer
-        '2007-arm64-dts-allwinner-pinetab-enable-jack-detection.patch'             # PineTab Audio
-        '2008-brcmfmac-USB-probing-provides-no-board-type.patch'                   # Bluetooth;  Will be submitted upstream by the author
-        '2009-arm64-dts-rockchip-Work-around-daughterboard-issues.patch'           # Pinebook Pro microSD;  Will be submitted upstream by the author
+        '2006-arm64-dts-allwinner-pinetab-add-accelerometer.patch'                 # PineTab Accelerometer (not needed)
+        '2007-arm64-dts-allwinner-pinetab-enable-jack-detection.patch'             # PineTab Audio (not needed)
+        '2008-brcmfmac-USB-probing-provides-no-board-type.patch'                   # Bluetooth;  Will be submitted upstream by Dragan
+        '2009-arm64-dts-rockchip-Work-around-daughterboard-issues.patch'           # Pinebook Pro microSD;  Will be submitted upstream by Dragan
         'config'
         'linux.preset'
         '60-linux.hook'
@@ -85,7 +85,7 @@ md5sums=('75192af2ac7c7cad2c42d6deb5824851'
          'f79300740a7350d2d24ab5e120831b52'
          'd2654df7fc87e5c874505a2d98cbce1c'
          '59c20ef6082f4b4c6b54c4f532931ff4'
-         '5ead336eeabcc515c32a5caf9b807f2c'
+         '496a222fcd2dd3e5c8f4b497758ae691'
          '86d4a35722b5410e3b29fc92dae15d4b'
          'ce6c81ad1ad1f8b333fd6077d47abdaf'
          '3dc88030a8f2f5a5f97266d99b149f77')
