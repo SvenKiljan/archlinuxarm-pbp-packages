@@ -6,7 +6,7 @@
 
 pkgbase=linux-manjaro
 pkgver=5.17.5
-pkgrel=2
+pkgrel=3
 _newversion=false
 _stopbuild=false     # Will also stop if ${_newversion} is true
 _srcname="linux-${pkgver/%.0/}"
@@ -36,6 +36,10 @@ source=("http://www.kernel.org/pub/linux/kernel/v5.x/${_srcname}.tar.xz"
         '1016-arm64-dts-meson-remove-CPU-opps-below-1GHz-for-G12B-boards.patch'    # AMLogic [1/2];  From list: https://patchwork.kernel.org/project/linux-amlogic/patch/20220210100638.19130-2-christianshewitt@gmail.com/
         '1017-arm64-dts-meson-remove-CPU-opps-below-1GHz-for-SM1-boards.patch'     # AMLogic [2/2];  From list: https://patchwork.kernel.org/project/linux-amlogic/patch/20220210100638.19130-3-christianshewitt@gmail.com/
         '1018-arm64-dts-rockchip-Add-PCIe-bus-scan-delay-to-Rock-P.patch'          # Radxa Rock Pi 4
+	'1019-add-h6-hdmi-audio-driver.patch'           			   # H6 HDMI Audio Driver
+	'1020-add-h6-hdmi-audio-dtsi.patch'					   # H6 HDMI Audio DTSI
+	'1021-add-h6-hdmi-audio-driver-dts.patch'				   # H6 HDMI Audio DTS	
+	'1022-add-opi3-lts-dts.patch'						   # OPI 3 LTS DTS
         '2001-Bluetooth-Add-new-quirk-for-broken-local-ext-features.patch'         # Bluetooth;  From list: https://patchwork.kernel.org/project/bluetooth/patch/20200705195110.405139-2-anarsoul@gmail.com/
         '2002-Bluetooth-btrtl-add-support-for-the-RTL8723CS.patch'                 # Bluetooth;  From list: https://patchwork.kernel.org/project/bluetooth/patch/20200705195110.405139-3-anarsoul@gmail.com/
         '2003-arm64-allwinner-a64-enable-Bluetooth-On-Pinebook.patch'              # Bluetooth;  From list: https://patchwork.kernel.org/project/bluetooth/patch/20200705195110.405139-4-anarsoul@gmail.com/
@@ -82,6 +86,10 @@ md5sums=('2d9d725a716d27c82ea31d2b4e802158'
          '5f88754771166cd2d95d7bc3911cacca'
          'ee8eb5a23404c879fcfd09e5b7c124b8'
          'a0cf3209d3f856522ef14c4618837ae7'
+         '680aec843f385e7233763d37b98ed2e0'
+         '38a98d96bd76ab22a4c5ecb34cec0204'
+         '717c673c7caa564fc06e76ff9a0eebaa'
+         'e285b47405d8eab611ba17bcbf2f9cbf'
          '372260658bc5fe55ee9b5690d8f67cb9'
          'a100d32aa6c345290061d2a773bf1232'
          '9510821113c122f91f47b9d0f7ca7264'
@@ -105,7 +113,7 @@ md5sums=('2d9d725a716d27c82ea31d2b4e802158'
          '482a6974207197cff14e77a61f66a810'
          'a76a46e31f4229e7c4349f90ac36601b'
          '04eec4b27d9c26f6d53317100fbab7fb'
-         'ce52543b5f8dd0c175fdc0c22f591deb'
+         'a2180a254033c885b3856af25a4cc340'
          '86d4a35722b5410e3b29fc92dae15d4b'
          'ce6c81ad1ad1f8b333fd6077d47abdaf'
          '3dc88030a8f2f5a5f97266d99b149f77')
